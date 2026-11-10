@@ -32,15 +32,15 @@
 	}
 </script>
 
-<header class="sticky top-0 z-50 border-b border-forest/10 bg-ivory/90 backdrop-blur-md">
+<header class="sticky top-0 z-50 border-b border-navy/10 bg-ivory/90 backdrop-blur-md">
 	<div class="container-page flex h-20 items-center justify-between gap-4">
 		<a
 			href={href('')}
 			class="group flex shrink-0 items-center gap-3"
 			aria-label="Pura Batuan Kaler 360"
 		>
-			<TempleMark class="h-9 w-9 text-forest transition-colors group-hover:text-gold-dark" />
-			<span class="font-display text-lg leading-none text-forest sm:text-xl">
+			<TempleMark class="h-9 w-9 text-navy transition-colors group-hover:text-gold-dark" />
+			<span class="font-display text-lg leading-none text-navy sm:text-xl">
 				Batuan Kaler <span class="text-gold-dark">360</span>
 			</span>
 		</a>
@@ -52,7 +52,7 @@
 					aria-current={isActive(item.path) ? 'page' : undefined}
 					class="text-sm font-medium transition-colors {isActive(item.path)
 						? 'text-gold-dark'
-						: 'text-forest/70 hover:text-forest'}"
+						: 'text-navy/70 hover:text-navy'}"
 				>
 					{item.label}
 				</a>
@@ -62,7 +62,7 @@
 		<div class="flex items-center gap-2">
 			<a
 				href={switchHref}
-				class="rounded-full border border-forest/15 px-3 py-2 text-xs font-semibold tracking-wider text-forest uppercase transition-colors hover:border-gold-dark hover:text-gold-dark"
+				class="rounded-full border border-navy/15 px-3 py-2 text-xs font-semibold tracking-wider text-navy uppercase transition-colors hover:border-gold-dark hover:text-gold-dark"
 				aria-label={content.common.language}
 				title={content.common.language}
 			>
@@ -71,7 +71,7 @@
 
 			<details class="group relative lg:hidden">
 				<summary
-					class="flex cursor-pointer list-none items-center gap-2 rounded-full border border-forest/15 px-3 py-2 text-xs font-semibold tracking-wider text-forest uppercase [&::-webkit-details-marker]:hidden"
+					class="flex cursor-pointer list-none items-center gap-2 rounded-full border border-navy/15 px-3 py-2 text-xs font-semibold tracking-wider text-navy uppercase [&::-webkit-details-marker]:hidden"
 				>
 					{content.common.menu}
 					<svg
@@ -91,7 +91,7 @@
 				</summary>
 
 				<div
-					class="absolute right-0 mt-3 w-60 rounded-2xl border border-forest/10 bg-ivory p-2 shadow-xl"
+					class="absolute right-0 mt-3 w-60 rounded-2xl border border-navy/10 bg-ivory p-2 shadow-xl"
 				>
 					<nav class="flex flex-col" aria-label={content.common.navigation}>
 						{#each content.nav as item (item.path)}
@@ -102,8 +102,8 @@
 								class="rounded-xl px-4 py-3 text-sm font-medium transition-colors {isActive(
 									item.path
 								)
-									? 'bg-forest/5 text-gold-dark'
-									: 'text-forest/75 hover:bg-forest/5 hover:text-forest'}"
+									? 'bg-navy/5 text-gold-dark'
+									: 'text-navy/75 hover:bg-navy/5 hover:text-navy'}"
 							>
 								{item.label}
 							</a>

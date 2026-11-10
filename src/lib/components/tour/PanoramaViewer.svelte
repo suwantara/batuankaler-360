@@ -212,12 +212,12 @@
 	});
 </script>
 
-<div class="relative overflow-hidden rounded-[2rem] border border-forest/10 bg-forest">
+<div class="relative overflow-hidden rounded-[2rem] border border-navy/10 bg-navy">
 	<div bind:this={container} class="relative h-[60vh] min-h-[420px] w-full sm:h-[68vh]"></div>
 
 	{#if loading}
 		<div
-			class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-forest text-ivory"
+			class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-navy text-ivory"
 		>
 			<span class="h-10 w-10 animate-spin rounded-full border-2 border-ivory/20 border-t-gold"
 			></span>
@@ -227,7 +227,7 @@
 
 	{#if error}
 		<div
-			class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-forest px-6 text-center text-ivory"
+			class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-navy px-6 text-center text-ivory"
 		>
 			<p class="max-w-md text-sm text-ivory/80">{error}</p>
 			<button
@@ -251,7 +251,7 @@
 				onclick={() => zoom(0.8)}
 				aria-label={labels.zoomOut}
 				title={labels.zoomOut}
-				class="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 text-lg text-ivory backdrop-blur transition hover:border-gold/60 hover:text-gold"
+				class="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 text-lg text-ivory backdrop-blur transition hover:border-gold-light/60 hover:text-gold-light"
 			>
 				−
 			</button>
@@ -260,7 +260,7 @@
 				onclick={() => zoom(1.2)}
 				aria-label={labels.zoomIn}
 				title={labels.zoomIn}
-				class="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 text-lg text-ivory backdrop-blur transition hover:border-gold/60 hover:text-gold"
+				class="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 text-lg text-ivory backdrop-blur transition hover:border-gold-light/60 hover:text-gold-light"
 			>
 				+
 			</button>
@@ -269,7 +269,7 @@
 				onclick={resetView}
 				aria-label={labels.reset}
 				title={labels.reset}
-				class="flex h-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 px-3 text-xs font-semibold text-ivory backdrop-blur transition hover:border-gold/60 hover:text-gold"
+				class="flex h-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 px-3 text-xs font-semibold text-ivory backdrop-blur transition hover:border-gold-light/60 hover:text-gold-light"
 			>
 				Reset
 			</button>
@@ -278,7 +278,7 @@
 				onclick={toggleFullscreen}
 				aria-label={fullscreen ? labels.exitFullscreen : labels.fullscreen}
 				title={fullscreen ? labels.exitFullscreen : labels.fullscreen}
-				class="flex h-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 px-3 text-xs font-semibold text-ivory backdrop-blur transition hover:border-gold/60 hover:text-gold"
+				class="flex h-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 px-3 text-xs font-semibold text-ivory backdrop-blur transition hover:border-gold-light/60 hover:text-gold-light"
 			>
 				{fullscreen ? labels.exitFullscreen : labels.fullscreen}
 			</button>

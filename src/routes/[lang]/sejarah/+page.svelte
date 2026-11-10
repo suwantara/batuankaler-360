@@ -24,11 +24,11 @@
 	<div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
 		<div>
 			<p class="eyebrow">{content.home.history.eyebrow}</p>
-			<h2 class="mt-4 font-display text-3xl leading-tight text-forest sm:text-4xl">
+			<h2 class="mt-4 font-display text-3xl leading-tight text-navy sm:text-4xl">
 				{content.home.history.title}
 			</h2>
 		</div>
-		<div class="rounded-3xl border border-gold/30 bg-gold/5 p-8 sm:p-10">
+		<div class="rounded-3xl border border-gold-dark/30 bg-gold/20 p-8 sm:p-10">
 			<p class="text-base leading-relaxed text-charcoal/75">{pageContent.notice}</p>
 		</div>
 	</div>

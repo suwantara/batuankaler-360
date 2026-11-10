@@ -1,4 +1,4 @@
-import { locales, type Locale } from '#lib/i18n/index.ts';
+import { locales, type Locale } from '#lib/i18n/locales.ts';
 
 export interface SceneTranslation {
 	title: string;

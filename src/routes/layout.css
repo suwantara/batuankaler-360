@@ -5,15 +5,22 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
+/*
+ * Palette roles (60-30-10):
+ * 60% cream #f9f2d7 + light sand surfaces
+ * 30% navy #21294c for dark sections and primary surfaces
+ * 10% gold #f2dea8 for CTAs and accents
+ * Ink #141829 is the supporting dark tone for text and deep contrast.
+ */
 @theme {
-	--color-forest: #25382d;
-	--color-forest-soft: #31493b;
-	--color-gold: #b58b55;
-	--color-gold-dark: #8a6435;
-	--color-gold-light: #d8b77f;
-	--color-sand: #e9e1d2;
-	--color-ivory: #f8f6f0;
-	--color-charcoal: #252525;
+	--color-navy: #21294c;
+	--color-navy-soft: #2c3560;
+	--color-gold: #f2dea8;
+	--color-gold-dark: #7d6230;
+	--color-gold-light: #f7e7bf;
+	--color-sand: #efe6c8;
+	--color-ivory: #f9f2d7;
+	--color-charcoal: #141829;
 	--font-display: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;
 	--font-body:
 		'Inter Variable', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -37,7 +44,7 @@
 	}
 
 	::selection {
-		background-color: color-mix(in srgb, var(--color-gold) 35%, transparent);
+		background-color: color-mix(in srgb, var(--color-gold) 60%, transparent);
 	}
 
 	:focus-visible {
@@ -67,7 +74,7 @@
 		transform: translate(-50%, -50%);
 		border-radius: 9999px;
 		border: 1px solid color-mix(in srgb, var(--color-ivory) 55%, transparent);
-		background-color: color-mix(in srgb, var(--color-forest) 88%, transparent);
+		background-color: color-mix(in srgb, var(--color-navy) 88%, transparent);
 		min-width: 2.75rem;
 		min-height: 2.75rem;
 		justify-content: center;

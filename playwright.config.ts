@@ -1,4 +1,8 @@
+import { loadEnvFile } from 'node:process';
 import { defineConfig } from '@playwright/test';
+
+loadEnvFile('.env');
+process.env.ORIGIN = 'http://127.0.0.1:4173';
 
 export default defineConfig({
 	webServer: {

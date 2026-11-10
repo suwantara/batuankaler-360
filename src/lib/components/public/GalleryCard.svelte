@@ -4,10 +4,10 @@
 	let { title, caption, index }: { title: string; caption: string; index: number } = $props();
 
 	const tones = [
-		'from-forest via-forest/80 to-gold/40',
-		'from-gold/70 via-sand to-forest/30',
-		'from-charcoal via-forest to-forest/60',
-		'from-forest/80 via-forest/40 to-sand'
+		'from-navy via-navy/80 to-gold/40',
+		'from-gold/70 via-sand to-navy/30',
+		'from-charcoal via-navy to-navy/60',
+		'from-navy/80 via-navy/40 to-sand'
 	];
 
 	const tone = $derived(tones[index % tones.length]);

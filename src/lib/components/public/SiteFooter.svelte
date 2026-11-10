@@ -13,7 +13,7 @@
 	}
 </script>
 
-<footer class="bg-forest text-ivory">
+<footer class="bg-navy text-ivory">
 	<div class="container-page grid gap-12 py-16 lg:grid-cols-[1.4fr_1fr_1fr]">
 		<div>
 			<div class="flex items-center gap-3">

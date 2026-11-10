@@ -438,13 +438,16 @@ utama.
 
 ### Palet Warna
 
-  Nama           Hex         Penggunaan
-  -------------- ----------- -------------------------------------
-  Forest Green   `#25382D`   Warna utama, navigasi, tombol utama
-  Antique Gold   `#B58B55`   Aksen dan detail interaksi
-  Sand           `#E9E1D2`   Latar bagian sekunder
-  Ivory          `#F8F6F0`   Latar utama
-  Charcoal       `#252525`   Teks utama
+  Nama           Hex         Porsi   Penggunaan
+  -------------- ----------- ------- ---------------------------------
+  Cream          `#F9F2D7`   60%     Latar utama, permukaan, dan kartu
+  Navy           `#21294C`   30%     Hero, footer, sidebar, dan bagian gelap
+  Gold           `#F2DEA8`   10%     CTA, aksen, dan detail interaksi
+  Ink            `#141829`   —       Teks utama, border tegas, dan kontras dalam
+
+Komposisi 60-30-10 diterapkan pada tiga warna utama (Cream, Navy, Gold).
+Ink digunakan sebagai warna pendukung untuk teks dan kontras, bukan bagian
+dari pembagian persentase utama.
 
 ### Tipografi
 

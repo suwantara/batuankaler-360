@@ -22,12 +22,12 @@
 />
 
 <section class="container-page py-12 sm:py-16">
-	<TourExperience lang={data.lang} />
+	<TourExperience lang={data.lang} scenes={data.scenes} />
 
 	<div class="mt-6 grid gap-4 sm:grid-cols-3">
 		{#each pageContent.tips as tip (tip.title)}
-			<div class="rounded-2xl border border-forest/10 bg-ivory p-5">
-				<p class="text-sm font-semibold text-forest">{tip.title}</p>
+			<div class="rounded-2xl border border-navy/10 bg-ivory p-5">
+				<p class="text-sm font-semibold text-navy">{tip.title}</p>
 				<p class="mt-2 text-sm leading-relaxed text-charcoal/65">{tip.body}</p>
 			</div>
 		{/each}

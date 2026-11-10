@@ -22,7 +22,7 @@
 />
 
 <section class="container-page py-16 sm:py-24">
-	<div class="rounded-3xl border border-gold/30 bg-gold/5 p-6 sm:p-8">
+	<div class="rounded-3xl border border-gold-dark/30 bg-gold/20 p-6 sm:p-8">
 		<p class="text-sm leading-relaxed text-charcoal/75">{pageContent.notice}</p>
 	</div>
 

@@ -3,11 +3,11 @@
 		$props();
 </script>
 
-<header class="border-b border-forest/10 bg-sand/60">
+<header class="border-b border-navy/10 bg-sand/60">
 	<div class="container-page py-20 sm:py-28">
 		<p class="eyebrow">{eyebrow}</p>
 		<h1
-			class="mt-5 max-w-4xl font-display text-4xl leading-[1.08] text-forest sm:text-5xl lg:text-6xl"
+			class="mt-5 max-w-4xl font-display text-4xl leading-[1.08] text-navy sm:text-5xl lg:text-6xl"
 		>
 			{title}
 		</h1>

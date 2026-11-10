@@ -20,17 +20,17 @@
 		tone === 'dark'
 			? {
 					card: 'border-ivory/10 bg-ivory/5 hover:border-gold/50',
-					number: 'text-gold/60',
+					number: 'text-gold-light/60',
 					title: 'text-ivory',
 					body: 'text-ivory/60',
 					mark: 'text-ivory/10'
 				}
 			: {
-					card: 'border-forest/10 bg-ivory hover:border-gold/60',
+					card: 'border-navy/10 bg-ivory hover:border-gold-dark/60',
 					number: 'text-gold-dark/70',
-					title: 'text-forest',
+					title: 'text-navy',
 					body: 'text-charcoal/65',
-					mark: 'text-forest/10'
+					mark: 'text-navy/10'
 				}
 	);
 </script>
@@ -46,7 +46,7 @@
 	<h3 class="mt-10 font-display text-2xl {toneClasses.title}">{name}</h3>
 	<p class="mt-3 flex-1 text-sm leading-relaxed {toneClasses.body}">{description}</p>
 	<span
-		class="mt-6 text-sm font-semibold {tone === 'dark' ? 'text-gold-light' : 'text-forest'}"
+		class="mt-6 text-sm font-semibold {tone === 'dark' ? 'text-gold-light' : 'text-navy'}"
 		aria-hidden="true"
 	>
 		→

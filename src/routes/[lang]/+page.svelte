@@ -20,13 +20,13 @@
 	<meta name="description" content={content.meta.description} />
 </svelte:head>
 
-<section class="relative isolate overflow-hidden bg-forest">
+<section class="relative isolate overflow-hidden bg-navy">
 	<img
 		src="/images/hero-pura.svg"
 		alt=""
 		class="absolute inset-0 h-full w-full object-cover opacity-80"
 	/>
-	<div class="absolute inset-0 bg-gradient-to-r from-forest via-forest/80 to-forest/20"></div>
+	<div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy/20"></div>
 	<div class="container-page relative flex min-h-[82vh] flex-col justify-end pt-32 pb-16 sm:pb-24">
 		<p class="text-xs font-semibold tracking-[0.28em] text-gold-light uppercase">
 			{content.home.hero.eyebrow}
@@ -63,7 +63,7 @@
 	<div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
 		<div>
 			<p class="eyebrow">{content.home.intro.eyebrow}</p>
-			<h2 class="mt-4 max-w-xl font-display text-4xl leading-tight text-forest sm:text-5xl">
+			<h2 class="mt-4 max-w-xl font-display text-4xl leading-tight text-navy sm:text-5xl">
 				{content.home.intro.title}
 			</h2>
 		</div>
@@ -71,8 +71,8 @@
 			<p class="text-lg leading-relaxed text-charcoal/70">{content.home.intro.body}</p>
 			<dl class="mt-10 grid gap-6 sm:grid-cols-3">
 				{#each content.home.intro.points as point (point.title)}
-					<div class="border-t border-forest/15 pt-4">
-						<dt class="text-sm font-semibold text-forest">{point.title}</dt>
+					<div class="border-t border-navy/15 pt-4">
+						<dt class="text-sm font-semibold text-navy">{point.title}</dt>
 						<dd class="mt-2 text-sm leading-relaxed text-charcoal/65">{point.body}</dd>
 					</div>
 				{/each}
@@ -81,11 +81,11 @@
 	</div>
 </section>
 
-<section class="border-y border-forest/10 bg-sand/60">
+<section class="border-y border-navy/10 bg-sand/60">
 	<div class="container-page grid gap-10 py-20 sm:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
 		<div>
 			<p class="eyebrow">{content.home.tour.eyebrow}</p>
-			<h2 class="mt-4 max-w-xl font-display text-4xl leading-tight text-forest sm:text-5xl">
+			<h2 class="mt-4 max-w-xl font-display text-4xl leading-tight text-navy sm:text-5xl">
 				{content.home.tour.title}
 			</h2>
 			<p class="mt-6 max-w-xl text-base leading-relaxed text-charcoal/70">
@@ -93,7 +93,7 @@
 			</p>
 			<a
 				href={href('/tour')}
-				class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-forest transition-colors hover:text-gold-dark"
+				class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-navy transition-colors hover:text-gold-dark"
 			>
 				{content.actions.exploreTour}
 				<span aria-hidden="true">→</span>
@@ -102,16 +102,14 @@
 
 		<a
 			href={href('/tour')}
-			class="group relative block overflow-hidden rounded-[2rem] border border-forest/10 bg-forest"
+			class="group relative block overflow-hidden rounded-[2rem] border border-navy/10 bg-navy"
 		>
 			<img
 				src="/images/panoramas/scene-jaba.jpg"
 				alt={content.home.tour.previewLabel}
 				class="aspect-[16/10] w-full object-cover opacity-90 transition duration-700 group-hover:scale-105"
 			/>
-			<div
-				class="absolute inset-0 bg-gradient-to-t from-forest/80 via-forest/10 to-transparent"
-			></div>
+			<div class="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/10 to-transparent"></div>
 			<div class="absolute inset-0 flex items-center justify-center">
 				<span
 					class="flex h-16 w-16 items-center justify-center rounded-full border border-ivory/50 bg-ivory/10 text-ivory backdrop-blur transition group-hover:border-gold-light group-hover:text-gold-light"
@@ -129,7 +127,7 @@
 </section>
 
 <section class="container-page grid gap-10 py-20 sm:py-28 lg:grid-cols-[1fr_1fr]">
-	<div class="rounded-[2rem] bg-forest p-8 text-ivory sm:p-12">
+	<div class="rounded-[2rem] bg-navy p-8 text-ivory sm:p-12">
 		<p class="eyebrow text-gold-light">{content.home.history.eyebrow}</p>
 		<h2 class="mt-4 font-display text-4xl leading-tight sm:text-5xl">
 			{content.home.history.title}
@@ -139,7 +137,7 @@
 		<p class="text-lg leading-relaxed text-charcoal/70">{content.home.history.body}</p>
 		<a
 			href={href('/sejarah')}
-			class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-forest transition-colors hover:text-gold-dark"
+			class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-navy transition-colors hover:text-gold-dark"
 		>
 			{content.actions.readHistory}
 			<span aria-hidden="true">→</span>
@@ -147,30 +145,36 @@
 	</div>
 </section>
 
-<section class="bg-forest py-20 text-ivory sm:py-28">
+<section class="bg-sand/60 py-20 text-charcoal sm:py-28">
 	<div class="container-page">
 		<div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
 			<div>
-				<p class="eyebrow text-gold-light">{content.home.areas.eyebrow}</p>
+				<p class="eyebrow text-gold-dark">{content.home.areas.eyebrow}</p>
 				<h2 class="mt-4 max-w-2xl font-display text-4xl leading-tight sm:text-5xl">
 					{content.home.areas.title}
 				</h2>
 			</div>
 			<a
 				href={href('/area')}
-				class="inline-flex items-center gap-2 text-sm font-semibold text-gold-light transition-colors hover:text-ivory"
+				class="inline-flex items-center gap-2 text-sm font-semibold text-gold-dark transition-colors hover:text-navy"
 			>
 				{content.actions.viewAllAreas}
 				<span aria-hidden="true">→</span>
 			</a>
 		</div>
-		<p class="mt-6 max-w-2xl text-sm leading-relaxed text-ivory/60">
+		<p class="mt-6 max-w-2xl text-sm leading-relaxed text-charcoal/65">
 			{content.home.areas.body}
 		</p>
 
 		<div class="mt-12 grid gap-5 md:grid-cols-3">
 			{#each content.home.areas.items as area, index (area.name)}
-				<AreaCard name={area.name} description={area.description} {index} href={href('/area')} />
+				<AreaCard
+					name={area.name}
+					description={area.description}
+					{index}
+					href={href('/area')}
+					tone="light"
+				/>
 			{/each}
 		</div>
 	</div>
@@ -180,13 +184,13 @@
 	<div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
 		<div>
 			<p class="eyebrow">{content.home.gallery.eyebrow}</p>
-			<h2 class="mt-4 max-w-2xl font-display text-4xl leading-tight text-forest sm:text-5xl">
+			<h2 class="mt-4 max-w-2xl font-display text-4xl leading-tight text-navy sm:text-5xl">
 				{content.home.gallery.title}
 			</h2>
 		</div>
 		<a
 			href={href('/galeri')}
-			class="inline-flex items-center gap-2 text-sm font-semibold text-forest transition-colors hover:text-gold-dark"
+			class="inline-flex items-center gap-2 text-sm font-semibold text-navy transition-colors hover:text-gold-dark"
 		>
 			{content.actions.openGallery}
 			<span aria-hidden="true">→</span>
@@ -207,7 +211,7 @@
 	<div class="container-page">
 		<div class="max-w-3xl">
 			<p class="eyebrow">{content.home.guide.eyebrow}</p>
-			<h2 class="mt-4 font-display text-4xl leading-tight text-forest sm:text-5xl">
+			<h2 class="mt-4 font-display text-4xl leading-tight text-navy sm:text-5xl">
 				{content.home.guide.title}
 			</h2>
 			<p class="mt-6 text-base leading-relaxed text-charcoal/70">
@@ -223,7 +227,7 @@
 
 		<a
 			href={href('/panduan')}
-			class="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-forest transition-colors hover:text-gold-dark"
+			class="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-navy transition-colors hover:text-gold-dark"
 		>
 			{content.actions.readGuide}
 			<span aria-hidden="true">→</span>

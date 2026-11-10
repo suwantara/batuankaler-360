@@ -1,19 +1,8 @@
 import { resolve } from '$app/paths';
 import type { ResolvedPathname } from '$app/types';
+import { isLocale, type Locale } from './locales';
 
-export const locales = ['id', 'en'] as const;
-
-export type Locale = (typeof locales)[number];
-
-export const defaultLocale: Locale = 'id';
-
-export function isLocale(value: string): value is Locale {
-	return (locales as readonly string[]).includes(value);
-}
-
-export function otherLocale(locale: Locale): Locale {
-	return locale === 'id' ? 'en' : 'id';
-}
+export { defaultLocale, isLocale, locales, otherLocale, type Locale } from './locales';
 
 export function localeHref(locale: Locale, path = ''): ResolvedPathname {
 	return resolve(`${locale}${path}`);

@@ -199,18 +199,20 @@ TypeScript hanya memeriksa compile time; semua input eksternal wajib divalidasi 
 - Tidak ada route admin yang hanya dilindungi UI.
 - Perubahan data multi-tabel harus teruji tidak meninggalkan relasi rusak.
 
-## 11. Kondisi Scaffold Saat Ini
+## 11. Status Implementasi Saat Ini
 
-Hal-hal berikut masih berupa scaffold dan harus dibersihkan/diganti saat relevan:
-
-- `src/routes/demo/**` — route demo Better Auth dan Playwright; hapus sebelum produksi.
-- `src/lib/server/db/schema.ts` — masih berisi tabel demo `task`; ganti dengan schema domain.
-- `src/lib/server/db/auth.schema.ts` — masih placeholder; jalankan `pnpm auth:schema`.
-- `src/routes/+page.svelte` dan `+layout.svelte` — masih halaman sambutan; ganti dengan layout publik.
-- `src/lib/vitest-examples/**` — contoh test; boleh dihapus setelah test domain dibuat.
-- `src/lib/components`, `src/lib/schemas`, `src/lib/i18n`, `src/lib/types`, `src/lib/server/services`, `src/lib/server/storage` — belum ada; buat sesuai kebutuhan.
-- Marzipano belum terpasang.
-- `.env` berisi secret development; jangan commit dan rotasi untuk produksi.
+- Fase 1–5 sudah diimplementasikan: public website, viewer multi-scene, PostgreSQL, Drizzle, Better Auth, panel admin, upload aset, preview, dan validasi publikasi.
+- Public tour membaca scene **published** dari database melalui `src/lib/server/services/tour.ts`.
+- Data scene awal yang dipakai untuk seed berada di `src/lib/tour/scenes.ts`.
+- Schema domain ada di `src/lib/server/db/app.schema.ts`; schema Better Auth ada di `src/lib/server/db/auth.schema.ts`.
+- Migrasi SQL ada di `drizzle/`; seed dan provisioning admin ada di `src/lib/server/db/`.
+- Admin dilindungi melalui `src/hooks.server.ts`; login tersedia di `/admin/login`.
+- Registrasi publik dinonaktifkan; akun admin dibuat dengan `pnpm admin:create`.
+- Upload aset tersedia di `/admin/media/upload`; file disimpan di `UPLOAD_DIR` dan divalidasi di `src/lib/server/storage/local.ts`.
+- Preview aset tersedia di `/admin/media/[id]`; validasi publikasi scene ada di `validateSceneForPublish`.
+- Halaman sejarah, area, galeri, dan panduan masih placeholder; konten situs belum dikelola dari dashboard.
+- Panorama di `static/images/panoramas/` masih aset sintetis; jangan dianggap dokumentasi final.
+- `.env` berisi kredensial development; jangan commit dan ganti semua secret untuk produksi.
 
 ## 12. Gaya Kode
 

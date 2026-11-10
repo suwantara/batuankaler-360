@@ -1,36 +1,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Ilustrasi kawasan Pura Batuan Kaler">
 	<defs>
 		<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-			<stop offset="0" stop-color="#16251d" />
-			<stop offset="0.55" stop-color="#3c4c3d" />
-			<stop offset="1" stop-color="#b58b55" />
+			<stop offset="0" stop-color="#141829" />
+			<stop offset="0.55" stop-color="#21294c" />
+			<stop offset="1" stop-color="#f2dea8" />
 		</linearGradient>
 		<radialGradient id="sun-glow" cx="50%" cy="50%" r="50%">
-			<stop offset="0" stop-color="#f8f6f0" stop-opacity="0.95" />
-			<stop offset="0.28" stop-color="#e9c98b" stop-opacity="0.55" />
-			<stop offset="1" stop-color="#b58b55" stop-opacity="0" />
+			<stop offset="0" stop-color="#f9f2d7" stop-opacity="0.95" />
+			<stop offset="0.28" stop-color="#f2dea8" stop-opacity="0.55" />
+			<stop offset="1" stop-color="#f2dea8" stop-opacity="0" />
 		</radialGradient>
 		<linearGradient id="ridge-far" x1="0" y1="0" x2="0" y2="1">
-			<stop offset="0" stop-color="#31493b" />
-			<stop offset="1" stop-color="#25382d" />
+			<stop offset="0" stop-color="#2c3560" />
+			<stop offset="1" stop-color="#21294c" />
 		</linearGradient>
 		<linearGradient id="ridge-mid" x1="0" y1="0" x2="0" y2="1">
-			<stop offset="0" stop-color="#22352a" />
-			<stop offset="1" stop-color="#1a2a21" />
+			<stop offset="0" stop-color="#202747" />
+			<stop offset="1" stop-color="#1a2140" />
 		</linearGradient>
 		<linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
-			<stop offset="0" stop-color="#1d2f25" />
-			<stop offset="1" stop-color="#0f1a14" />
+			<stop offset="0" stop-color="#1a2140" />
+			<stop offset="1" stop-color="#141829" />
 		</linearGradient>
 		<radialGradient id="vignette" cx="50%" cy="45%" r="75%">
-			<stop offset="0.45" stop-color="#0f1a14" stop-opacity="0" />
-			<stop offset="1" stop-color="#0f1a14" stop-opacity="0.65" />
+			<stop offset="0.45" stop-color="#141829" stop-opacity="0" />
+			<stop offset="1" stop-color="#141829" stop-opacity="0.65" />
 		</radialGradient>
 	</defs>
 
 	<rect width="1600" height="900" fill="url(#sky)" />
 	<circle cx="1180" cy="280" r="300" fill="url(#sun-glow)" />
-	<circle cx="1180" cy="280" r="78" fill="#f4e4c0" opacity="0.88" />
+	<circle cx="1180" cy="280" r="78" fill="#f9f2d7" opacity="0.88" />
 
 	<path
 		d="M0 620 170 470l150 105 160-150 180 175 170-110 170 130 170-105 160 120 150-95 130 110v350H0Z"
@@ -43,7 +43,7 @@
 	/>
 	<rect y="690" width="1600" height="210" fill="url(#ground)" />
 
-	<g fill="#142019">
+	<g fill="#141829">
 		<rect x="540" y="748" width="520" height="26" rx="4" />
 		<rect x="590" y="774" width="420" height="18" rx="3" />
 		<rect x="640" y="792" width="320" height="14" rx="3" />
@@ -61,21 +61,21 @@
 		<path d="M870 442h92l-17-30H887Z" />
 		<path d="M887 412h58l-10-24h-38Z" />
 
-		<path d="M700 748V646c0-28 22-50 50-50s50 22 50 50v102Z" fill="#0d1712" />
+		<path d="M700 748V646c0-28 22-50 50-50s50 22 50 50v102Z" fill="#101423" />
 	</g>
 
-	<g stroke="#b58b55" stroke-width="2" opacity="0.55" fill="none">
+	<g stroke="#f2dea8" stroke-width="2" opacity="0.55" fill="none">
 		<path d="M590 520h188M616 478h136M638 442h92M655 412h58" />
 		<path d="M822 520h188M848 478h136M870 442h92M887 412h58" />
 		<path d="M620 548h128M852 548h128" opacity="0.35" />
 		<path d="M620 580h128M852 580h128" opacity="0.2" />
 	</g>
 
-	<g fill="#0f1a14">
+	<g fill="#141829">
 		<path d="M0 830c90-55 180-40 270-10s170 30 260-5 180-40 270 0 170 45 260 5 180-35 270 0 170 45 270-5v85H0Z" opacity="0.85" />
 	</g>
 
-	<g fill="none" stroke="#e9e1d2" stroke-width="2" stroke-linecap="round" opacity="0.45">
+	<g fill="none" stroke="#f9f2d7" stroke-width="2" stroke-linecap="round" opacity="0.45">
 		<path d="M300 250c12-8 24-8 36 0" />
 		<path d="M340 225c9-6 18-6 27 0" />
 		<path d="M1260 205c12-8 24-8 36 0" />

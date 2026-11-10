@@ -1,4 +1,4 @@
-import type { Locale } from './index';
+import type { Locale } from './locales';
 
 const id = {
 	meta: {
@@ -142,7 +142,10 @@ const id = {
 				info: 'Informasi hotspot',
 				infoEmpty: 'Pilih hotspot informasi pada panorama untuk menampilkan keterangan area.',
 				infoNotice: 'Konten informasi masih dalam kerangka dan menunggu verifikasi pengelola.',
-				closeInfo: 'Tutup informasi'
+				closeInfo: 'Tutup informasi',
+				emptyScenes: 'Belum ada scene yang dipublikasikan.',
+				emptyScenesHint:
+					'Scene yang berstatus published akan tampil di sini. Administrator dapat mengelola scene melalui dashboard.'
 			},
 			controls: {
 				loading: 'Memuat panorama…',
@@ -348,7 +351,10 @@ const en: SiteDictionary = {
 				info: 'Hotspot information',
 				infoEmpty: 'Choose an information hotspot on the panorama to display area details.',
 				infoNotice: 'Information content is still a framework awaiting management verification.',
-				closeInfo: 'Close information'
+				closeInfo: 'Close information',
+				emptyScenes: 'No published scenes yet.',
+				emptyScenesHint:
+					'Published scenes will appear here. An administrator can manage scenes through the dashboard.'
 			},
 			controls: {
 				loading: 'Loading panorama…',
