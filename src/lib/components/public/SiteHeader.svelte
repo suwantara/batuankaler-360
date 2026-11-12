@@ -102,8 +102,8 @@
 		<div class="flex items-center gap-2 sm:gap-3">
 			<a
 				href={switchHref}
-				class="inline-flex items-center gap-1.5 rounded-xs px-1 py-2 text-[0.6875rem] font-semibold tracking-[0.16em] text-navy/60 uppercase transition-colors hover:text-gold-dark"
-				aria-label={content.common.language}
+				class="inline-flex items-center gap-1.5 rounded-xs px-1 py-2 text-[0.6875rem] font-semibold tracking-[0.16em] text-navy/75 uppercase transition-colors hover:text-gold-dark"
+				aria-label={`${targetLocale.toUpperCase()} — ${content.common.language}`}
 				title={content.common.language}
 			>
 				<Icon name="globe" class="h-4 w-4" />

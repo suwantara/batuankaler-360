@@ -11,9 +11,9 @@ import type { Locale } from '#lib/i18n/locales.ts';
 import type { SitePageDataAdmin } from '#lib/types/site-page.ts';
 
 export const DEFAULT_HOME_MEDIA = {
-	heroImagePath: '/images/panoramas/scene-jaba.jpg',
+	heroImagePath: '/images/panoramas/scene-jaba-preview.jpg',
 	heroBackgroundPath: '/images/hero-pura.svg',
-	previewImagePath: '/images/panoramas/scene-jaba.jpg'
+	previewImagePath: '/images/panoramas/scene-jaba-preview.jpg'
 } as const;
 
 export interface HomeMediaPaths {

@@ -83,6 +83,6 @@
 			<p class="font-display text-xl leading-snug text-navy">{title}</p>
 			<p class="mt-1.5 text-xs leading-relaxed text-muted">{caption}</p>
 		</div>
-		<span class="meta shrink-0 text-gold-dark/60">0{index + 1}</span>
+		<span class="meta shrink-0 text-gold-dark">0{index + 1}</span>
 	</figcaption>
 </figure>

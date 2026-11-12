@@ -5,7 +5,7 @@
 <article
 	class="group grid gap-3 border-t border-charcoal/12 py-6 sm:grid-cols-[3.5rem_1fr] sm:gap-5"
 >
-	<span class="font-display text-xl leading-none text-gold-dark/60">
+	<span class="font-display text-xl leading-none text-gold-dark">
 		{String(index + 1).padStart(2, '0')}
 	</span>
 	<div>

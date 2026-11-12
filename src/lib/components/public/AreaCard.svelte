@@ -28,7 +28,7 @@
 				}
 			: {
 					row: 'border-charcoal/12 hover:bg-navy/[0.025]',
-					number: 'text-gold-dark/60',
+					number: 'text-gold-dark',
 					title: 'text-navy group-hover:text-gold-dark',
 					body: 'text-body',
 					arrow:

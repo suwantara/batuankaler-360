@@ -140,7 +140,7 @@
 					<div
 						class="grid gap-2 border-b border-charcoal/12 py-6 sm:grid-cols-[2.5rem_10rem_1fr] sm:gap-5"
 					>
-						<span class="font-display text-lg leading-none text-gold-dark/55">
+						<span class="font-display text-lg leading-none text-gold-dark">
 							0{index + 1}
 						</span>
 						<h3 class="text-sm font-semibold text-navy">{point.title}</h3>
@@ -176,11 +176,12 @@
 			<a
 				href={href('/tour')}
 				class="group relative block overflow-hidden border border-ivory/15 bg-navy-deep"
-				aria-label={content.actions.exploreTour}
 			>
 				<img
 					src={data.homeMedia.previewImagePath}
 					alt={home.tour.previewLabel}
+					loading="lazy"
+					decoding="async"
 					class="aspect-[16/10] w-full object-cover opacity-90 transition duration-700 ease-out group-hover:scale-[1.025]"
 				/>
 				<div
