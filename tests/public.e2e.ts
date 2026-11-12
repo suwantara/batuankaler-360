@@ -132,6 +132,19 @@ test.describe('public website', () => {
 });
 
 test.describe('admin dashboard', () => {
+	test('toggles password visibility on the login form', async ({ page }) => {
+		await page.goto('/admin/login');
+
+		const password = page.getByLabel('Password', { exact: true });
+		await expect(password).toHaveAttribute('type', 'password');
+
+		await page.getByRole('button', { name: 'Tampilkan sandi' }).click();
+		await expect(password).toHaveAttribute('type', 'text');
+
+		await page.getByRole('button', { name: 'Sembunyikan sandi' }).click();
+		await expect(password).toHaveAttribute('type', 'password');
+	});
+
 	test('redirects unauthenticated visitors to the login page', async ({ page }) => {
 		await page.goto('/admin/dashboard');
 		await expect(page).toHaveURL(/\/admin\/login/);

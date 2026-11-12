@@ -13,6 +13,7 @@ export type IconName =
 	| 'expand'
 	| 'external'
 	| 'eye'
+	| 'eye-off'
 	| 'file'
 	| 'globe'
 	| 'grid'

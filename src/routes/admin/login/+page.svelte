@@ -7,6 +7,8 @@
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
+
+	let showPassword = $state(false);
 </script>
 
 <svelte:head>
@@ -78,16 +80,28 @@
 					/>
 				</label>
 
-				<label class="block">
-					<span class="field-label">Password</span>
-					<input
-						type="password"
-						name="password"
-						autocomplete="current-password"
-						required
-						class="field-input"
-					/>
-				</label>
+				<div>
+					<label for="admin-password" class="field-label">Password</label>
+					<div class="relative mt-2">
+						<input
+							id="admin-password"
+							type={showPassword ? 'text' : 'password'}
+							name="password"
+							autocomplete="current-password"
+							required
+							class="field-input mt-0 pr-12"
+						/>
+						<button
+							type="button"
+							class="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-muted transition-colors hover:text-heading"
+							onclick={() => (showPassword = !showPassword)}
+							aria-label={showPassword ? 'Sembunyikan sandi' : 'Tampilkan sandi'}
+							aria-controls="admin-password"
+						>
+							<Icon name={showPassword ? 'eye-off' : 'eye'} class="h-4 w-4" />
+						</button>
+					</div>
+				</div>
 
 				<button type="submit" class="btn btn--primary w-full">
 					Masuk
