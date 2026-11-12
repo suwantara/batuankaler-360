@@ -41,7 +41,7 @@
 	<div class="border-t border-ivory/10">
 		<div class="container-page grid gap-12 py-14 lg:grid-cols-[1.4fr_0.8fr_1fr]">
 			<div>
-				<a href={href('')} aria-label="Pura Batuan Kaler 360">
+				<a href={href('')}>
 					<BrandLockup tone="light" tagline />
 				</a>
 				<p class="mt-7 max-w-md text-sm leading-relaxed text-ivory/55">

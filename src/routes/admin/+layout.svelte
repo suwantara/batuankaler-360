@@ -46,8 +46,9 @@
 	<div class="admin-shell min-h-dvh bg-sand/30 lg:grid lg:grid-cols-[17rem_1fr]">
 		<aside class="dark-surface flex flex-col lg:min-h-dvh">
 			<div class="border-b border-ivory/10 px-5 py-5">
-				<a href={resolve('admin/dashboard')} aria-label="Dashboard admin">
+				<a href={resolve('admin/dashboard')}>
 					<BrandLockup tone="light" tagline />
+					<span class="sr-only">Dashboard admin</span>
 				</a>
 			</div>
 

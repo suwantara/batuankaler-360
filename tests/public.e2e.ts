@@ -29,6 +29,17 @@ test.describe('public website', () => {
 		await expect(page.getByRole('heading', { level: 1 })).toContainText('Pura Batuan Kaler');
 	});
 
+	test('sets baseline security headers', async ({ request }) => {
+		const response = await request.get('/id');
+		const headers = response.headers();
+
+		expect(headers['x-content-type-options']).toBe('nosniff');
+		expect(headers['x-frame-options']).toBe('DENY');
+		expect(headers['referrer-policy']).toBe('strict-origin-when-cross-origin');
+		expect(headers['cross-origin-opener-policy']).toBe('same-origin');
+		expect(headers['permissions-policy']).toContain('camera=()');
+	});
+
 	test('switches language from the header', async ({ page }) => {
 		await page.goto('/id');
 		await page.getByRole('link', { name: 'Ganti bahasa' }).click();

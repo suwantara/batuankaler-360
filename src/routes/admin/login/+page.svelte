@@ -30,8 +30,9 @@
 			class="absolute inset-0 bg-gradient-to-b from-navy-deep/80 via-navy-deep/60 to-navy-deep"
 		></div>
 
-		<a href={resolve('id')} class="relative z-10 w-fit" aria-label="Kembali ke situs">
+		<a href={resolve('id')} class="relative z-10 w-fit">
 			<BrandLockup tone="light" tagline />
+			<span class="sr-only">Kembali ke situs</span>
 		</a>
 
 		<div class="relative z-10 max-w-lg py-12">
@@ -50,8 +51,9 @@
 
 	<section class="flex items-center justify-center px-5 py-12 sm:px-10 lg:px-12">
 		<div class="w-full max-w-md">
-			<a href={resolve('id')} class="w-fit lg:hidden" aria-label="Kembali ke situs">
+			<a href={resolve('id')} class="w-fit lg:hidden">
 				<BrandLockup tagline />
+				<span class="sr-only">Kembali ke situs</span>
 			</a>
 
 			<p class="eyebrow mt-10 lg:mt-0">Akses administrator</p>

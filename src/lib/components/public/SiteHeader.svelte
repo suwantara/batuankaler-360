@@ -83,7 +83,7 @@
 
 <header class="sticky top-0 z-50 border-b border-charcoal/10 bg-paper/90 backdrop-blur-xl">
 	<div class="container-page flex h-[4.75rem] items-center justify-between gap-6">
-		<a href={href('')} class="shrink-0" aria-label="Pura Batuan Kaler 360">
+		<a href={href('')} class="shrink-0">
 			<BrandLockup />
 		</a>
 
@@ -144,7 +144,7 @@
 		<div
 			class="container-page flex h-[4.75rem] shrink-0 items-center justify-between border-b border-ivory/10"
 		>
-			<a href={href('')} onclick={() => closeMenu()} aria-label="Pura Batuan Kaler 360">
+			<a href={href('')} onclick={() => closeMenu()}>
 				<BrandLockup tone="light" />
 			</a>
 			<button

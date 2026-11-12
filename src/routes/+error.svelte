@@ -20,7 +20,7 @@
 <div {lang} class="flex min-h-dvh flex-col bg-paper">
 	<header class="border-b border-charcoal/10">
 		<div class="container-page flex h-[4.75rem] items-center justify-between gap-6">
-			<a href={homeHref} aria-label="Pura Batuan Kaler 360">
+			<a href={homeHref}>
 				<BrandLockup />
 			</a>
 			<span class="badge badge--quiet">{labels.eyebrow} {page.status}</span>
