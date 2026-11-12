@@ -1004,3 +1004,10 @@ html[data-admin-theme='dark'] .theme-icon--sun {
 html[data-admin-theme='dark'] .theme-icon--moon {
 	display: none;
 }
+
+/* Virtual tour: fullscreen includes the viewer and hotspot information panel. */
+.fullscreen-stage:fullscreen {
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--color-navy-deep);
+}

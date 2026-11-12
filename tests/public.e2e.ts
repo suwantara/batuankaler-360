@@ -77,6 +77,18 @@ test.describe('public website', () => {
 		await expect(infoPanel).toContainText('Gapura menjadi penanda peralihan');
 	});
 
+	test('keeps hotspot information visible in fullscreen', async ({ page }) => {
+		await page.goto('/id/tour');
+
+		await page.getByRole('button', { name: 'Informasi gapura' }).click();
+		const panel = page.getByRole('region', { name: 'Informasi hotspot' });
+		await expect(panel).toBeVisible();
+
+		await page.getByRole('button', { name: 'Layar penuh' }).click();
+		await expect(page.getByRole('button', { name: 'Keluar layar penuh' })).toBeVisible();
+		await expect(panel).toBeVisible();
+	});
+
 	test('loads a scene from a direct URL', async ({ page }) => {
 		await page.goto('/id/tour/madya-mandala');
 		await expect(page.getByRole('heading', { level: 1 })).toContainText('Madya Mandala');

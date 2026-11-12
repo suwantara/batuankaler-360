@@ -18,6 +18,7 @@
 		return scenes.find((scene) => scene.id === initialSceneId)?.id ?? scenes[0]?.id ?? '';
 	}
 
+	let viewerStage: HTMLDivElement | undefined = $state();
 	let activeSceneId = $state(resolveInitialSceneId());
 	let infoHotspot = $state<InformationHotspot | null>(null);
 
@@ -71,13 +72,14 @@
 	</div>
 
 	<div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_21rem]">
-		<div class="relative min-w-0">
+		<div bind:this={viewerStage} class="fullscreen-stage relative min-w-0">
 			<PanoramaViewer
 				{scenes}
 				sceneId={activeSceneId}
 				{lang}
 				onNavigate={navigateTo}
 				onInfo={showInfo}
+				fullscreenTarget={viewerStage}
 			/>
 
 			{#if infoHotspot}

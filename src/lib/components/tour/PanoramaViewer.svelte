@@ -21,6 +21,7 @@
 		onNavigate,
 		onInfo,
 		onCoordinatePick,
+		fullscreenTarget,
 		pickMode = false,
 		compact = false
 	}: {
@@ -30,6 +31,7 @@
 		onNavigate?: (sceneId: string) => void;
 		onInfo?: (hotspot: InformationHotspot) => void;
 		onCoordinatePick?: (coords: { yaw: number; pitch: number }) => void;
+		fullscreenTarget?: HTMLElement | null;
 		pickMode?: boolean;
 		compact?: boolean;
 	} = $props();
@@ -38,6 +40,7 @@
 	const minFov = Math.PI / 6;
 	const maxFov = (100 * Math.PI) / 180;
 
+	let root: HTMLDivElement | undefined = $state();
 	let container: HTMLDivElement | undefined = $state();
 	let loading = $state(true);
 	let error = $state<string | null>(null);
@@ -278,14 +281,19 @@
 		}
 	}
 
+	function getFullscreenTarget(): HTMLElement | null {
+		return fullscreenTarget ?? root ?? container ?? null;
+	}
+
 	async function toggleFullscreen(): Promise<void> {
-		if (!container) return;
+		const target = getFullscreenTarget();
+		if (!target) return;
 
 		try {
 			if (document.fullscreenElement) {
 				await document.exitFullscreen();
 			} else {
-				await container.requestFullscreen();
+				await target.requestFullscreen();
 			}
 		} catch (cause) {
 			console.error('Fullscreen request failed', cause);
@@ -308,7 +316,7 @@
 
 	onMount(() => {
 		const onFullscreenChange = () => {
-			fullscreen = document.fullscreenElement === container;
+			fullscreen = document.fullscreenElement === getFullscreenTarget();
 		};
 
 		const resizeObserver = new ResizeObserver(() => {
@@ -336,7 +344,12 @@
 	});
 </script>
 
-<div class="relative overflow-hidden border border-ivory/15 bg-navy-deep">
+<div
+	bind:this={root}
+	class="relative overflow-hidden border border-ivory/15 bg-navy-deep {fullscreen
+		? 'h-full border-0'
+		: ''}"
+>
 	<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 	<div
@@ -348,9 +361,11 @@
 		onpointerdown={handlePointerDown}
 		onpointerup={handlePointerUp}
 		onpointercancel={() => (pickStart = null)}
-		class="relative w-full outline-none focus-visible:ring-2 focus-visible:ring-gold/70 focus-visible:ring-inset {compact
-			? 'h-[22rem] min-h-[280px]'
-			: 'h-[58vh] min-h-[420px] sm:h-[66vh] xl:h-[70vh]'} {pickMode ? 'cursor-crosshair' : ''}"
+		class="relative w-full outline-none focus-visible:ring-2 focus-visible:ring-gold/70 focus-visible:ring-inset {fullscreen
+			? 'h-full min-h-0'
+			: compact
+				? 'h-[22rem] min-h-[280px]'
+				: 'h-[58vh] min-h-[420px] sm:h-[66vh] xl:h-[70vh]'} {pickMode ? 'cursor-crosshair' : ''}"
 	></div>
 
 	{#if loading}
