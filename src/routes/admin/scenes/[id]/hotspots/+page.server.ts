@@ -65,7 +65,7 @@ function toHotspotInput(data: HotspotFormInput, sceneId: string): HotspotInput {
 	};
 }
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, url }) => {
 	const scene = await getSceneForAdmin(params.id);
 
 	if (!scene) {
@@ -76,7 +76,8 @@ export const load: PageServerLoad = async ({ params }) => {
 
 	return {
 		scene,
-		scenes: allScenes.filter((item) => item.id !== scene.id)
+		scenes: allScenes.filter((item) => item.id !== scene.id),
+		selectedHotspotId: url.searchParams.get('hotspot')
 	};
 };
 

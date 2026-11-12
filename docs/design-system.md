@@ -223,6 +223,7 @@ Ritme section yang disarankan: gelap → kertas → gelap → ivory → sand →
 - **Form:** section bernomor (01, 02, 03) dengan jarak konsisten; aksi simpan di akhir.
 - **Koordinat:** form scene dan hotspot memiliki pemilih panorama. Pengguna menggeser panorama, mengklik satu titik, lalu yaw/pitch terisi otomatis dan marker emas menandai posisi.
 - **Media:** metadata dan upload dipisahkan; panel panduan gelap mendampingi form.
+- **Hotspot:** daftar seluruh hotspot dikelompokkan per scene, lengkap dengan tipe, tujuan, koordinat, dan status aktif. Tombol Edit membuka langsung hotspot terkait di halaman scene.
 - **Konten:** mengelola informasi kunjungan ID/EN, status Draf/Tayang, identitas pengelola, dan tautan peta. Field kosong tidak ditampilkan.
 - **Mode gelap:** toggle tersedia di topbar admin dan halaman login. Pilihan disimpan di `localStorage`, mengikuti preferensi sistem saat belum ada pilihan, dan hanya memengaruhi area `.admin-shell`; situs publik tetap terang.
 

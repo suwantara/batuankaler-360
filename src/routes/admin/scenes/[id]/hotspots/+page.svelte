@@ -38,6 +38,7 @@
 		form?.hotspotId === null && form.values ? form.values : emptyHotspotFormValues
 	);
 	const createErrors = $derived(form?.hotspotId === null ? (form?.errors ?? {}) : {});
+	const openHotspotId = $derived(form ? form.hotspotId : data.selectedHotspotId);
 	const panorama = $derived(
 		data.scene.panoramaAsset
 			? { src: data.scene.panoramaAsset.originalPath, width: data.scene.panoramaAsset.width }
@@ -78,10 +79,13 @@
 					{sceneTitle(data.scene)} · {data.scene.hotspots.length} hotspot
 				</p>
 			</div>
-			<a href={resolve(`admin/scenes/${data.scene.id}`)} class="btn btn--outline btn--sm w-fit">
-				<Icon name="arrow-left" class="h-3.5 w-3.5" />
-				Kembali ke scene
-			</a>
+			<div class="flex flex-wrap gap-2">
+				<a href={resolve('admin/hotspots')} class="btn btn--outline btn--sm">Semua hotspot</a>
+				<a href={resolve(`admin/scenes/${data.scene.id}`)} class="btn btn--outline btn--sm">
+					<Icon name="arrow-left" class="h-3.5 w-3.5" />
+					Kembali ke scene
+				</a>
+			</div>
 		</div>
 	</header>
 
@@ -116,7 +120,7 @@
 			</div>
 		{:else}
 			{#each data.scene.hotspots as hotspot (hotspot.id)}
-				<details class="surface overflow-hidden" open={form?.hotspotId === hotspot.id}>
+				<details class="surface overflow-hidden" open={openHotspotId === hotspot.id}>
 					<summary
 						class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition-colors hover:bg-line/[0.03] sm:flex-row sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden"
 					>

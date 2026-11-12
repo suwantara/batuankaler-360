@@ -13,6 +13,7 @@
 	const navItems: Array<{ label: string; href: string; icon: IconName }> = [
 		{ label: 'Dashboard', href: resolve('admin/dashboard'), icon: 'grid' },
 		{ label: 'Scene', href: resolve('admin/scenes'), icon: 'layers' },
+		{ label: 'Hotspot', href: resolve('admin/hotspots'), icon: 'map-pin' },
 		{ label: 'Media', href: resolve('admin/media'), icon: 'image' },
 		{ label: 'Konten', href: resolve('admin/content'), icon: 'file' },
 		{ label: 'Pengaturan', href: resolve('admin/settings'), icon: 'settings' }

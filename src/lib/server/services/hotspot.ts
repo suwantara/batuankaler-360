@@ -52,6 +52,17 @@ async function assertTarget(input: HotspotInput): Promise<void> {
 	}
 }
 
+export async function listAllHotspotsForAdmin() {
+	return db.query.hotspot.findMany({
+		with: {
+			scene: { with: { translations: true } },
+			targetScene: { with: { translations: true } },
+			translations: true
+		},
+		orderBy: [asc(hotspot.sortOrder), asc(hotspot.createdAt)]
+	});
+}
+
 export async function listHotspotsForScene(sceneId: string) {
 	return db.query.hotspot.findMany({
 		where: eq(hotspot.sceneId, sceneId),

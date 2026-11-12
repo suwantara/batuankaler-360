@@ -150,6 +150,22 @@ test.describe('admin dashboard', () => {
 		await expect(page.getByRole('button', { name: 'Simpan konten' })).toBeVisible();
 	});
 
+	test('lists hotspots and opens one for editing', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+
+		await loginAsAdmin(page);
+		await page.goto('/admin/hotspots');
+
+		await expect(page.getByRole('heading', { name: 'Hotspot', exact: true })).toBeVisible();
+		await expect(page.getByText('Informasi gapura').first()).toBeVisible();
+
+		await page.getByRole('button', { name: 'Edit' }).first().click();
+		await expect(page).toHaveURL(/\/admin\/scenes\/.+\/hotspots\?hotspot=/);
+		await expect(
+			page.locator('details[open]').getByRole('button', { name: 'Simpan hotspot' })
+		).toBeVisible();
+	});
+
 	test('picks scene coordinates from the panorama', async ({ page }) => {
 		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
 
