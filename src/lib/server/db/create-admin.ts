@@ -1,8 +1,9 @@
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { betterAuth } from 'better-auth/minimal';
+import { hashPassword } from 'better-auth/crypto';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { db, closeDb } from './script-db.ts';
-import { user } from './schema.ts';
+import { account, user } from './schema.ts';
 
 const email = process.env.ADMIN_EMAIL;
 const password = process.env.ADMIN_PASSWORD;
@@ -31,7 +32,30 @@ async function createAdmin(): Promise<void> {
 		.limit(1);
 
 	if (existing.length > 0) {
-		console.log(`Admin sudah ada: ${email}`);
+		const userId = existing[0].id;
+		const passwordHash = await hashPassword(password!);
+		const credential = await db
+			.select({ id: account.id })
+			.from(account)
+			.where(and(eq(account.userId, userId), eq(account.providerId, 'credential')))
+			.limit(1);
+
+		if (credential.length > 0) {
+			await db
+				.update(account)
+				.set({ password: passwordHash, updatedAt: new Date() })
+				.where(eq(account.id, credential[0].id));
+		} else {
+			await db.insert(account).values({
+				id: crypto.randomUUID(),
+				accountId: userId,
+				providerId: 'credential',
+				userId,
+				password: passwordHash
+			});
+		}
+
+		console.log(`Password admin diperbarui: ${email}`);
 		return;
 	}
 

@@ -71,6 +71,8 @@ ADMIN_EMAIL=admin@contoh.id ADMIN_PASSWORD='password-kuat-minimal-12' pnpm admin
 pnpm dev
 ```
 
+`pnpm admin:create` membuat akun baru. Jika email sudah terdaftar, perintah yang sama memperbarui password akun tersebut — berguna untuk reset password lokal maupun production.
+
 Buka `http://localhost:5173`. Root `/` akan mengarah ke `/id`. Panel admin tersedia di `/admin/login`.
 
 Catatan pengembangan: database lokal saat ini menggunakan role `batuankaler` dan database `batuankaler_360`. Jangan commit `.env`; kredensial hanya untuk lingkungan lokal.
@@ -214,7 +216,7 @@ Data awal di `src/lib/tour/scenes.ts` dipakai oleh `pnpm db:seed`; setelah di-se
 ## Keamanan
 
 - Jangan commit `.env` atau secret.
-- Registrasi publik dinonaktifkan; akun admin dibuat melalui `pnpm admin:create`.
+- Registrasi publik dinonaktifkan; akun admin dibuat atau di-reset melalui `pnpm admin:create` atau `CREATE_ADMIN_ON_START=true` dengan `ADMIN_EMAIL` dan `ADMIN_PASSWORD` terbaru.
 - Semua route `/admin/**` diperiksa sesi di server, bukan hanya disembunyikan di UI.
 - Rate limit login diaktifkan melalui konfigurasi Better Auth.
 - Upload aset divalidasi berdasarkan isi gambar, ekstensi, ukuran, rasio panorama, dan nama file yang dibuat ulang.
