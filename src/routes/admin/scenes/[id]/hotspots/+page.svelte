@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import HotspotForm from '#lib/components/admin/HotspotForm.svelte';
+	import Icon from '#lib/components/ui/Icon.svelte';
 	import { emptyHotspotFormValues, type HotspotFormValues } from '#lib/schemas/scene.ts';
 	import type { PageProps } from './$types';
 
@@ -53,34 +54,36 @@
 
 <div class="flex flex-col gap-6">
 	<header class="flex flex-col gap-4">
-		<nav class="text-xs text-charcoal/45" aria-label="Breadcrumb">
-			<a href={resolve('admin/scenes')} class="hover:text-navy">Scene</a>
-			<span aria-hidden="true"> / </span>
-			<a href={resolve(`admin/scenes/${data.scene.id}`)} class="hover:text-navy"
+		<nav class="flex flex-wrap items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
+			<a href={resolve('admin/scenes')} class="transition-colors hover:text-navy">Scene</a>
+			<Icon name="chevron-right" class="h-3 w-3" />
+			<a href={resolve(`admin/scenes/${data.scene.id}`)} class="transition-colors hover:text-navy"
 				>{sceneTitle(data.scene)}</a
 			>
-			<span aria-hidden="true"> / </span>
-			<span>Hotspot</span>
+			<Icon name="chevron-right" class="h-3 w-3" />
+			<span class="text-navy/60">Hotspot</span>
 		</nav>
 
 		<div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 			<div>
-				<h1 class="font-display text-3xl text-navy sm:text-4xl">Hotspot</h1>
-				<p class="mt-2 text-sm text-charcoal/60">
+				<p class="eyebrow">Interaksi panorama</p>
+				<h1 class="display-lg mt-4 text-navy">Hotspot</h1>
+				<p class="mt-2 text-sm text-muted">
 					{sceneTitle(data.scene)} · {data.scene.hotspots.length} hotspot
 				</p>
 			</div>
-			<a
-				href={resolve(`admin/scenes/${data.scene.id}`)}
-				class="w-fit rounded-full border border-navy/15 px-4 py-2 text-xs font-semibold text-navy transition hover:border-gold-dark hover:text-gold-dark"
-			>
+			<a href={resolve(`admin/scenes/${data.scene.id}`)} class="btn btn--outline btn--sm w-fit">
+				<Icon name="arrow-left" class="h-3.5 w-3.5" />
 				Kembali ke scene
 			</a>
 		</div>
 	</header>
 
-	<section class="rounded-2xl border border-navy/10 bg-ivory p-5 sm:p-6">
-		<h2 class="font-display text-xl text-navy">Tambah hotspot</h2>
+	<section class="surface p-5 sm:p-6">
+		<div class="flex items-center gap-3 border-b border-charcoal/10 pb-4">
+			<span class="badge badge--gold">Baru</span>
+			<h2 class="title-sm text-navy">Tambah hotspot</h2>
+		</div>
 		<div class="mt-5">
 			<HotspotForm
 				values={createValues}
@@ -94,45 +97,39 @@
 	</section>
 
 	<section class="flex flex-col gap-3">
-		<h2 class="font-display text-xl text-navy">Daftar hotspot</h2>
+		<div class="flex items-center justify-between gap-4">
+			<h2 class="title-sm text-navy">Daftar hotspot</h2>
+			<span class="badge badge--quiet">{data.scene.hotspots.length} item</span>
+		</div>
 
 		{#if data.scene.hotspots.length === 0}
-			<div
-				class="rounded-2xl border border-dashed border-navy/15 bg-ivory px-5 py-8 text-center text-sm text-charcoal/50"
-			>
-				Belum ada hotspot pada scene ini.
+			<div class="surface flex flex-col items-center px-5 py-12 text-center">
+				<Icon name="map-pin" class="h-7 w-7 text-navy/20" />
+				<p class="mt-4 text-sm text-muted">Belum ada hotspot pada scene ini.</p>
 			</div>
 		{:else}
 			{#each data.scene.hotspots as hotspot (hotspot.id)}
-				<details
-					class="rounded-2xl border border-navy/10 bg-ivory"
-					open={form?.hotspotId === hotspot.id}
-				>
+				<details class="surface overflow-hidden" open={form?.hotspotId === hotspot.id}>
 					<summary
-						class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden"
+						class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition-colors hover:bg-navy/[0.02] sm:flex-row sm:items-center sm:justify-between [&::-webkit-details-marker]:hidden"
 					>
-						<div class="flex flex-wrap items-center gap-2">
-							<span
-								class="rounded-full bg-navy/5 px-2.5 py-1 text-[0.65rem] font-semibold tracking-wider text-navy/60 uppercase"
-							>
-								{hotspot.type}
+						<div class="flex flex-wrap items-center gap-2.5">
+							<span class="badge {hotspot.type === 'navigation' ? 'badge--gold' : 'badge--quiet'}">
+								{hotspot.type === 'navigation' ? 'Navigasi' : 'Informasi'}
 							</span>
 							<span class="font-medium text-navy">
 								{hotspot.translations.find((item) => item.locale === 'id')?.label ?? hotspot.id}
 							</span>
 							{#if !hotspot.isActive}
-								<span
-									class="rounded-full bg-amber-50 px-2 py-0.5 text-[0.65rem] font-semibold text-amber-700 uppercase"
-									>Nonaktif</span
-								>
+								<span class="badge badge--draft">Nonaktif</span>
 							{/if}
 						</div>
-						<p class="text-xs text-charcoal/45">
+						<p class="text-xs text-muted">
 							yaw {radiansToDegrees(hotspot.yaw)}° · pitch {radiansToDegrees(hotspot.pitch)}°
 						</p>
 					</summary>
 
-					<div class="border-t border-navy/10 p-5">
+					<div class="border-t border-charcoal/10 p-5">
 						<HotspotForm
 							values={valuesFor(hotspot)}
 							scenes={data.scenes}
@@ -146,7 +143,7 @@
 						<form
 							method="POST"
 							action="?/delete"
-							class="mt-5 border-t border-red-100 pt-4"
+							class="mt-5 border-t border-danger/15 pt-4"
 							onsubmit={(event) => {
 								if (!confirm('Hapus hotspot ini?')) {
 									event.preventDefault();
@@ -154,9 +151,7 @@
 							}}
 						>
 							<input type="hidden" name="hotspotId" value={hotspot.id} />
-							<button type="submit" class="text-xs font-semibold text-red-700 hover:text-red-900">
-								Hapus hotspot
-							</button>
+							<button type="submit" class="btn btn--danger btn--sm">Hapus hotspot</button>
 						</form>
 					</div>
 				</details>

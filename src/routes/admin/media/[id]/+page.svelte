@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import PanoramaViewer from '#lib/components/tour/PanoramaViewer.svelte';
+	import Icon from '#lib/components/ui/Icon.svelte';
 	import type { TourScene } from '#lib/tour/scenes.ts';
 	import type { PageProps } from './$types';
 
@@ -35,35 +36,37 @@
 
 <div class="flex flex-col gap-6">
 	<header class="flex flex-col gap-4">
-		<nav class="text-xs text-charcoal/45" aria-label="Breadcrumb">
-			<a href={resolve('admin/media')} class="hover:text-navy">Media</a>
-			<span aria-hidden="true"> / </span>
-			<span>Preview</span>
+		<nav class="flex items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
+			<a href={resolve('admin/media')} class="transition-colors hover:text-navy">Media</a>
+			<Icon name="chevron-right" class="h-3 w-3" />
+			<span class="text-navy/60">Preview</span>
 		</nav>
+
 		<div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 			<div>
-				<h1 class="font-display text-3xl text-navy sm:text-4xl">Preview aset</h1>
-				<p class="mt-2 text-sm break-all text-charcoal/50">{data.asset.originalPath}</p>
-				<p class="mt-1 text-xs text-charcoal/40">
+				<p class="eyebrow">Media</p>
+				<h1 class="display-lg mt-4 text-navy">Preview aset</h1>
+				<p class="mt-2 max-w-xl truncate text-sm text-muted">{data.asset.originalPath}</p>
+				<p class="mt-1 text-xs text-muted">
 					{data.asset.width}{data.asset.height ? ` × ${data.asset.height}` : ''} px ·
 					{data.asset.projection} · {data.asset.processingStatus}
 				</p>
 			</div>
-			<a
-				href={resolve('admin/media')}
-				class="w-fit rounded-full border border-navy/15 px-4 py-2 text-xs font-semibold text-navy transition hover:border-gold-dark hover:text-gold-dark"
-			>
+			<a href={resolve('admin/media')} class="btn btn--outline btn--sm w-fit">
+				<Icon name="arrow-left" class="h-3.5 w-3.5" />
 				Kembali ke media
 			</a>
 		</div>
 	</header>
 
 	{#if data.asset.processingStatus !== 'processed'}
-		<div class="rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+		<div class="alert alert--warning">
 			Aset ini belum berstatus processed. Scene yang menggunakan aset ini tidak dapat
 			dipublikasikan.
 		</div>
 	{/if}
 
-	<PanoramaViewer scenes={[previewScene]} sceneId={data.asset.id} lang="id" />
+	<div class="bg-navy p-2 sm:p-3">
+		<PanoramaViewer scenes={[previewScene]} sceneId={data.asset.id} lang="id" />
+	</div>
 </div>

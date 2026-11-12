@@ -2,7 +2,8 @@
 	import { page } from '$app/state';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
 	import { localeHref, localizePath, otherLocale, type Locale } from '#lib/i18n/index.ts';
-	import TempleMark from './TempleMark.svelte';
+	import BrandLockup from '#lib/components/ui/BrandLockup.svelte';
+	import Icon from '#lib/components/ui/Icon.svelte';
 
 	let { lang }: { lang: Locale } = $props();
 
@@ -10,6 +11,11 @@
 	const currentPath = $derived(page.url.pathname);
 	const targetLocale = $derived(otherLocale(lang));
 	const switchHref = $derived(localizePath(currentPath, targetLocale));
+
+	let menuOpen = $state(false);
+	let trigger: HTMLButtonElement | undefined = $state();
+	let closeButton: HTMLButtonElement | undefined = $state();
+	let panel: HTMLDivElement | undefined = $state();
 
 	function href(path: string) {
 		return localeHref(lang, path);
@@ -23,94 +29,201 @@
 		return currentPath === href(path) || currentPath.startsWith(`${href(path)}/`);
 	}
 
-	function closeMenu(event: MouseEvent): void {
-		const target = event.currentTarget;
+	function closeMenu(restoreFocus = false): void {
+		menuOpen = false;
 
-		if (target instanceof HTMLAnchorElement) {
-			target.closest('details')?.removeAttribute('open');
+		if (restoreFocus) {
+			trigger?.focus();
 		}
 	}
+
+	function handleWindowKeydown(event: KeyboardEvent): void {
+		if (!menuOpen) return;
+
+		if (event.key === 'Escape') {
+			event.preventDefault();
+			closeMenu(true);
+			return;
+		}
+
+		if (event.key !== 'Tab' || !panel) return;
+
+		const focusable = Array.from(
+			panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')
+		).filter((element) => element.offsetParent !== null);
+
+		if (focusable.length === 0) return;
+
+		const first = focusable[0];
+		const last = focusable[focusable.length - 1];
+
+		if (event.shiftKey && document.activeElement === first) {
+			event.preventDefault();
+			last.focus();
+		} else if (!event.shiftKey && document.activeElement === last) {
+			event.preventDefault();
+			first.focus();
+		}
+	}
+
+	$effect(() => {
+		if (!menuOpen) return;
+
+		const previousOverflow = document.body.style.overflow;
+		document.body.style.overflow = 'hidden';
+		closeButton?.focus();
+
+		return () => {
+			document.body.style.overflow = previousOverflow;
+		};
+	});
 </script>
 
-<header class="sticky top-0 z-50 border-b border-navy/10 bg-ivory/90 backdrop-blur-md">
-	<div class="container-page flex h-20 items-center justify-between gap-4">
-		<a
-			href={href('')}
-			class="group flex shrink-0 items-center gap-3"
-			aria-label="Pura Batuan Kaler 360"
-		>
-			<TempleMark class="h-9 w-9 text-navy transition-colors group-hover:text-gold-dark" />
-			<span class="font-display text-lg leading-none text-navy sm:text-xl">
-				Batuan Kaler <span class="text-gold-dark">360</span>
-			</span>
+<svelte:window onkeydown={handleWindowKeydown} />
+
+<header class="sticky top-0 z-50 border-b border-charcoal/10 bg-paper/90 backdrop-blur-xl">
+	<div class="container-page flex h-[4.75rem] items-center justify-between gap-6">
+		<a href={href('')} class="shrink-0" aria-label="Pura Batuan Kaler 360">
+			<BrandLockup />
 		</a>
 
-		<nav class="hidden items-center gap-7 lg:flex" aria-label={content.common.navigation}>
+		<nav class="hidden items-center gap-6 lg:flex" aria-label={content.common.navigation}>
 			{#each content.nav as item (item.path)}
 				<a
 					href={href(item.path)}
 					aria-current={isActive(item.path) ? 'page' : undefined}
-					class="text-sm font-medium transition-colors {isActive(item.path)
-						? 'text-gold-dark'
-						: 'text-navy/70 hover:text-navy'}"
+					class="nav-link"
 				>
 					{item.label}
 				</a>
 			{/each}
 		</nav>
 
-		<div class="flex items-center gap-2">
+		<div class="flex items-center gap-2 sm:gap-3">
 			<a
 				href={switchHref}
-				class="rounded-full border border-navy/15 px-3 py-2 text-xs font-semibold tracking-wider text-navy uppercase transition-colors hover:border-gold-dark hover:text-gold-dark"
+				class="inline-flex items-center gap-1.5 rounded-xs px-1 py-2 text-[0.6875rem] font-semibold tracking-[0.16em] text-navy/60 uppercase transition-colors hover:text-gold-dark"
 				aria-label={content.common.language}
 				title={content.common.language}
 			>
-				{targetLocale.toUpperCase()}
+				<Icon name="globe" class="h-4 w-4" />
+				<span>{targetLocale.toUpperCase()}</span>
 			</a>
 
-			<details class="group relative lg:hidden">
-				<summary
-					class="flex cursor-pointer list-none items-center gap-2 rounded-full border border-navy/15 px-3 py-2 text-xs font-semibold tracking-wider text-navy uppercase [&::-webkit-details-marker]:hidden"
-				>
-					{content.common.menu}
-					<svg
-						class="h-3.5 w-3.5 transition-transform group-open:rotate-180"
-						viewBox="0 0 16 16"
-						fill="none"
-						aria-hidden="true"
-					>
-						<path
-							d="m4 6 4 4 4-4"
-							stroke="currentColor"
-							stroke-width="1.5"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					</svg>
-				</summary>
+			<span class="hidden h-4 w-px bg-navy/15 sm:block" aria-hidden="true"></span>
 
-				<div
-					class="absolute right-0 mt-3 w-60 rounded-2xl border border-navy/10 bg-ivory p-2 shadow-xl"
-				>
-					<nav class="flex flex-col" aria-label={content.common.navigation}>
-						{#each content.nav as item (item.path)}
-							<a
-								href={href(item.path)}
-								onclick={closeMenu}
-								aria-current={isActive(item.path) ? 'page' : undefined}
-								class="rounded-xl px-4 py-3 text-sm font-medium transition-colors {isActive(
-									item.path
-								)
-									? 'bg-navy/5 text-gold-dark'
-									: 'text-navy/75 hover:bg-navy/5 hover:text-navy'}"
-							>
-								{item.label}
-							</a>
-						{/each}
-					</nav>
-				</div>
-			</details>
+			<a href={href('/tour')} class="btn btn--primary btn--sm hidden lg:inline-flex">
+				{content.nav[1].label}
+				<Icon name="arrow-up-right" class="h-3.5 w-3.5" />
+			</a>
+
+			<button
+				type="button"
+				bind:this={trigger}
+				onclick={() => (menuOpen = true)}
+				aria-expanded={menuOpen}
+				aria-controls="mobile-navigation"
+				aria-label={content.common.menu}
+				class="inline-flex h-11 w-11 items-center justify-center rounded-xs border border-navy/15 text-navy transition-colors hover:border-gold-dark hover:text-gold-dark lg:hidden"
+			>
+				<Icon name="menu" class="h-5 w-5" />
+			</button>
 		</div>
 	</div>
 </header>
+
+{#if menuOpen}
+	<div
+		bind:this={panel}
+		id="mobile-navigation"
+		role="dialog"
+		aria-modal="true"
+		aria-label={content.common.navigation}
+		class="mobile-menu fixed inset-0 z-[80] flex flex-col overflow-y-auto bg-navy-deep text-ivory"
+	>
+		<div
+			class="container-page flex h-[4.75rem] shrink-0 items-center justify-between border-b border-ivory/10"
+		>
+			<a href={href('')} onclick={() => closeMenu()} aria-label="Pura Batuan Kaler 360">
+				<BrandLockup tone="light" />
+			</a>
+			<button
+				type="button"
+				bind:this={closeButton}
+				onclick={() => closeMenu(true)}
+				aria-label={content.common.closeMenu}
+				class="inline-flex h-11 w-11 items-center justify-center rounded-xs border border-ivory/20 text-ivory transition-colors hover:border-gold-light hover:text-gold-light"
+			>
+				<Icon name="close" class="h-5 w-5" />
+			</button>
+		</div>
+
+		<nav
+			class="container-page flex flex-1 flex-col justify-center py-10"
+			aria-label={content.common.navigation}
+		>
+			{#each content.nav as item, index (item.path)}
+				<a
+					href={href(item.path)}
+					onclick={() => closeMenu()}
+					aria-current={isActive(item.path) ? 'page' : undefined}
+					class="group flex items-center justify-between border-b border-ivory/10 py-4 first:border-t sm:py-5"
+				>
+					<span class="flex items-baseline gap-4 sm:gap-6">
+						<span class="meta text-gold-light/60">0{index + 1}</span>
+						<span
+							class="font-display text-3xl leading-none tracking-tight transition-colors group-hover:text-gold-light sm:text-4xl {isActive(
+								item.path
+							)
+								? 'text-gold-light'
+								: 'text-ivory'}"
+						>
+							{item.label}
+						</span>
+					</span>
+					<Icon
+						name="arrow-up-right"
+						class="h-5 w-5 text-ivory/30 transition-colors group-hover:text-gold-light"
+					/>
+				</a>
+			{/each}
+		</nav>
+
+		<div class="container-page shrink-0 border-t border-ivory/10 py-5">
+			<div class="flex flex-wrap items-center justify-between gap-4">
+				<a
+					href={switchHref}
+					onclick={() => closeMenu()}
+					class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.14em] text-ivory/60 uppercase transition-colors hover:text-gold-light"
+				>
+					<Icon name="globe" class="h-4 w-4" />
+					{targetLocale === 'en' ? 'English' : 'Bahasa Indonesia'}
+				</a>
+				<p class="max-w-xs text-xs leading-relaxed text-ivory/55">{content.footer.note}</p>
+			</div>
+		</div>
+	</div>
+{/if}
+
+<style>
+	.mobile-menu {
+		animation: menu-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+
+	@keyframes menu-in {
+		from {
+			opacity: 0;
+			transform: translateY(-0.75rem);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.mobile-menu {
+			animation: none;
+		}
+	}
+</style>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import SceneForm from '#lib/components/admin/SceneForm.svelte';
+	import Icon from '#lib/components/ui/Icon.svelte';
 	import { emptySceneFormValues } from '#lib/schemas/scene.ts';
 	import type { PageProps } from './$types';
 
@@ -14,16 +15,19 @@
 </svelte:head>
 
 <div class="flex flex-col gap-6">
-	<header>
-		<nav class="text-xs text-charcoal/45" aria-label="Breadcrumb">
-			<a href={resolve('admin/scenes')} class="hover:text-navy">Scene</a>
-			<span aria-hidden="true"> / </span>
-			<span>Tambah</span>
+	<header class="flex flex-col gap-4">
+		<nav class="flex items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
+			<a href={resolve('admin/scenes')} class="transition-colors hover:text-navy">Scene</a>
+			<Icon name="chevron-right" class="h-3 w-3" />
+			<span class="text-navy/60">Tambah</span>
 		</nav>
-		<h1 class="mt-3 font-display text-3xl text-navy sm:text-4xl">Tambah scene</h1>
-		<p class="mt-2 max-w-2xl text-sm leading-relaxed text-charcoal/60">
-			Buat scene baru, hubungkan dengan aset panorama, lalu tentukan status publikasinya.
-		</p>
+		<div>
+			<p class="eyebrow">Scene baru</p>
+			<h1 class="display-lg mt-4 text-navy">Tambah scene</h1>
+			<p class="body-copy mt-3 max-w-2xl">
+				Buat scene baru, hubungkan dengan aset panorama, lalu tentukan status publikasinya.
+			</p>
+		</div>
 	</header>
 
 	<SceneForm

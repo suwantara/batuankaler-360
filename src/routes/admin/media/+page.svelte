@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import Icon from '#lib/components/ui/Icon.svelte';
 	import { emptyPanoramaAssetFormValues } from '#lib/schemas/scene.ts';
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
 
 	const values = $derived(form?.values ?? emptyPanoramaAssetFormValues);
-	const inputClass =
-		'mt-2 w-full rounded-xl border border-navy/15 bg-white px-3.5 py-2.5 text-sm text-charcoal outline-none transition focus:border-gold-dark focus:ring-2 focus:ring-gold/20';
 </script>
 
 <svelte:head>
@@ -17,184 +16,206 @@
 <div class="flex flex-col gap-6">
 	<header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 		<div>
-			<p class="text-xs font-semibold tracking-[0.24em] text-gold-dark uppercase">Media</p>
-			<h1 class="mt-2 font-display text-3xl text-navy sm:text-4xl">Aset panorama</h1>
-			<p class="mt-2 max-w-2xl text-sm leading-relaxed text-charcoal/60">
+			<p class="eyebrow">Media</p>
+			<h1 class="display-lg mt-4 text-navy">Aset panorama</h1>
+			<p class="body-copy mt-3 max-w-2xl">
 				Upload panorama equirectangular dan kelola metadata aset. File disimpan di storage lokal
 				server.
 			</p>
 		</div>
-		<a
-			href={resolve('admin/media/upload')}
-			class="w-fit rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-ivory transition hover:bg-navy-soft"
-		>
+		<a href={resolve('admin/media/upload')} class="btn btn--primary btn--sm w-fit">
+			<Icon name="upload" class="h-3.5 w-3.5" />
 			Upload panorama
 		</a>
 	</header>
 
 	{#if form?.success}
-		<div
-			class="rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"
-			role="status"
-		>
-			Aset panorama berhasil disimpan.
-		</div>
+		<div class="alert alert--success" role="status">Aset panorama berhasil disimpan.</div>
 	{/if}
 
 	{#if form?.errors?.form}
-		<div
-			class="rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800"
-			role="alert"
-		>
-			{form.errors.form}
-		</div>
+		<div class="alert alert--error" role="alert">{form.errors.form}</div>
 	{/if}
 
-	<section class="rounded-2xl border border-navy/10 bg-ivory p-5 sm:p-6">
-		<h2 class="font-display text-xl text-navy">Tambah metadata aset</h2>
-		<form method="POST" action="?/metadata" class="mt-5 grid gap-5 sm:grid-cols-2">
-			<label class="block sm:col-span-2">
-				<span class="text-sm font-medium text-navy">Path panorama asli</span>
-				<input
-					type="text"
-					name="originalPath"
-					value={values.originalPath}
-					required
-					class={inputClass}
-					placeholder="/images/panoramas/scene.jpg"
-				/>
-				{#if form?.errors?.originalPath}<p class="mt-1 text-xs text-red-600">
-						{form.errors.originalPath}
-					</p>{/if}
-			</label>
-
-			<label class="block">
-				<span class="text-sm font-medium text-navy">Path thumbnail</span>
-				<input
-					type="text"
-					name="thumbnailPath"
-					value={values.thumbnailPath}
-					required
-					class={inputClass}
-					placeholder="/images/panoramas/scene-thumb.jpg"
-				/>
-				{#if form?.errors?.thumbnailPath}<p class="mt-1 text-xs text-red-600">
-						{form.errors.thumbnailPath}
-					</p>{/if}
-			</label>
-
-			<label class="block">
-				<span class="text-sm font-medium text-navy">Path preview (opsional)</span>
-				<input
-					type="text"
-					name="previewPath"
-					value={values.previewPath}
-					class={inputClass}
-					placeholder="/images/panoramas/scene-preview.jpg"
-				/>
-			</label>
-
-			<label class="block">
-				<span class="text-sm font-medium text-navy">Proyeksi</span>
-				<input
-					type="text"
-					name="projection"
-					value={values.projection}
-					required
-					class={inputClass}
-				/>
-			</label>
-
-			<label class="block">
-				<span class="text-sm font-medium text-navy">Status pemrosesan</span>
-				<select name="processingStatus" class={inputClass}>
-					<option value="uploaded" selected={values.processingStatus === 'uploaded'}
-						>Uploaded</option
-					>
-					<option value="processed" selected={values.processingStatus === 'processed'}
-						>Processed</option
-					>
-					<option value="failed" selected={values.processingStatus === 'failed'}>Failed</option>
-				</select>
-			</label>
-
-			<label class="block">
-				<span class="text-sm font-medium text-navy">Lebar (px)</span>
-				<input
-					type="number"
-					name="width"
-					value={values.width}
-					min="1"
-					max="20000"
-					required
-					class={inputClass}
-				/>
-				{#if form?.errors?.width}<p class="mt-1 text-xs text-red-600">{form.errors.width}</p>{/if}
-			</label>
-
-			<label class="block">
-				<span class="text-sm font-medium text-navy">Tinggi (px, opsional)</span>
-				<input
-					type="number"
-					name="height"
-					value={values.height}
-					min="1"
-					max="20000"
-					class={inputClass}
-				/>
-				{#if form?.errors?.height}<p class="mt-1 text-xs text-red-600">{form.errors.height}</p>{/if}
-			</label>
-
-			<div class="sm:col-span-2">
-				<button
-					type="submit"
-					class="rounded-full bg-navy px-6 py-3 text-sm font-semibold text-ivory transition hover:bg-navy-soft"
-				>
-					Simpan aset
-				</button>
+	<div class="grid gap-6 xl:grid-cols-[1.35fr_0.65fr]">
+		<section class="surface p-5 sm:p-6">
+			<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
+				<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
+				<h2 class="title-sm text-navy">Tambah metadata aset</h2>
 			</div>
-		</form>
-	</section>
 
-	<section class="rounded-2xl border border-navy/10 bg-ivory">
-		<div class="border-b border-navy/10 px-5 py-4">
-			<h2 class="font-display text-xl text-navy">Daftar aset</h2>
+			<form method="POST" action="?/metadata" class="mt-5 grid gap-5 sm:grid-cols-2">
+				<label class="block sm:col-span-2">
+					<span class="field-label">Path panorama asli</span>
+					<input
+						type="text"
+						name="originalPath"
+						value={values.originalPath}
+						required
+						class="field-input"
+						placeholder="/images/panoramas/scene.jpg"
+					/>
+					{#if form?.errors?.originalPath}<p class="field-error">{form.errors.originalPath}</p>{/if}
+				</label>
+
+				<label class="block">
+					<span class="field-label">Path thumbnail</span>
+					<input
+						type="text"
+						name="thumbnailPath"
+						value={values.thumbnailPath}
+						required
+						class="field-input"
+						placeholder="/images/panoramas/scene-thumb.jpg"
+					/>
+					{#if form?.errors?.thumbnailPath}<p class="field-error">
+							{form.errors.thumbnailPath}
+						</p>{/if}
+				</label>
+
+				<label class="block">
+					<span class="field-label">Path preview (opsional)</span>
+					<input
+						type="text"
+						name="previewPath"
+						value={values.previewPath}
+						class="field-input"
+						placeholder="/images/panoramas/scene-preview.jpg"
+					/>
+				</label>
+
+				<label class="block">
+					<span class="field-label">Proyeksi</span>
+					<input
+						type="text"
+						name="projection"
+						value={values.projection}
+						required
+						class="field-input"
+					/>
+				</label>
+
+				<label class="block">
+					<span class="field-label">Status pemrosesan</span>
+					<select name="processingStatus" class="field-input">
+						<option value="uploaded" selected={values.processingStatus === 'uploaded'}
+							>Uploaded</option
+						>
+						<option value="processed" selected={values.processingStatus === 'processed'}
+							>Processed</option
+						>
+						<option value="failed" selected={values.processingStatus === 'failed'}>Failed</option>
+					</select>
+				</label>
+
+				<label class="block">
+					<span class="field-label">Lebar (px)</span>
+					<input
+						type="number"
+						name="width"
+						value={values.width}
+						min="1"
+						max="20000"
+						required
+						class="field-input"
+					/>
+					{#if form?.errors?.width}<p class="field-error">{form.errors.width}</p>{/if}
+				</label>
+
+				<label class="block">
+					<span class="field-label">Tinggi (px, opsional)</span>
+					<input
+						type="number"
+						name="height"
+						value={values.height}
+						min="1"
+						max="20000"
+						class="field-input"
+					/>
+					{#if form?.errors?.height}<p class="field-error">{form.errors.height}</p>{/if}
+				</label>
+
+				<div class="border-t border-charcoal/10 pt-5 sm:col-span-2">
+					<button type="submit" class="btn btn--primary">
+						Simpan aset
+						<Icon name="check" class="h-4 w-4" />
+					</button>
+				</div>
+			</form>
+		</section>
+
+		<aside class="surface surface--dark h-fit p-6">
+			<p class="meta text-[0.58rem] text-gold-light/60">Panduan singkat</p>
+			<div class="mt-5 flex flex-col gap-5">
+				<div>
+					<p class="text-sm font-semibold text-ivory">Metadata bukan upload</p>
+					<p class="mt-1.5 text-xs leading-relaxed text-ivory/55">
+						Form ini mencatat referensi file yang sudah tersedia. Untuk mengunggah file baru,
+						gunakan halaman upload.
+					</p>
+				</div>
+				<div class="border-t border-ivory/10 pt-5">
+					<p class="text-sm font-semibold text-ivory">Rasio panorama</p>
+					<p class="mt-1.5 text-xs leading-relaxed text-ivory/55">
+						Gunakan panorama equirectangular dengan rasio 2:1 dan aset berstatus processed sebelum
+						dipublikasikan.
+					</p>
+				</div>
+				<div class="border-t border-ivory/10 pt-5">
+					<a href={resolve('admin/media/upload')} class="link-arrow link-arrow--light">
+						Upload panorama
+						<Icon name="upload" class="h-3.5 w-3.5" />
+					</a>
+				</div>
+			</div>
+		</aside>
+	</div>
+
+	<section class="surface overflow-hidden">
+		<div class="flex items-center justify-between gap-4 border-b border-charcoal/10 px-5 py-4">
+			<h2 class="title-sm text-navy">Daftar aset</h2>
+			<span class="badge badge--quiet">{data.assets.length} aset</span>
 		</div>
 
 		{#if data.assets.length === 0}
-			<p class="px-5 py-8 text-sm text-charcoal/50">Belum ada aset panorama.</p>
+			<div class="flex flex-col items-center px-5 py-14 text-center">
+				<Icon name="image" class="h-7 w-7 text-navy/20" />
+				<p class="mt-4 text-sm text-muted">Belum ada aset panorama.</p>
+				<a href={resolve('admin/media/upload')} class="btn btn--outline btn--sm mt-5">
+					Upload panorama pertama
+				</a>
+			</div>
 		{:else}
-			<div class="divide-y divide-navy/10">
+			<div class="divide-y divide-charcoal/10">
 				{#each data.assets as asset (asset.id)}
 					<div
-						class="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
+						class="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5"
 						data-testid="asset-row"
 					>
 						<div class="flex min-w-0 items-center gap-4">
 							<img
 								src={asset.thumbnailPath}
 								alt=""
-								class="h-14 w-20 shrink-0 rounded-xl object-cover"
+								class="h-14 w-20 shrink-0 border border-charcoal/10 object-cover"
 								loading="lazy"
 							/>
 							<div class="min-w-0">
 								<p class="truncate text-sm font-medium text-navy">{asset.originalPath}</p>
-								<p class="mt-0.5 text-xs text-charcoal/45">
-									{asset.width}{asset.height ? ` × ${asset.height}` : ''} px · {asset.projection}
+								<p class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
+									<span>{asset.width}{asset.height ? ` × ${asset.height}` : ''} px</span>
+									<span class="h-1 w-1 rounded-full bg-charcoal/20" aria-hidden="true"></span>
+									<span>{asset.projection}</span>
 								</p>
 							</div>
 						</div>
-						<div class="flex flex-wrap items-center gap-3">
-							<span
-								class="w-fit rounded-full bg-navy/5 px-2.5 py-1 text-[0.65rem] font-semibold tracking-wider text-navy/60 uppercase"
-							>
-								{asset.processingStatus}
-							</span>
+						<div class="flex flex-wrap items-center gap-3 sm:justify-end">
+							<span class="badge badge--quiet">{asset.processingStatus}</span>
 							<a
 								href={resolve(`admin/media/${asset.id}`)}
-								class="text-xs font-semibold text-navy hover:text-gold-dark"
+								class="inline-flex items-center gap-1.5 text-xs font-semibold text-navy transition-colors hover:text-gold-dark"
 							>
 								Preview
+								<Icon name="eye" class="h-3.5 w-3.5" />
 							</a>
 							<form
 								method="POST"
@@ -209,9 +230,10 @@
 								<button
 									type="submit"
 									data-testid="delete-asset"
-									class="text-xs font-semibold text-red-700 hover:text-red-900"
+									class="inline-flex items-center gap-1.5 text-xs font-semibold text-danger transition-colors hover:text-danger/70"
 								>
 									Hapus
+									<Icon name="trash" class="h-3.5 w-3.5" />
 								</button>
 							</form>
 						</div>

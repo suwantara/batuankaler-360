@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ResolvedPathname } from '$app/types';
-	import TempleMark from './TempleMark.svelte';
+	import Icon from '#lib/components/ui/Icon.svelte';
 
 	let {
 		name,
@@ -19,36 +19,47 @@
 	const toneClasses = $derived(
 		tone === 'dark'
 			? {
-					card: 'border-ivory/10 bg-ivory/5 hover:border-gold/50',
-					number: 'text-gold-light/60',
-					title: 'text-ivory',
-					body: 'text-ivory/60',
-					mark: 'text-ivory/10'
+					row: 'border-ivory/12 hover:bg-ivory/[0.03]',
+					number: 'text-gold-light/50',
+					title: 'text-ivory group-hover:text-gold-light',
+					body: 'text-ivory/55',
+					arrow:
+						'border-ivory/20 text-ivory/50 group-hover:border-gold-light/60 group-hover:text-gold-light'
 				}
 			: {
-					card: 'border-navy/10 bg-ivory hover:border-gold-dark/60',
-					number: 'text-gold-dark/70',
-					title: 'text-navy',
-					body: 'text-charcoal/65',
-					mark: 'text-navy/10'
+					row: 'border-charcoal/12 hover:bg-navy/[0.025]',
+					number: 'text-gold-dark/60',
+					title: 'text-navy group-hover:text-gold-dark',
+					body: 'text-body',
+					arrow:
+						'border-navy/15 text-navy/45 group-hover:border-gold-dark/50 group-hover:text-gold-dark'
 				}
 	);
 </script>
 
 <a
 	{href}
-	class="group relative flex h-full flex-col overflow-hidden rounded-3xl border p-6 transition-colors {toneClasses.card}"
+	class="group grid gap-3 border-t px-1 py-6 transition-colors sm:grid-cols-[3.5rem_1fr_2.5rem] sm:items-start sm:gap-6 sm:py-7 {toneClasses.row}"
 >
-	<TempleMark class="absolute -top-4 -right-4 h-28 w-28 {toneClasses.mark}" />
-	<span class="font-display text-5xl {toneClasses.number}">
+	<span class="font-display text-lg leading-none {toneClasses.number}">
 		{String(index + 1).padStart(2, '0')}
 	</span>
-	<h3 class="mt-10 font-display text-2xl {toneClasses.title}">{name}</h3>
-	<p class="mt-3 flex-1 text-sm leading-relaxed {toneClasses.body}">{description}</p>
+
+	<span class="min-w-0">
+		<span
+			class="block font-display text-2xl leading-tight tracking-tight transition-colors sm:text-[1.65rem] {toneClasses.title}"
+		>
+			{name}
+		</span>
+		<span class="mt-2 block max-w-2xl text-sm leading-relaxed {toneClasses.body}">
+			{description}
+		</span>
+	</span>
+
 	<span
-		class="mt-6 text-sm font-semibold {tone === 'dark' ? 'text-gold-light' : 'text-navy'}"
+		class="hidden h-9 w-9 items-center justify-center rounded-full border transition-colors sm:flex {toneClasses.arrow}"
 		aria-hidden="true"
 	>
-		→
+		<Icon name="arrow-up-right" class="h-4 w-4" />
 	</span>
 </a>

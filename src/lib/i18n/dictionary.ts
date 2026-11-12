@@ -36,15 +36,28 @@ const id = {
 		explore: 'Jelajahi',
 		visit: 'Kunjungan',
 		note: 'Konten sedang melalui proses validasi pengelola.',
-		rights: 'Pura Batuan Kaler 360.'
+		rights: 'Pura Batuan Kaler 360.',
+		cta: {
+			eyebrow: 'Virtual tour',
+			title: 'Masuk ke kawasan, satu panorama demi satu.',
+			body: 'Mulai dari Jaba Pura, lalu berjalan menuju area berikutnya melalui hotspot dan daftar scene.'
+		}
 	},
 	home: {
 		hero: {
 			eyebrow: 'Dokumentasi digital kawasan pura',
 			title: 'Pura Batuan Kaler, dalam pandangan 360°.',
+			titleLead: 'Pura Batuan Kaler,',
+			titleAccent: 'dalam pandangan 360°.',
 			description:
 				'Jelajahi suasana kawasan pura melalui panorama interaktif, mengenal area yang terdokumentasi, dan memahami konteks kunjungan dengan tetap menghormati nilai dan aturan tempat.',
-			note: 'Konten visual dan informasi sedang melalui proses validasi pengelola.'
+			note: 'Konten visual dan informasi sedang melalui proses validasi pengelola.',
+			viewLabel: 'Pratinjau panorama',
+			meta: [
+				{ label: 'Panorama', value: '360°' },
+				{ label: 'Navigasi', value: 'Multi-scene' },
+				{ label: 'Bahasa', value: 'ID / EN' }
+			]
 		},
 		intro: {
 			eyebrow: 'Tentang proyek',
@@ -74,7 +87,9 @@ const id = {
 		history: {
 			eyebrow: 'Sejarah',
 			title: 'Konteks yang melandasi kawasan.',
-			body: 'Ringkasan sejarah dan perkembangan kawasan pura akan ditampilkan setelah melalui proses verifikasi dan persetujuan pengelola. Pendekatan ini menjaga agar informasi yang dipublikasikan dapat dipertanggungjawabkan.'
+			body: 'Ringkasan sejarah dan perkembangan kawasan pura akan ditampilkan setelah melalui proses verifikasi dan persetujuan pengelola. Pendekatan ini menjaga agar informasi yang dipublikasikan dapat dipertanggungjawabkan.',
+			noteLabel: 'Catatan kurasi',
+			status: 'Dalam proses verifikasi'
 		},
 		areas: {
 			eyebrow: 'Area',
@@ -101,6 +116,7 @@ const id = {
 			eyebrow: 'Galeri',
 			title: 'Dokumentasi visual kawasan.',
 			body: 'Foto dan media akan ditambahkan setelah izin dokumentasi dan validasi konten selesai. Galeri disiapkan untuk menampilkan detail arsitektur, lanskap, dan suasana kawasan.',
+			pending: 'Dokumentasi menyusul',
 			items: [
 				{ title: 'Ruang luar', caption: 'Kerangka dokumentasi area luar' },
 				{ title: 'Jalur masuk', caption: 'Kerangka dokumentasi jalur kunjungan' },
@@ -134,7 +150,7 @@ const id = {
 			description:
 				'Gunakan panorama interaktif untuk melihat suasana kawasan. Tarik atau geser tampilan, gunakan tombol zoom, dan buka layar penuh untuk pengalaman yang lebih luas.',
 			notice:
-				'Panorama pada halaman ini masih menggunakan aset uji. Data scene dan hotspot masih disimpan statis hingga integrasi database pada Fase 4.',
+				'Panorama pada halaman ini masih menggunakan aset uji. Scene dan hotspot dikelola melalui dashboard admin.',
 			panel: {
 				sceneList: 'Daftar scene',
 				sceneListHint: 'Pilih scene untuk berpindah panorama.',
@@ -155,7 +171,8 @@ const id = {
 				zoomOut: 'Perkecil',
 				reset: 'Reset tampilan',
 				fullscreen: 'Layar penuh',
-				exitFullscreen: 'Keluar layar penuh'
+				exitFullscreen: 'Keluar layar penuh',
+				gesture: 'Geser · Zoom · 360°'
 			},
 			tips: [
 				{
@@ -245,15 +262,28 @@ const en: SiteDictionary = {
 		explore: 'Explore',
 		visit: 'Visit',
 		note: 'Content is currently undergoing review by the temple management.',
-		rights: 'Pura Batuan Kaler 360.'
+		rights: 'Pura Batuan Kaler 360.',
+		cta: {
+			eyebrow: 'Virtual tour',
+			title: 'Enter the grounds, one panorama at a time.',
+			body: 'Begin at Jaba Pura, then move through the following areas with hotspots and the scene list.'
+		}
 	},
 	home: {
 		hero: {
 			eyebrow: 'Digital documentation of the temple grounds',
 			title: 'Pura Batuan Kaler, in a 360° view.',
+			titleLead: 'Pura Batuan Kaler,',
+			titleAccent: 'in a 360° view.',
 			description:
 				'Explore the atmosphere of the temple grounds through interactive panoramas, discover documented areas, and understand the context of a visit while respecting the values and rules of the place.',
-			note: 'Visual content and information are currently undergoing review by the temple management.'
+			note: 'Visual content and information are currently undergoing review by the temple management.',
+			viewLabel: 'Panorama preview',
+			meta: [
+				{ label: 'Panorama', value: '360°' },
+				{ label: 'Navigation', value: 'Multi-scene' },
+				{ label: 'Language', value: 'ID / EN' }
+			]
 		},
 		intro: {
 			eyebrow: 'About the project',
@@ -283,7 +313,9 @@ const en: SiteDictionary = {
 		history: {
 			eyebrow: 'History',
 			title: 'The context that shapes the grounds.',
-			body: 'A summary of the history and development of the temple grounds will be published after verification and approval by the management. This approach ensures that published information can be accounted for.'
+			body: 'A summary of the history and development of the temple grounds will be published after verification and approval by the management. This approach ensures that published information can be accounted for.',
+			noteLabel: 'Curatorial note',
+			status: 'Under verification'
 		},
 		areas: {
 			eyebrow: 'Areas',
@@ -310,6 +342,7 @@ const en: SiteDictionary = {
 			eyebrow: 'Gallery',
 			title: 'Visual documentation of the grounds.',
 			body: 'Photographs and media will be added once documentation permission and content review are complete. The gallery is prepared to show architectural details, landscape, and atmosphere.',
+			pending: 'Documentation forthcoming',
 			items: [
 				{ title: 'Outer spaces', caption: 'Documentation framework for outer areas' },
 				{ title: 'Approach path', caption: 'Documentation framework for visitor routes' },
@@ -343,7 +376,7 @@ const en: SiteDictionary = {
 			description:
 				'Use the interactive panorama to view the atmosphere of the grounds. Drag or swipe the view, use the zoom controls, and open full screen for a wider experience.',
 			notice:
-				'This page currently uses test assets. Scene and hotspot data remain static until the database integration in Phase 4.',
+				'This page currently uses test assets. Scenes and hotspots are managed through the admin dashboard.',
 			panel: {
 				sceneList: 'Scene list',
 				sceneListHint: 'Choose a scene to move to another panorama.',
@@ -364,7 +397,8 @@ const en: SiteDictionary = {
 				zoomOut: 'Zoom out',
 				reset: 'Reset view',
 				fullscreen: 'Full screen',
-				exitFullscreen: 'Exit full screen'
+				exitFullscreen: 'Exit full screen',
+				gesture: 'Drag · Zoom · 360°'
 			},
 			tips: [
 				{

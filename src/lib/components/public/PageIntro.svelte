@@ -3,14 +3,22 @@
 		$props();
 </script>
 
-<header class="border-b border-navy/10 bg-sand/60">
-	<div class="container-page py-20 sm:py-28">
+<header class="relative overflow-hidden border-b border-charcoal/10 bg-ivory">
+	<div
+		class="pointer-events-none absolute -top-10 right-4 hidden font-display text-[16rem] leading-none text-navy/[0.035] select-none lg:block"
+		aria-hidden="true"
+	>
+		360
+	</div>
+
+	<div class="container-page relative py-14 sm:py-20 lg:py-24">
 		<p class="eyebrow">{eyebrow}</p>
-		<h1
-			class="mt-5 max-w-4xl font-display text-4xl leading-[1.08] text-navy sm:text-5xl lg:text-6xl"
-		>
-			{title}
-		</h1>
-		<p class="mt-6 max-w-2xl text-lg leading-relaxed text-charcoal/70">{description}</p>
+
+		<div class="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
+			<h1 class="display-xl max-w-4xl text-navy">{title}</h1>
+			<div class="lg:border-l lg:border-charcoal/10 lg:pl-8">
+				<p class="lede max-w-md">{description}</p>
+			</div>
+		</div>
 	</div>
 </header>

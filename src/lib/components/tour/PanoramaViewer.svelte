@@ -2,10 +2,12 @@
 	import { onMount } from 'svelte';
 	import { SvelteMap } from 'svelte/reactivity';
 	import type { Scene as MarzipanoScene, View, Viewer } from 'marzipano';
+	import Icon from '#lib/components/ui/Icon.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
 	import type { Locale } from '#lib/i18n/index.ts';
 	import { createHotspotElement } from '#lib/tour/hotspot-element.ts';
 	import type { InformationHotspot, TourScene } from '#lib/tour/scenes.ts';
+	import ViewerControl from './ViewerControl.svelte';
 
 	let {
 		scenes,
@@ -212,76 +214,63 @@
 	});
 </script>
 
-<div class="relative overflow-hidden rounded-[2rem] border border-navy/10 bg-navy">
-	<div bind:this={container} class="relative h-[60vh] min-h-[420px] w-full sm:h-[68vh]"></div>
+<div class="relative overflow-hidden border border-ivory/15 bg-navy-deep">
+	<div
+		bind:this={container}
+		class="relative h-[58vh] min-h-[420px] w-full sm:h-[66vh] xl:h-[70vh]"
+	></div>
 
 	{#if loading}
 		<div
-			class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-navy text-ivory"
+			class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-5 bg-navy-deep text-ivory"
 		>
-			<span class="h-10 w-10 animate-spin rounded-full border-2 border-ivory/20 border-t-gold"
-			></span>
-			<p class="text-sm text-ivory/70">{labels.loading}</p>
+			<span class="relative flex h-14 w-14 items-center justify-center">
+				<span
+					class="absolute inset-0 animate-spin rounded-full border border-ivory/15 border-t-gold"
+				></span>
+				<Icon name="compass" class="h-6 w-6 text-gold-light/60" />
+			</span>
+			<p class="text-xs tracking-[0.16em] text-ivory/55 uppercase">{labels.loading}</p>
 		</div>
 	{/if}
 
 	{#if error}
 		<div
-			class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-navy px-6 text-center text-ivory"
+			class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-5 bg-navy-deep px-6 text-center text-ivory"
 		>
-			<p class="max-w-md text-sm text-ivory/80">{error}</p>
-			<button
-				type="button"
-				onclick={retry}
-				class="rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-charcoal transition hover:bg-gold/90"
-			>
+			<Icon name="alert" class="h-8 w-8 text-gold-light/70" />
+			<p class="max-w-md text-sm leading-relaxed text-ivory/70">{error}</p>
+			<button type="button" onclick={retry} class="btn btn--gold btn--sm">
 				{labels.retry}
 			</button>
 		</div>
 	{/if}
 
 	<div
-		class="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-3 bg-gradient-to-t from-charcoal/75 to-transparent p-4"
+		class="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-start justify-between p-4"
 	>
-		<p class="text-xs tracking-[0.2em] text-ivory/70 uppercase">360°</p>
+		<span
+			class="inline-flex items-center gap-1.5 rounded-full border border-ivory/20 bg-charcoal/35 px-2.5 py-1 text-[0.6rem] font-semibold tracking-[0.18em] text-ivory/70 uppercase backdrop-blur"
+		>
+			<span class="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true"></span>
+			360°
+		</span>
+	</div>
 
-		<div class="pointer-events-auto flex items-center gap-2">
-			<button
-				type="button"
-				onclick={() => zoom(0.8)}
-				aria-label={labels.zoomOut}
-				title={labels.zoomOut}
-				class="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 text-lg text-ivory backdrop-blur transition hover:border-gold-light/60 hover:text-gold-light"
-			>
-				−
-			</button>
-			<button
-				type="button"
-				onclick={() => zoom(1.2)}
-				aria-label={labels.zoomIn}
-				title={labels.zoomIn}
-				class="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 text-lg text-ivory backdrop-blur transition hover:border-gold-light/60 hover:text-gold-light"
-			>
-				+
-			</button>
-			<button
-				type="button"
-				onclick={resetView}
-				aria-label={labels.reset}
-				title={labels.reset}
-				class="flex h-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 px-3 text-xs font-semibold text-ivory backdrop-blur transition hover:border-gold-light/60 hover:text-gold-light"
-			>
-				Reset
-			</button>
-			<button
-				type="button"
+	<div
+		class="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-3 bg-gradient-to-t from-charcoal/85 via-charcoal/25 to-transparent p-4 pt-14"
+	>
+		<p class="text-[0.6rem] tracking-[0.22em] text-ivory/60 uppercase">{labels.gesture}</p>
+
+		<div class="pointer-events-auto flex items-center gap-1.5 sm:gap-2">
+			<ViewerControl name="minus" label={labels.zoomOut} onclick={() => zoom(0.8)} />
+			<ViewerControl name="plus" label={labels.zoomIn} onclick={() => zoom(1.2)} />
+			<ViewerControl name="reset" label={labels.reset} onclick={resetView} />
+			<ViewerControl
+				name={fullscreen ? 'shrink' : 'expand'}
+				label={fullscreen ? labels.exitFullscreen : labels.fullscreen}
 				onclick={toggleFullscreen}
-				aria-label={fullscreen ? labels.exitFullscreen : labels.fullscreen}
-				title={fullscreen ? labels.exitFullscreen : labels.fullscreen}
-				class="flex h-10 items-center justify-center rounded-full border border-ivory/20 bg-charcoal/40 px-3 text-xs font-semibold text-ivory backdrop-blur transition hover:border-gold-light/60 hover:text-gold-light"
-			>
-				{fullscreen ? labels.exitFullscreen : labels.fullscreen}
-			</button>
+			/>
 		</div>
 	</div>
 </div>

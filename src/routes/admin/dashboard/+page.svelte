@@ -1,96 +1,183 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import Icon from '#lib/components/ui/Icon.svelte';
+	import type { IconName } from '#lib/components/ui/icons.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 
-	const stats = $derived([
-		{ label: 'Total scene', value: data.counts.scenes },
-		{ label: 'Scene published', value: data.counts.published },
-		{ label: 'Total hotspot', value: data.counts.hotspots },
-		{ label: 'Aset panorama', value: data.counts.assets }
+	const stats: Array<{ label: string; value: number; icon: IconName }> = $derived([
+		{ label: 'Total scene', value: data.counts.scenes, icon: 'layers' },
+		{ label: 'Scene tayang', value: data.counts.published, icon: 'check' },
+		{ label: 'Total hotspot', value: data.counts.hotspots, icon: 'map-pin' },
+		{ label: 'Aset panorama', value: data.counts.assets, icon: 'image' }
 	]);
+
+	const publishedRatio = $derived(
+		data.counts.scenes === 0 ? 0 : Math.round((data.counts.published / data.counts.scenes) * 100)
+	);
+
+	function sceneTitle(scene: (typeof data.scenes)[number]): string {
+		return scene.translations.find((item) => item.locale === 'id')?.title ?? scene.slug;
+	}
 </script>
 
 <svelte:head>
 	<title>Dashboard Admin — Pura Batuan Kaler 360</title>
 </svelte:head>
 
-<div class="flex flex-col gap-6">
-	<header>
-		<p class="text-xs font-semibold tracking-[0.24em] text-gold-dark uppercase">Ringkasan</p>
-		<h1 class="mt-2 font-display text-3xl text-navy sm:text-4xl">Dashboard</h1>
-		<p class="mt-2 max-w-2xl text-sm leading-relaxed text-charcoal/60">
-			Pantau jumlah scene, hotspot, dan aset panorama yang tersedia.
-		</p>
+<div class="flex flex-col gap-8">
+	<header class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+		<div>
+			<p class="eyebrow">Ringkasan</p>
+			<h1 class="display-lg mt-4 text-navy">Dashboard</h1>
+			<p class="body-copy mt-3 max-w-xl">
+				Pantau jumlah scene, hotspot, dan aset panorama yang tersedia.
+			</p>
+		</div>
+		<div class="flex flex-wrap gap-2">
+			<a href={resolve('admin/scenes/new')} class="btn btn--primary btn--sm">
+				Tambah scene
+				<Icon name="plus" class="h-3.5 w-3.5" />
+			</a>
+			<a href={resolve('admin/media')} class="btn btn--outline btn--sm">Kelola media</a>
+		</div>
 	</header>
 
-	<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+	<div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
 		{#each stats as stat (stat.label)}
-			<div class="rounded-2xl border border-navy/10 bg-ivory p-5">
-				<p class="text-xs font-medium text-charcoal/50">{stat.label}</p>
-				<p class="mt-3 font-display text-4xl text-navy">{stat.value}</p>
+			<div class="surface p-5">
+				<div class="flex items-start justify-between gap-4">
+					<p class="meta text-[0.58rem] text-muted">{stat.label}</p>
+					<Icon name={stat.icon} class="h-4 w-4 text-gold-dark/55" />
+				</div>
+				<p class="mt-6 font-display text-5xl leading-none text-navy">{stat.value}</p>
+				<div class="mt-5 h-px w-full bg-charcoal/10">
+					<div class="h-px w-10 bg-gold-dark/70"></div>
+				</div>
 			</div>
 		{/each}
 	</div>
 
-	<div class="flex flex-wrap gap-3">
-		<a
-			href={resolve('admin/scenes/new')}
-			class="rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-ivory transition hover:bg-navy-soft"
-		>
-			Tambah scene
-		</a>
-		<a
-			href={resolve('admin/media')}
-			class="rounded-full border border-navy/15 px-5 py-2.5 text-sm font-semibold text-navy transition hover:border-gold-dark hover:text-gold-dark"
-		>
-			Kelola media
-		</a>
-	</div>
+	<div class="grid gap-6 xl:grid-cols-[1.45fr_1fr]">
+		<section class="surface overflow-hidden">
+			<div class="flex items-center justify-between gap-4 border-b border-charcoal/10 px-5 py-4">
+				<h2 class="title-sm text-navy">Scene terbaru</h2>
+				<a
+					href={resolve('admin/scenes')}
+					class="inline-flex items-center gap-1.5 text-xs font-semibold text-navy transition-colors hover:text-gold-dark"
+				>
+					Lihat semua
+					<Icon name="arrow-right" class="h-3.5 w-3.5" />
+				</a>
+			</div>
 
-	<section class="rounded-2xl border border-navy/10 bg-ivory">
-		<div class="flex items-center justify-between border-b border-navy/10 px-5 py-4">
-			<h2 class="font-display text-xl text-navy">Scene terbaru</h2>
-			<a
-				href={resolve('admin/scenes')}
-				class="text-xs font-semibold text-navy hover:text-gold-dark"
-			>
-				Lihat semua
-			</a>
-		</div>
-
-		<div class="divide-y divide-navy/10">
 			{#if data.scenes.length === 0}
-				<p class="px-5 py-6 text-sm text-charcoal/50">Belum ada scene.</p>
+				<div class="flex flex-col items-center px-5 py-12 text-center">
+					<Icon name="layers" class="h-7 w-7 text-navy/20" />
+					<p class="mt-4 text-sm text-muted">Belum ada scene.</p>
+					<a
+						href={resolve('admin/scenes/new')}
+						class="mt-4 text-xs font-semibold text-navy underline decoration-gold-dark/40 underline-offset-4 hover:text-gold-dark"
+					>
+						Buat scene pertama
+					</a>
+				</div>
 			{:else}
-				{#each data.scenes.slice(0, 5) as scene (scene.id)}
-					<div class="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-						<div class="min-w-0">
-							<p class="truncate font-medium text-navy">
-								{scene.translations.find((item) => item.locale === 'id')?.title ?? scene.slug}
-							</p>
-							<p class="mt-0.5 truncate text-xs text-charcoal/45">/{scene.slug}</p>
-						</div>
-						<div class="flex items-center gap-3">
+				<div class="divide-y divide-charcoal/10">
+					{#each data.scenes.slice(0, 5) as scene (scene.id)}
+						<div class="flex items-center gap-4 px-5 py-4">
+							<div class="h-12 w-16 shrink-0 overflow-hidden border border-charcoal/10 bg-sand">
+								{#if scene.panoramaAsset}
+									<img
+										src={scene.panoramaAsset.thumbnailPath}
+										alt=""
+										class="h-full w-full object-cover"
+										loading="lazy"
+									/>
+								{:else}
+									<span
+										class="flex h-full w-full items-center justify-center text-[0.55rem] tracking-wider text-charcoal/35 uppercase"
+									>
+										—
+									</span>
+								{/if}
+							</div>
+
+							<div class="min-w-0 flex-1">
+								<p class="truncate text-sm font-semibold text-navy">{sceneTitle(scene)}</p>
+								<p class="mt-0.5 truncate text-xs text-muted">/{scene.slug}</p>
+							</div>
+
 							<span
-								class="rounded-full px-2.5 py-1 text-[0.65rem] font-semibold tracking-wider uppercase {scene.status ===
-								'published'
-									? 'bg-emerald-50 text-emerald-700'
-									: 'bg-amber-50 text-amber-700'}"
+								class="badge {scene.status === 'published' ? 'badge--published' : 'badge--draft'}"
 							>
-								{scene.status}
+								{scene.status === 'published' ? 'Tayang' : 'Draf'}
 							</span>
+
 							<a
 								href={resolve(`admin/scenes/${scene.id}`)}
-								class="text-xs font-semibold text-navy hover:text-gold-dark"
+								class="text-xs font-semibold text-navy transition-colors hover:text-gold-dark"
 							>
 								Edit
 							</a>
 						</div>
-					</div>
-				{/each}
+					{/each}
+				</div>
 			{/if}
+		</section>
+
+		<div class="flex flex-col gap-6">
+			<section class="surface surface--dark p-6">
+				<p class="meta text-[0.58rem] text-gold-light/60">Aksi cepat</p>
+				<div class="mt-4 flex flex-col divide-y divide-ivory/10">
+					<a
+						href={resolve('admin/scenes/new')}
+						class="flex items-center justify-between gap-4 py-3 text-sm text-ivory/70 transition-colors hover:text-gold-light"
+					>
+						Tambah scene baru
+						<Icon name="plus" class="h-4 w-4" />
+					</a>
+					<a
+						href={resolve('admin/media/upload')}
+						class="flex items-center justify-between gap-4 py-3 text-sm text-ivory/70 transition-colors hover:text-gold-light"
+					>
+						Unggah panorama
+						<Icon name="upload" class="h-4 w-4" />
+					</a>
+					<a
+						href={resolve('id/tour')}
+						class="flex items-center justify-between gap-4 py-3 text-sm text-ivory/70 transition-colors hover:text-gold-light"
+					>
+						Buka situs publik
+						<Icon name="external" class="h-4 w-4" />
+					</a>
+				</div>
+			</section>
+
+			<section class="surface p-6">
+				<div class="flex items-center justify-between gap-4">
+					<p class="meta text-[0.58rem] text-muted">Status publikasi</p>
+					<span class="badge badge--gold">{publishedRatio}%</span>
+				</div>
+				<div
+					class="mt-5 h-1.5 w-full bg-charcoal/10"
+					role="progressbar"
+					aria-valuemin="0"
+					aria-valuemax="100"
+					aria-valuenow={publishedRatio}
+					aria-label="Persentase scene tayang"
+				>
+					<div class="h-full bg-gold-dark/80" style="width: {publishedRatio}%"></div>
+				</div>
+				<p class="mt-4 text-sm leading-relaxed text-body">
+					{data.counts.published} dari {data.counts.scenes} scene sudah tayang di situs publik.
+				</p>
+				<a href={resolve('admin/scenes')} class="link-arrow mt-5">
+					Kelola scene
+					<Icon name="arrow-right" class="h-3.5 w-3.5" />
+				</a>
+			</section>
 		</div>
-	</section>
+	</div>
 </div>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import SceneForm from '#lib/components/admin/SceneForm.svelte';
+	import Icon from '#lib/components/ui/Icon.svelte';
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
@@ -16,59 +17,49 @@
 </svelte:head>
 
 <div class="flex flex-col gap-6">
-	<header class="flex flex-col gap-4">
-		<nav class="text-xs text-charcoal/45" aria-label="Breadcrumb">
-			<a href={resolve('admin/scenes')} class="hover:text-navy">Scene</a>
-			<span aria-hidden="true"> / </span>
-			<span>{title}</span>
+	<header class="flex flex-col gap-5">
+		<nav class="flex items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
+			<a href={resolve('admin/scenes')} class="transition-colors hover:text-navy">Scene</a>
+			<Icon name="chevron-right" class="h-3 w-3" />
+			<span class="text-navy/60">{title}</span>
 		</nav>
 
-		<div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+		<div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
 			<div>
-				<div class="flex flex-wrap items-center gap-3">
-					<h1 class="font-display text-3xl text-navy sm:text-4xl">{title}</h1>
+				<p class="eyebrow">Scene</p>
+				<div class="mt-4 flex flex-wrap items-center gap-3">
+					<h1 class="display-lg text-navy">{title}</h1>
 					<span
-						class="rounded-full px-2.5 py-1 text-[0.65rem] font-semibold tracking-wider uppercase {data
-							.scene.status === 'published'
-							? 'bg-emerald-50 text-emerald-700'
-							: 'bg-amber-50 text-amber-700'}"
+						class="badge {data.scene.status === 'published' ? 'badge--published' : 'badge--draft'}"
 					>
-						{data.scene.status}
+						{data.scene.status === 'published' ? 'Tayang' : 'Draf'}
 					</span>
 				</div>
-				<p class="mt-2 text-sm text-charcoal/50">/{data.scene.slug}</p>
+				<p class="mt-2 text-sm text-muted">/{data.scene.slug}</p>
 			</div>
 
 			<div class="flex flex-wrap items-center gap-2">
 				{#if data.scene.status === 'published'}
-					<a
-						href={resolve(`id/tour/${data.scene.slug}`)}
-						class="rounded-full border border-navy/15 px-4 py-2 text-xs font-semibold text-navy transition hover:border-gold-dark hover:text-gold-dark"
-					>
+					<a href={resolve(`id/tour/${data.scene.slug}`)} class="btn btn--outline btn--sm">
 						Lihat di situs
+						<Icon name="external" class="h-3.5 w-3.5" />
 					</a>
 					<form method="POST" action="?/unpublish">
-						<button
-							type="submit"
-							class="rounded-full border border-amber-300 px-4 py-2 text-xs font-semibold text-amber-800 transition hover:bg-amber-50"
-						>
-							Jadikan draft
-						</button>
+						<button type="submit" class="btn btn--outline btn--sm">Jadikan draft</button>
 					</form>
 				{:else}
 					<form method="POST" action="?/publish">
-						<button
-							type="submit"
-							class="rounded-full bg-emerald-700 px-4 py-2 text-xs font-semibold text-white transition hover:bg-emerald-800"
-						>
+						<button type="submit" class="btn btn--gold btn--sm">
 							Publikasikan
+							<Icon name="check" class="h-3.5 w-3.5" />
 						</button>
 					</form>
 				{/if}
 				<a
 					href={resolve(`admin/scenes/${data.scene.id}/hotspots`)}
-					class="rounded-full bg-navy px-4 py-2 text-xs font-semibold text-ivory transition hover:bg-navy-soft"
+					class="btn btn--primary btn--sm"
 				>
+					<Icon name="map-pin" class="h-3.5 w-3.5" />
 					Kelola hotspot
 				</a>
 			</div>
@@ -76,10 +67,7 @@
 	</header>
 
 	{#if form?.errors?.form}
-		<div
-			class="rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800"
-			role="alert"
-		>
+		<div class="alert alert--error" role="alert">
 			{form.errors.form}
 		</div>
 	{/if}
@@ -93,28 +81,28 @@
 		action="?/update"
 	/>
 
-	<section class="rounded-2xl border border-red-200 bg-red-50/60 p-5">
-		<h2 class="font-display text-lg text-red-900">Hapus scene</h2>
-		<p class="mt-1 max-w-2xl text-xs leading-relaxed text-red-800/70">
-			Scene yang masih menjadi tujuan hotspot tidak dapat dihapus. Pindahkan atau hapus hotspot
-			terkait terlebih dahulu.
-		</p>
-		<form
-			method="POST"
-			action="?/delete"
-			class="mt-4"
-			onsubmit={(event) => {
-				if (!confirm('Hapus scene ini? Tindakan ini tidak dapat dibatalkan.')) {
-					event.preventDefault();
-				}
-			}}
-		>
-			<button
-				type="submit"
-				class="rounded-full border border-red-300 px-4 py-2 text-xs font-semibold text-red-800 transition hover:bg-red-100"
-			>
-				Hapus scene
-			</button>
-		</form>
+	<section class="rounded-md border border-danger/25 bg-danger-soft/40 p-5 sm:p-6">
+		<div class="flex items-start gap-3">
+			<Icon name="trash" class="mt-0.5 h-5 w-5 shrink-0 text-danger/70" />
+			<div>
+				<h2 class="title-sm text-danger">Hapus scene</h2>
+				<p class="mt-2 max-w-2xl text-xs leading-relaxed text-danger/70">
+					Scene yang masih menjadi tujuan hotspot tidak dapat dihapus. Pindahkan atau hapus hotspot
+					terkait terlebih dahulu.
+				</p>
+				<form
+					method="POST"
+					action="?/delete"
+					class="mt-4"
+					onsubmit={(event) => {
+						if (!confirm('Hapus scene ini? Tindakan ini tidak dapat dibatalkan.')) {
+							event.preventDefault();
+						}
+					}}
+				>
+					<button type="submit" class="btn btn--danger btn--sm">Hapus scene</button>
+				</form>
+			</div>
+		</div>
 	</section>
 </div>

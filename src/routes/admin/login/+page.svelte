@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import TempleMark from '#lib/components/public/TempleMark.svelte';
+	import BrandLockup from '#lib/components/ui/BrandLockup.svelte';
+	import Icon from '#lib/components/ui/Icon.svelte';
+	import Ornament from '#lib/components/ui/Ornament.svelte';
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
@@ -10,73 +12,100 @@
 	<title>Masuk Admin — Pura Batuan Kaler 360</title>
 </svelte:head>
 
-<div class="flex min-h-dvh items-center justify-center bg-navy px-5 py-12">
-	<div class="w-full max-w-md rounded-[2rem] border border-ivory/10 bg-ivory p-7 shadow-2xl sm:p-9">
-		<a href={resolve('id')} class="flex items-center gap-3" aria-label="Kembali ke situs">
-			<TempleMark class="h-10 w-10 text-navy" />
-			<span class="font-display text-xl text-navy"
-				>Batuan Kaler <span class="text-gold-dark">360</span></span
-			>
+<div class="grid min-h-dvh bg-paper lg:grid-cols-[1.04fr_0.96fr]">
+	<section
+		class="dark-surface relative hidden overflow-hidden p-10 lg:flex lg:flex-col lg:justify-between xl:p-14"
+	>
+		<img
+			src="/images/hero-pura.svg"
+			alt=""
+			class="absolute inset-0 h-full w-full object-cover opacity-65"
+		/>
+		<div
+			class="absolute inset-0 bg-gradient-to-b from-navy-deep/80 via-navy-deep/60 to-navy-deep"
+		></div>
+
+		<a href={resolve('id')} class="relative z-10 w-fit" aria-label="Kembali ke situs">
+			<BrandLockup tone="light" tagline />
 		</a>
 
-		<h1 class="mt-8 font-display text-3xl text-navy">Masuk ke panel admin</h1>
-		<p class="mt-2 text-sm leading-relaxed text-charcoal/60">
-			Gunakan akun administrator yang telah dibuat melalui proses provisioning.
-		</p>
-
-		{#if form?.message}
-			<div
-				class="mt-5 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800"
-				role="alert"
-				aria-live="polite"
-			>
-				{form.message}
-			</div>
-		{/if}
-
-		<form method="POST" class="mt-7 space-y-5">
-			<label class="block">
-				<span class="text-sm font-medium text-navy">Email</span>
-				<input
-					type="email"
-					name="email"
-					value={form?.email ?? ''}
-					autocomplete="username"
-					required
-					class="mt-2 w-full rounded-xl border border-navy/15 bg-white px-4 py-3 text-sm text-charcoal transition outline-none focus:border-gold-dark focus:ring-2 focus:ring-gold/20"
-					placeholder="admin@contoh.id"
-				/>
-			</label>
-
-			<label class="block">
-				<span class="text-sm font-medium text-navy">Password</span>
-				<input
-					type="password"
-					name="password"
-					autocomplete="current-password"
-					required
-					class="mt-2 w-full rounded-xl border border-navy/15 bg-white px-4 py-3 text-sm text-charcoal transition outline-none focus:border-gold-dark focus:ring-2 focus:ring-gold/20"
-				/>
-			</label>
-
-			<button
-				type="submit"
-				class="w-full rounded-full bg-navy px-5 py-3 text-sm font-semibold text-ivory transition hover:bg-navy-soft"
-			>
-				Masuk
-			</button>
-		</form>
-
-		<p class="mt-6 text-center text-xs text-charcoal/45">
-			<a href={resolve('id')} class="font-semibold text-navy hover:text-gold-dark"
-				>Kembali ke situs publik</a
-			>
-		</p>
-
-		{#if data.redirectTo}
-			<p class="mt-3 text-center text-[0.7rem] text-charcoal/35">
-				Setelah masuk Anda akan diarahkan ke halaman yang diminta.
+		<div class="relative z-10 max-w-lg py-12">
+			<p class="eyebrow">Panel pengelolaan</p>
+			<p class="display-xl mt-5 text-ivory">Dokumentasi yang terawat, satu scene demi satu.</p>
+			<p class="mt-5 max-w-md text-sm leading-relaxed text-ivory/55">
+				Kelola panorama, scene, hotspot, dan status publikasi kawasan Pura Batuan Kaler.
 			</p>
-		{/if}
-	</div>
+		</div>
+
+		<div class="relative z-10">
+			<Ornament class="h-3 w-44 text-gold-light/35" />
+			<p class="meta mt-5 text-[0.55rem] text-ivory/55">Pura Batuan Kaler · 2026</p>
+		</div>
+	</section>
+
+	<section class="flex items-center justify-center px-5 py-12 sm:px-10 lg:px-12">
+		<div class="w-full max-w-md">
+			<a href={resolve('id')} class="w-fit lg:hidden" aria-label="Kembali ke situs">
+				<BrandLockup tagline />
+			</a>
+
+			<p class="eyebrow mt-10 lg:mt-0">Akses administrator</p>
+			<h1 class="display-lg mt-5 text-navy">Masuk ke panel admin</h1>
+			<p class="mt-4 max-w-sm text-sm leading-relaxed text-body">
+				Gunakan akun administrator yang telah dibuat melalui proses provisioning.
+			</p>
+
+			{#if form?.message}
+				<div class="alert alert--error mt-6" role="alert" aria-live="polite">
+					{form.message}
+				</div>
+			{/if}
+
+			<form method="POST" class="mt-8 space-y-5">
+				<label class="block">
+					<span class="field-label">Email</span>
+					<input
+						type="email"
+						name="email"
+						value={form?.email ?? ''}
+						autocomplete="username"
+						required
+						class="field-input"
+						placeholder="admin@contoh.id"
+					/>
+				</label>
+
+				<label class="block">
+					<span class="field-label">Password</span>
+					<input
+						type="password"
+						name="password"
+						autocomplete="current-password"
+						required
+						class="field-input"
+					/>
+				</label>
+
+				<button type="submit" class="btn btn--primary w-full">
+					Masuk
+					<Icon name="arrow-right" class="h-4 w-4" />
+				</button>
+			</form>
+
+			<div class="mt-8 border-t border-charcoal/10 pt-5">
+				<a
+					href={resolve('id')}
+					class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-navy uppercase transition-colors hover:text-gold-dark"
+				>
+					<Icon name="arrow-left" class="h-3.5 w-3.5" />
+					Kembali ke situs publik
+				</a>
+				{#if data.redirectTo}
+					<p class="mt-3 text-[0.7rem] leading-relaxed text-muted">
+						Setelah masuk Anda akan diarahkan ke halaman yang diminta.
+					</p>
+				{/if}
+			</div>
+		</div>
+	</section>
 </div>

@@ -2,6 +2,10 @@
 	import AreaCard from '#lib/components/public/AreaCard.svelte';
 	import GalleryCard from '#lib/components/public/GalleryCard.svelte';
 	import GuideCard from '#lib/components/public/GuideCard.svelte';
+	import ArrowLink from '#lib/components/ui/ArrowLink.svelte';
+	import Icon from '#lib/components/ui/Icon.svelte';
+	import Ornament from '#lib/components/ui/Ornament.svelte';
+	import SectionHeading from '#lib/components/ui/SectionHeading.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
 	import { localeHref } from '#lib/i18n/index.ts';
 	import type { PageProps } from './$types';
@@ -9,6 +13,7 @@
 	let { data }: PageProps = $props();
 
 	const content = $derived(dictionary[data.lang]);
+	const hero = $derived(content.home.hero);
 
 	function href(path = '') {
 		return localeHref(data.lang, path);
@@ -20,153 +25,211 @@
 	<meta name="description" content={content.meta.description} />
 </svelte:head>
 
-<section class="relative isolate overflow-hidden bg-navy">
+<!-- Hero -->
+<section class="dark-surface relative isolate overflow-hidden bg-navy-deep">
 	<img
 		src="/images/hero-pura.svg"
 		alt=""
-		class="absolute inset-0 h-full w-full object-cover opacity-80"
+		class="absolute inset-0 h-full w-full object-cover opacity-70"
 	/>
-	<div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy/20"></div>
-	<div class="container-page relative flex min-h-[82vh] flex-col justify-end pt-32 pb-16 sm:pb-24">
-		<p class="text-xs font-semibold tracking-[0.28em] text-gold-light uppercase">
-			{content.home.hero.eyebrow}
-		</p>
-		<h1
-			class="mt-5 max-w-3xl font-display text-5xl leading-[1.04] text-ivory sm:text-6xl lg:text-7xl"
-		>
-			{content.home.hero.title}
-		</h1>
-		<p class="mt-6 max-w-2xl text-lg leading-relaxed text-ivory/75">
-			{content.home.hero.description}
-		</p>
-		<div class="mt-9 flex flex-wrap gap-3">
-			<a
-				href={href('/tour')}
-				class="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-charcoal transition-colors hover:bg-gold/90"
-			>
-				{content.actions.exploreTour}
-			</a>
-			<a
-				href={href('/sejarah')}
-				class="rounded-full border border-ivory/30 px-6 py-3 text-sm font-semibold text-ivory transition-colors hover:border-gold-light hover:text-gold-light"
-			>
-				{content.actions.learnHistory}
-			</a>
-		</div>
-		<p class="mt-12 text-xs tracking-[0.2em] text-ivory/50 uppercase">
-			{content.home.hero.note}
-		</p>
-	</div>
-</section>
+	<div class="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy/25"></div>
+	<div
+		class="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_20%,rgba(242,222,168,0.16),transparent_55%)]"
+	></div>
 
-<section class="container-page py-20 sm:py-28">
-	<div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-		<div>
-			<p class="eyebrow">{content.home.intro.eyebrow}</p>
-			<h2 class="mt-4 max-w-xl font-display text-4xl leading-tight text-navy sm:text-5xl">
-				{content.home.intro.title}
-			</h2>
-		</div>
-		<div>
-			<p class="text-lg leading-relaxed text-charcoal/70">{content.home.intro.body}</p>
-			<dl class="mt-10 grid gap-6 sm:grid-cols-3">
-				{#each content.home.intro.points as point (point.title)}
-					<div class="border-t border-navy/15 pt-4">
-						<dt class="text-sm font-semibold text-navy">{point.title}</dt>
-						<dd class="mt-2 text-sm leading-relaxed text-charcoal/65">{point.body}</dd>
+	<div
+		class="container-page relative grid min-h-[34rem] gap-12 py-16 sm:py-20 lg:min-h-[44rem] lg:grid-cols-[1.06fr_0.74fr] lg:items-center lg:py-24"
+	>
+		<div class="max-w-3xl">
+			<p class="eyebrow">{hero.eyebrow}</p>
+
+			<h1 class="display-hero mt-6 text-ivory">
+				<span class="block">{hero.titleLead}</span>
+				<span class="mt-2 block text-[0.78em] leading-[1.04] text-gold-light italic">
+					{hero.titleAccent}
+				</span>
+			</h1>
+
+			<p class="mt-7 max-w-xl text-base leading-relaxed text-ivory/65 sm:text-lg">
+				{hero.description}
+			</p>
+
+			<div class="mt-9 flex flex-wrap gap-3">
+				<a href={href('/tour')} class="btn btn--gold">
+					{content.actions.exploreTour}
+					<Icon name="arrow-up-right" class="h-4 w-4" />
+				</a>
+				<a href={href('/sejarah')} class="btn btn--outline">
+					{content.actions.learnHistory}
+				</a>
+			</div>
+
+			<dl class="mt-14 grid max-w-xl grid-cols-3 gap-4 border-t border-ivory/15 pt-5">
+				{#each hero.meta as item (item.label)}
+					<div>
+						<dt class="meta text-[0.6rem] text-ivory/55">{item.label}</dt>
+						<dd class="mt-1.5 font-display text-lg text-gold-light/85">{item.value}</dd>
 					</div>
 				{/each}
 			</dl>
 		</div>
+
+		<div class="relative hidden lg:block">
+			<div
+				class="arch-frame frame-inset relative ml-auto w-full max-w-[24rem] border border-ivory/15 bg-navy"
+			>
+				<img
+					src="/images/panoramas/scene-jaba.jpg"
+					alt={hero.viewLabel}
+					class="h-[32rem] w-full object-cover object-[58%_62%] opacity-85"
+				/>
+				<div
+					class="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-transparent to-navy-deep/10"
+				></div>
+				<div class="absolute inset-x-0 bottom-0 p-6">
+					<span class="badge badge--gold">360°</span>
+					<p class="mt-3 text-xs tracking-[0.16em] text-ivory/70 uppercase">{hero.viewLabel}</p>
+				</div>
+			</div>
+			<p class="mt-5 text-right text-[0.6rem] tracking-[0.18em] text-ivory/55 uppercase">
+				Jaba Pura · Batuan Kaler
+			</p>
+		</div>
+	</div>
+
+	<div class="container-page relative pb-8">
+		<p
+			class="hidden max-w-xl border-t border-ivory/10 pt-4 text-[0.65rem] leading-relaxed tracking-[0.1em] text-ivory/55 uppercase sm:block"
+		>
+			{hero.note}
+		</p>
 	</div>
 </section>
 
-<section class="border-y border-navy/10 bg-sand/60">
-	<div class="container-page grid gap-10 py-20 sm:py-28 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+<!-- Pengenalan -->
+<section class="section section--paper">
+	<div class="container-page grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
+		<div class="lg:sticky lg:top-28 lg:self-start">
+			<p class="eyebrow">{content.home.intro.eyebrow}</p>
+			<h2 class="display-xl mt-6 text-navy">{content.home.intro.title}</h2>
+			<Ornament class="mt-8 h-3 w-44 text-gold-dark/45" />
+		</div>
+
 		<div>
+			<p class="lede max-w-2xl">{content.home.intro.body}</p>
+
+			<div class="mt-10 border-t border-charcoal/12">
+				{#each content.home.intro.points as point, index (point.title)}
+					<div
+						class="grid gap-2 border-b border-charcoal/12 py-6 sm:grid-cols-[2.5rem_10rem_1fr] sm:gap-5"
+					>
+						<span class="font-display text-lg leading-none text-gold-dark/55">
+							0{index + 1}
+						</span>
+						<h3 class="text-sm font-semibold text-navy">{point.title}</h3>
+						<p class="max-w-md text-sm leading-relaxed text-body">{point.body}</p>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Virtual tour -->
+<section class="dark-surface section relative overflow-hidden">
+	<div
+		class="pointer-events-none absolute -top-16 right-0 hidden font-display text-[22rem] leading-none text-ivory/[0.035] select-none lg:block"
+		aria-hidden="true"
+	>
+		360
+	</div>
+
+	<div class="container-page relative grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+		<div class="max-w-xl">
 			<p class="eyebrow">{content.home.tour.eyebrow}</p>
-			<h2 class="mt-4 max-w-xl font-display text-4xl leading-tight text-navy sm:text-5xl">
-				{content.home.tour.title}
-			</h2>
-			<p class="mt-6 max-w-xl text-base leading-relaxed text-charcoal/70">
-				{content.home.tour.body}
-			</p>
+			<h2 class="display-xl mt-6 text-ivory">{content.home.tour.title}</h2>
+			<p class="mt-6 text-base leading-relaxed text-ivory/60">{content.home.tour.body}</p>
+			<div class="mt-8">
+				<ArrowLink href={href('/tour')} label={content.actions.exploreTour} tone="light" />
+			</div>
+		</div>
+
+		<div class="relative">
+			<div class="absolute -inset-3 border border-gold/25" aria-hidden="true"></div>
 			<a
 				href={href('/tour')}
-				class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-navy transition-colors hover:text-gold-dark"
+				class="group relative block overflow-hidden border border-ivory/15 bg-navy-deep"
+				aria-label={content.actions.exploreTour}
 			>
-				{content.actions.exploreTour}
-				<span aria-hidden="true">→</span>
-			</a>
-		</div>
+				<img
+					src="/images/panoramas/scene-jaba.jpg"
+					alt={content.home.tour.previewLabel}
+					class="aspect-[16/10] w-full object-cover opacity-90 transition duration-700 ease-out group-hover:scale-[1.025]"
+				/>
+				<div
+					class="absolute inset-0 bg-gradient-to-t from-navy-deep/85 via-navy/10 to-transparent"
+				></div>
 
-		<a
-			href={href('/tour')}
-			class="group relative block overflow-hidden rounded-[2rem] border border-navy/10 bg-navy"
-		>
-			<img
-				src="/images/panoramas/scene-jaba.jpg"
-				alt={content.home.tour.previewLabel}
-				class="aspect-[16/10] w-full object-cover opacity-90 transition duration-700 group-hover:scale-105"
-			/>
-			<div class="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/10 to-transparent"></div>
-			<div class="absolute inset-0 flex items-center justify-center">
 				<span
-					class="flex h-16 w-16 items-center justify-center rounded-full border border-ivory/50 bg-ivory/10 text-ivory backdrop-blur transition group-hover:border-gold-light group-hover:text-gold-light"
+					class="absolute top-1/2 left-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/40 bg-ivory/10 text-ivory backdrop-blur-md transition group-hover:border-gold-light group-hover:bg-gold group-hover:text-ink"
 				>
-					<svg class="ml-1 h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-						<path d="M8 5v14l11-7L8 5Z" />
-					</svg>
+					<Icon name="play" class="ml-0.5 h-5 w-5" />
 				</span>
-			</div>
-			<p class="absolute bottom-5 left-5 text-xs tracking-[0.2em] text-ivory/70 uppercase">
-				{content.home.tour.previewLabel}
-			</p>
-		</a>
-	</div>
-</section>
 
-<section class="container-page grid gap-10 py-20 sm:py-28 lg:grid-cols-[1fr_1fr]">
-	<div class="rounded-[2rem] bg-navy p-8 text-ivory sm:p-12">
-		<p class="eyebrow text-gold-light">{content.home.history.eyebrow}</p>
-		<h2 class="mt-4 font-display text-4xl leading-tight sm:text-5xl">
-			{content.home.history.title}
-		</h2>
-	</div>
-	<div class="flex flex-col justify-center">
-		<p class="text-lg leading-relaxed text-charcoal/70">{content.home.history.body}</p>
-		<a
-			href={href('/sejarah')}
-			class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-navy transition-colors hover:text-gold-dark"
-		>
-			{content.actions.readHistory}
-			<span aria-hidden="true">→</span>
-		</a>
-	</div>
-</section>
-
-<section class="bg-sand/60 py-20 text-charcoal sm:py-28">
-	<div class="container-page">
-		<div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-			<div>
-				<p class="eyebrow text-gold-dark">{content.home.areas.eyebrow}</p>
-				<h2 class="mt-4 max-w-2xl font-display text-4xl leading-tight sm:text-5xl">
-					{content.home.areas.title}
-				</h2>
-			</div>
-			<a
-				href={href('/area')}
-				class="inline-flex items-center gap-2 text-sm font-semibold text-gold-dark transition-colors hover:text-navy"
-			>
-				{content.actions.viewAllAreas}
-				<span aria-hidden="true">→</span>
+				<div class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5">
+					<p class="text-[0.65rem] tracking-[0.18em] text-ivory/65 uppercase">
+						{content.home.tour.previewLabel}
+					</p>
+					<span class="meta text-gold-light/70">360°</span>
+				</div>
 			</a>
 		</div>
-		<p class="mt-6 max-w-2xl text-sm leading-relaxed text-charcoal/65">
-			{content.home.areas.body}
-		</p>
+	</div>
+</section>
 
-		<div class="mt-12 grid gap-5 md:grid-cols-3">
+<!-- Sejarah -->
+<section class="section section--ivory">
+	<div class="container-page grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
+		<div>
+			<p class="eyebrow">{content.home.history.eyebrow}</p>
+			<h2 class="display-xl mt-6 text-navy">{content.home.history.title}</h2>
+			<Ornament class="mt-8 h-3 w-40 text-gold-dark/45" />
+		</div>
+
+		<div class="relative border-l border-gold-dark/30 pl-6 sm:pl-10">
+			<span
+				class="absolute top-0 -left-[5px] h-2.5 w-2.5 rotate-45 border border-gold-dark bg-ivory"
+				aria-hidden="true"
+			></span>
+			<p class="meta text-gold-dark">
+				{content.home.history.noteLabel} · {content.home.history.status}
+			</p>
+			<blockquote class="mt-6">
+				<p class="font-display text-2xl leading-snug text-navy italic sm:text-3xl">
+					“{content.home.history.body}”
+				</p>
+			</blockquote>
+			<div class="mt-8">
+				<ArrowLink href={href('/sejarah')} label={content.actions.readHistory} />
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Area -->
+<section class="section section--sand">
+	<div class="container-page">
+		<SectionHeading
+			eyebrow={content.home.areas.eyebrow}
+			title={content.home.areas.title}
+			description={content.home.areas.body}
+		>
+			{#snippet action()}
+				<ArrowLink href={href('/area')} label={content.actions.viewAllAreas} />
+			{/snippet}
+		</SectionHeading>
+
+		<div class="mt-12 border-b border-charcoal/12">
 			{#each content.home.areas.items as area, index (area.name)}
 				<AreaCard
 					name={area.name}
@@ -180,57 +243,58 @@
 	</div>
 </section>
 
-<section class="container-page py-20 sm:py-28">
-	<div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-		<div>
-			<p class="eyebrow">{content.home.gallery.eyebrow}</p>
-			<h2 class="mt-4 max-w-2xl font-display text-4xl leading-tight text-navy sm:text-5xl">
-				{content.home.gallery.title}
-			</h2>
-		</div>
-		<a
-			href={href('/galeri')}
-			class="inline-flex items-center gap-2 text-sm font-semibold text-navy transition-colors hover:text-gold-dark"
+<!-- Galeri -->
+<section class="section section--paper">
+	<div class="container-page">
+		<SectionHeading
+			eyebrow={content.home.gallery.eyebrow}
+			title={content.home.gallery.title}
+			description={content.home.gallery.body}
 		>
-			{content.actions.openGallery}
-			<span aria-hidden="true">→</span>
-		</a>
-	</div>
-	<p class="mt-6 max-w-2xl text-base leading-relaxed text-charcoal/70">
-		{content.home.gallery.body}
-	</p>
+			{#snippet action()}
+				<ArrowLink href={href('/galeri')} label={content.actions.openGallery} />
+			{/snippet}
+		</SectionHeading>
 
-	<div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-		{#each content.home.gallery.items as item, index (item.title)}
-			<GalleryCard title={item.title} caption={item.caption} {index} />
-		{/each}
+		<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			{#each content.home.gallery.items as item, index (item.title)}
+				<div class={index === 1 ? 'lg:mt-10' : ''}>
+					<GalleryCard
+						title={item.title}
+						caption={item.caption}
+						{index}
+						pending={content.home.gallery.pending}
+					/>
+				</div>
+			{/each}
+		</div>
 	</div>
 </section>
 
-<section class="bg-sand/60 py-20 sm:py-28">
-	<div class="container-page">
-		<div class="max-w-3xl">
+<!-- Panduan -->
+<section class="section section--ivory">
+	<div class="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+		<div>
 			<p class="eyebrow">{content.home.guide.eyebrow}</p>
-			<h2 class="mt-4 font-display text-4xl leading-tight text-navy sm:text-5xl">
-				{content.home.guide.title}
-			</h2>
-			<p class="mt-6 text-base leading-relaxed text-charcoal/70">
+			<h2 class="display-xl mt-6 text-navy">{content.home.guide.title}</h2>
+			<p class="mt-6 max-w-md text-base leading-relaxed text-body">
 				{content.home.guide.body}
 			</p>
+
+			<div class="mt-8 max-w-md border-l-2 border-gold-dark/40 pl-5">
+				<p class="meta text-gold-dark">{content.home.history.noteLabel}</p>
+				<p class="mt-2 text-sm leading-relaxed text-muted">{content.footer.note}</p>
+			</div>
+
+			<div class="mt-8">
+				<ArrowLink href={href('/panduan')} label={content.actions.readGuide} />
+			</div>
 		</div>
 
-		<div class="mt-12 grid gap-5 md:grid-cols-3">
+		<div class="border-b border-charcoal/12">
 			{#each content.home.guide.items as item, index (item.title)}
 				<GuideCard title={item.title} body={item.body} {index} />
 			{/each}
 		</div>
-
-		<a
-			href={href('/panduan')}
-			class="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-navy transition-colors hover:text-gold-dark"
-		>
-			{content.actions.readGuide}
-			<span aria-hidden="true">→</span>
-		</a>
 	</div>
 </section>
