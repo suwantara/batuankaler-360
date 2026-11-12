@@ -14,6 +14,31 @@ const id = {
 		navigation: 'Navigasi utama',
 		footerNavigation: 'Navigasi footer'
 	},
+	errorPage: {
+		eyebrow: 'Kesalahan',
+		notFoundTitle: 'Halaman tidak ditemukan.',
+		notFoundBody:
+			'Alamat ini tidak tersedia atau kontennya sudah dipindahkan. Periksa kembali tautan, atau lanjutkan dari beranda.',
+		unauthorizedTitle: 'Akses diperlukan.',
+		unauthorizedBody: 'Sesi Anda tidak valid atau sudah berakhir. Masuk kembali untuk melanjutkan.',
+		forbiddenTitle: 'Akses tidak diizinkan.',
+		forbiddenBody: 'Akun Anda tidak memiliki izin untuk membuka halaman ini.',
+		serverTitle: 'Terjadi kendala pada server.',
+		serverBody:
+			'Halaman gagal dimuat. Coba muat ulang beberapa saat lagi. Jika masalah berlanjut, hubungi pengelola.',
+		genericTitle: 'Halaman tidak dapat dibuka.',
+		genericBody:
+			'Terjadi kendala saat membuka halaman ini. Coba kembali ke beranda atau muat ulang halaman.',
+		backHome: 'Kembali ke beranda',
+		openTour: 'Buka virtual tour',
+		retry: 'Muat ulang halaman',
+		dashboard: 'Ke dashboard admin',
+		publicSite: 'Buka situs publik',
+		login: 'Masuk admin',
+		help: 'Jika tautan ini seharusnya tersedia, hubungi pengelola kawasan.',
+		adminHelp: 'Jika masalah berlanjut, periksa log server atau hubungi pengembang.',
+		standaloneFooter: 'Pura Batuan Kaler 360 · Virtual tour kawasan pura'
+	},
 	nav: [
 		{ label: 'Beranda', path: '' },
 		{ label: 'Virtual Tour', path: '/tour' },
@@ -299,6 +324,31 @@ const en: SiteDictionary = {
 		language: 'Change language',
 		navigation: 'Main navigation',
 		footerNavigation: 'Footer navigation'
+	},
+	errorPage: {
+		eyebrow: 'Error',
+		notFoundTitle: 'Page not found.',
+		notFoundBody:
+			'This address is unavailable or the content has moved. Check the link again, or continue from the home page.',
+		unauthorizedTitle: 'Access required.',
+		unauthorizedBody: 'Your session is invalid or has ended. Sign in again to continue.',
+		forbiddenTitle: 'Access not allowed.',
+		forbiddenBody: 'Your account does not have permission to open this page.',
+		serverTitle: 'The server ran into a problem.',
+		serverBody:
+			'The page failed to load. Try reloading in a moment. If the problem continues, contact the site manager.',
+		genericTitle: 'The page could not be opened.',
+		genericBody:
+			'Something went wrong while opening this page. Try returning to the home page or reloading.',
+		backHome: 'Back to home',
+		openTour: 'Open virtual tour',
+		retry: 'Reload page',
+		dashboard: 'Go to admin dashboard',
+		publicSite: 'Open public site',
+		login: 'Admin sign in',
+		help: 'If this link should be available, contact the site manager.',
+		adminHelp: 'If the problem continues, check the server logs or contact the developer.',
+		standaloneFooter: 'Pura Batuan Kaler 360 · Virtual tour of the temple grounds'
 	},
 	nav: [
 		{ label: 'Home', path: '' },

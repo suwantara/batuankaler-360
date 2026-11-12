@@ -98,11 +98,20 @@ test.describe('public website', () => {
 	test('returns 404 for an unknown scene', async ({ page }) => {
 		const response = await page.goto('/id/tour/scene-tidak-ada');
 		expect(response?.status()).toBe(404);
+		await expect(page.getByRole('heading', { name: 'Halaman tidak ditemukan.' })).toBeVisible();
+		await expect(page.getByRole('link', { name: /Kembali ke beranda/ })).toBeVisible();
+	});
+
+	test('returns an English 404 page for an unknown scene', async ({ page }) => {
+		const response = await page.goto('/en/tour/scene-tidak-ada');
+		expect(response?.status()).toBe(404);
+		await expect(page.getByRole('heading', { name: 'Page not found.' })).toBeVisible();
 	});
 
 	test('returns 404 for an unknown locale', async ({ page }) => {
 		const response = await page.goto('/fr');
 		expect(response?.status()).toBe(404);
+		await expect(page.getByRole('heading', { name: 'Halaman tidak ditemukan.' })).toBeVisible();
 	});
 
 	test('does not expose files outside the upload directory', async ({ page }) => {
@@ -136,6 +145,17 @@ test.describe('admin dashboard', () => {
 		await page.goto('/admin/media');
 		await expect(page.getByRole('heading', { name: 'Aset panorama' })).toBeVisible();
 		await expect(page.getByText('scene-jaba.jpg').first()).toBeVisible();
+	});
+
+	test('shows a friendly error page for unknown admin routes', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+
+		await loginAsAdmin(page);
+		const response = await page.goto('/admin/halaman-tidak-ada');
+
+		expect(response?.status()).toBe(404);
+		await expect(page.getByRole('heading', { name: 'Halaman tidak ditemukan.' })).toBeVisible();
+		await expect(page.getByRole('link', { name: /Ke dashboard admin/ })).toBeVisible();
 	});
 
 	test('toggles and persists admin dark mode', async ({ page }) => {
