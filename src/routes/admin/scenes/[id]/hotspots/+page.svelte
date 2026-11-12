@@ -38,6 +38,11 @@
 		form?.hotspotId === null && form.values ? form.values : emptyHotspotFormValues
 	);
 	const createErrors = $derived(form?.hotspotId === null ? (form?.errors ?? {}) : {});
+	const panorama = $derived(
+		data.scene.panoramaAsset
+			? { src: data.scene.panoramaAsset.originalPath, width: data.scene.panoramaAsset.width }
+			: null
+	);
 
 	function valuesFor(hotspot: (typeof data.scene.hotspots)[number]): HotspotFormValues {
 		return form?.hotspotId === hotspot.id && form.values ? form.values : hotspotValues(hotspot);
@@ -90,6 +95,7 @@
 				scenes={data.scenes}
 				errors={createErrors}
 				sceneId={data.scene.id}
+				{panorama}
 				action="?/create"
 				submitLabel="Tambah hotspot"
 			/>
@@ -136,6 +142,7 @@
 							errors={errorsFor(hotspot)}
 							sceneId={data.scene.id}
 							hotspotId={hotspot.id}
+							{panorama}
 							action="?/update"
 							submitLabel="Simpan hotspot"
 						/>

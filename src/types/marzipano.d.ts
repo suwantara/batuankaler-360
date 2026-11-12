@@ -41,6 +41,14 @@ declare module 'marzipano' {
 		setYaw(yaw: number): void;
 		setPitch(pitch: number): void;
 		setFov(fov: number): void;
+		screenToCoordinates(
+			coords: { x: number; y: number },
+			result?: { yaw?: number; pitch?: number }
+		): { yaw: number; pitch: number };
+		coordinatesToScreen(
+			coords: { yaw: number; pitch: number },
+			result?: { x?: number | null; y?: number | null }
+		): { x: number | null; y: number | null };
 	}
 
 	export interface Viewer {

@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { SvelteMap } from 'svelte/reactivity';
-	import type { Scene as MarzipanoScene, View, Viewer } from 'marzipano';
+	import type {
+		Hotspot as MarzipanoHotspot,
+		Scene as MarzipanoScene,
+		View,
+		Viewer
+	} from 'marzipano';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
 	import type { Locale } from '#lib/i18n/index.ts';
@@ -14,13 +19,19 @@
 		sceneId,
 		lang,
 		onNavigate,
-		onInfo
+		onInfo,
+		onCoordinatePick,
+		pickMode = false,
+		compact = false
 	}: {
 		scenes: TourScene[];
 		sceneId: string;
 		lang: Locale;
 		onNavigate?: (sceneId: string) => void;
 		onInfo?: (hotspot: InformationHotspot) => void;
+		onCoordinatePick?: (coords: { yaw: number; pitch: number }) => void;
+		pickMode?: boolean;
+		compact?: boolean;
 	} = $props();
 
 	const labels = $derived(dictionary[lang].pages.tour.controls);
@@ -38,6 +49,8 @@
 	let viewer: Viewer | null = null;
 	let activeView: View | null = null;
 	let activeMarzipanoScene: MarzipanoScene | null = null;
+	let pickedHotspot: MarzipanoHotspot | null = null;
+	let pickStart: { x: number; y: number } | null = null;
 	const sceneInstances = new SvelteMap<string, MarzipanoScene>();
 	const views = new SvelteMap<string, View>();
 	let disposed = false;
@@ -56,6 +69,7 @@
 
 		loading = true;
 		error = null;
+		pickedHotspot = null;
 
 		try {
 			const initialScene = scenes.find((scene) => scene.id === sceneId) ?? scenes[0];
@@ -88,23 +102,25 @@
 
 				const hotspotContainer = sceneInstance.hotspotContainer();
 
-				for (const hotspot of scene.hotspots) {
-					const element = createHotspotElement({
-						label: hotspot.translations[lang].label,
-						type: hotspot.type,
-						onClick: () => {
-							if (hotspot.type === 'navigation') {
-								onNavigate?.(hotspot.targetSceneId);
-							} else {
-								onInfo?.(hotspot);
+				if (!pickMode) {
+					for (const hotspot of scene.hotspots) {
+						const element = createHotspotElement({
+							label: hotspot.translations[lang].label,
+							type: hotspot.type,
+							onClick: () => {
+								if (hotspot.type === 'navigation') {
+									onNavigate?.(hotspot.targetSceneId);
+								} else {
+									onInfo?.(hotspot);
+								}
 							}
-						}
-					});
+						});
 
-					hotspotContainer.createHotspot(element, {
-						yaw: hotspot.yaw,
-						pitch: hotspot.pitch
-					});
+						hotspotContainer.createHotspot(element, {
+							yaw: hotspot.yaw,
+							pitch: hotspot.pitch
+						});
+					}
 				}
 			}
 
@@ -121,6 +137,13 @@
 			activeSceneId = initialScene.id;
 			loading = false;
 			ready = true;
+
+			if (pickMode) {
+				placePickMarker({
+					yaw: initialScene.initialView.yaw,
+					pitch: initialScene.initialView.pitch
+				});
+			}
 		} catch (cause) {
 			if (disposed) return;
 
@@ -159,6 +182,53 @@
 		if (!scene) return;
 
 		activeMarzipanoScene.lookTo(scene.initialView, 600);
+	}
+
+	function placePickMarker(coords: { yaw: number; pitch: number }): void {
+		if (!activeMarzipanoScene) return;
+
+		const hotspotContainer = activeMarzipanoScene.hotspotContainer();
+
+		if (pickedHotspot) {
+			hotspotContainer.destroyHotspot(pickedHotspot);
+			pickedHotspot = null;
+		}
+
+		const marker = document.createElement('div');
+		marker.className = 'coordinate-pick-marker';
+		marker.setAttribute('aria-hidden', 'true');
+		pickedHotspot = hotspotContainer.createHotspot(marker, coords);
+	}
+
+	function handlePointerDown(event: PointerEvent): void {
+		if (pickMode) {
+			pickStart = { x: event.clientX, y: event.clientY };
+			return;
+		}
+
+		showHint = false;
+	}
+
+	function handlePointerUp(event: PointerEvent): void {
+		if (!pickMode) return;
+
+		const start = pickStart;
+		pickStart = null;
+
+		if (!start) return;
+		if (Math.hypot(event.clientX - start.x, event.clientY - start.y) > 6) return;
+		if (!activeView || !container) return;
+
+		const rect = container.getBoundingClientRect();
+		const picked = activeView.screenToCoordinates({
+			x: event.clientX - rect.left,
+			y: event.clientY - rect.top
+		});
+
+		if (!Number.isFinite(picked.yaw) || !Number.isFinite(picked.pitch)) return;
+
+		onCoordinatePick?.(picked);
+		placePickMarker(picked);
 	}
 
 	function handleKeydown(event: KeyboardEvent): void {
@@ -227,6 +297,8 @@
 		viewer = null;
 		activeView = null;
 		activeMarzipanoScene = null;
+		pickedHotspot = null;
+		pickStart = null;
 		activeSceneId = '';
 		ready = false;
 		sceneInstances.clear();
@@ -256,6 +328,8 @@
 			viewer = null;
 			activeView = null;
 			activeMarzipanoScene = null;
+			pickedHotspot = null;
+			pickStart = null;
 			sceneInstances.clear();
 			views.clear();
 		};
@@ -269,10 +343,14 @@
 		bind:this={container}
 		role="application"
 		tabindex="0"
-		aria-label={labels.keyboardLabel}
+		aria-label={pickMode ? labels.pickHint : labels.keyboardLabel}
 		onkeydown={handleKeydown}
-		onpointerdown={() => (showHint = false)}
-		class="relative h-[58vh] min-h-[420px] w-full outline-none focus-visible:ring-2 focus-visible:ring-gold/70 focus-visible:ring-inset sm:h-[66vh] xl:h-[70vh]"
+		onpointerdown={handlePointerDown}
+		onpointerup={handlePointerUp}
+		onpointercancel={() => (pickStart = null)}
+		class="relative w-full outline-none focus-visible:ring-2 focus-visible:ring-gold/70 focus-visible:ring-inset {compact
+			? 'h-[22rem] min-h-[280px]'
+			: 'h-[58vh] min-h-[420px] sm:h-[66vh] xl:h-[70vh]'} {pickMode ? 'cursor-crosshair' : ''}"
 	></div>
 
 	{#if loading}
@@ -301,7 +379,7 @@
 		</div>
 	{/if}
 
-	{#if showHint && !loading && !error}
+	{#if showHint && !pickMode && !loading && !error}
 		<div
 			class="absolute inset-x-3 bottom-24 z-30 sm:inset-x-auto sm:right-4 sm:bottom-24 sm:left-auto sm:w-80"
 		>
@@ -345,7 +423,9 @@
 	<div
 		class="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-3 bg-gradient-to-t from-charcoal/85 via-charcoal/25 to-transparent p-4 pt-14"
 	>
-		<p class="text-[0.6rem] tracking-[0.22em] text-ivory/60 uppercase">{labels.gesture}</p>
+		<p class="hidden text-[0.6rem] tracking-[0.22em] text-ivory/60 uppercase sm:block">
+			{pickMode ? labels.pickHint : labels.gesture}
+		</p>
 
 		<div class="pointer-events-auto flex items-center gap-1.5 sm:gap-2">
 			<ViewerControl name="minus" label={labels.zoomOut} onclick={() => zoom(0.8)} />

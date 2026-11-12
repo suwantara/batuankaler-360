@@ -1,7 +1,15 @@
 <script lang="ts">
+	import PanoramaViewer from '#lib/components/tour/PanoramaViewer.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import type { Locale } from '#lib/i18n/locales.ts';
 	import type { HotspotFormValues } from '#lib/schemas/scene.ts';
+	import {
+		degreesToRadians,
+		formatDegrees,
+		parseCoordinate,
+		radiansToDegrees
+	} from '#lib/tour/coordinates.ts';
+	import type { TourScene } from '#lib/tour/scenes.ts';
 
 	let {
 		values,
@@ -10,7 +18,8 @@
 		sceneId,
 		hotspotId,
 		action,
-		submitLabel
+		submitLabel,
+		panorama
 	}: {
 		values: HotspotFormValues;
 		scenes: Array<{ id: string; translations: Array<{ locale: Locale; title: string }> }>;
@@ -19,7 +28,43 @@
 		hotspotId?: string;
 		action: string;
 		submitLabel: string;
+		panorama: { src: string; width: number } | null;
 	} = $props();
+
+	// Local editable copy of server values; reset when a form action returns new values.
+	// svelte-ignore state_referenced_locally
+	// eslint-disable-next-line svelte/prefer-writable-derived
+	let form = $state<HotspotFormValues>({ ...values });
+	let pickerOpen = $state(false);
+
+	$effect(() => {
+		form = { ...values };
+	});
+
+	const previewScene = $derived(
+		panorama
+			? ({
+					id: panorama.src,
+					slug: 'preview',
+					panorama: { src: panorama.src, thumbnail: '', width: panorama.width },
+					initialView: {
+						yaw: degreesToRadians(parseCoordinate(form.yaw)),
+						pitch: degreesToRadians(parseCoordinate(form.pitch)),
+						fov: Math.PI / 2
+					},
+					translations: {
+						id: { title: '', description: '' },
+						en: { title: '', description: '' }
+					},
+					hotspots: []
+				} satisfies TourScene)
+			: null
+	);
+
+	function handleCoordinatePick(coords: { yaw: number; pitch: number }): void {
+		form.yaw = formatDegrees(radiansToDegrees(coords.yaw));
+		form.pitch = formatDegrees(radiansToDegrees(coords.pitch));
+	}
 
 	const fieldLabels: Record<string, string> = {
 		form: 'Form',
@@ -67,20 +112,18 @@
 		<div class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
 			<label class="block">
 				<span class="field-label">Tipe</span>
-				<select name="type" class="field-input">
-					<option value="navigation" selected={values.type === 'navigation'}>Navigasi</option>
-					<option value="information" selected={values.type === 'information'}>Informasi</option>
+				<select name="type" class="field-input" bind:value={form.type}>
+					<option value="navigation">Navigasi</option>
+					<option value="information">Informasi</option>
 				</select>
 			</label>
 
 			<label class="block">
 				<span class="field-label">Scene tujuan</span>
-				<select name="targetSceneId" class="field-input">
-					<option value="" selected={values.targetSceneId === ''}>— Tidak ada —</option>
+				<select name="targetSceneId" class="field-input" bind:value={form.targetSceneId}>
+					<option value="">— Tidak ada —</option>
 					{#each scenes as scene (scene.id)}
-						<option value={scene.id} selected={values.targetSceneId === scene.id}
-							>{sceneLabel(scene)}</option
-						>
+						<option value={scene.id}>{sceneLabel(scene)}</option>
 					{/each}
 				</select>
 			</label>
@@ -90,7 +133,7 @@
 				<input
 					type="number"
 					name="sortOrder"
-					value={values.sortOrder}
+					bind:value={form.sortOrder}
 					min="0"
 					step="1"
 					class="field-input"
@@ -102,7 +145,7 @@
 				<input
 					type="number"
 					name="yaw"
-					value={values.yaw}
+					bind:value={form.yaw}
 					min="-180"
 					max="180"
 					step="0.1"
@@ -115,7 +158,7 @@
 				<input
 					type="number"
 					name="pitch"
-					value={values.pitch}
+					bind:value={form.pitch}
 					min="-90"
 					max="90"
 					step="0.1"
@@ -127,11 +170,56 @@
 				<input
 					type="checkbox"
 					name="isActive"
-					checked={values.isActive}
+					bind:checked={form.isActive}
 					class="h-4 w-4 rounded-xs border-navy/25 text-navy accent-[var(--color-navy)]"
 				/>
 				Aktif
 			</label>
+		</div>
+
+		<div class="mt-5 border-t border-charcoal/10 pt-4">
+			<div class="flex flex-wrap items-start justify-between gap-3">
+				<div>
+					<p class="field-label">Pilih dari panorama</p>
+					<p class="field-help mt-1">
+						Klik titik pada panorama untuk mengisi yaw/pitch. Geser panorama untuk mencari objek.
+					</p>
+				</div>
+				<button
+					type="button"
+					class="btn btn--outline btn--sm"
+					onclick={() => (pickerOpen = !pickerOpen)}
+				>
+					<Icon name="map-pin" class="h-3.5 w-3.5" />
+					{pickerOpen ? 'Tutup pemilih' : 'Buka pemilih'}
+				</button>
+			</div>
+
+			{#if pickerOpen}
+				<div class="mt-4">
+					{#if previewScene}
+						{#key previewScene.id}
+							<PanoramaViewer
+								scenes={[previewScene]}
+								sceneId={previewScene.id}
+								lang="id"
+								pickMode
+								compact
+								onCoordinatePick={handleCoordinatePick}
+							/>
+						{/key}
+						<p class="field-help mt-2">
+							Marker emas menunjukkan koordinat terpilih. Nilai yaw/pitch di atas diperbarui
+							otomatis.
+						</p>
+					{:else}
+						<p class="alert alert--warning">
+							Scene belum memiliki aset panorama. Hubungkan aset panorama terlebih dahulu di halaman
+							edit scene.
+						</p>
+					{/if}
+				</div>
+			{/if}
 		</div>
 
 		<p class="field-help">
@@ -154,7 +242,7 @@
 					<input
 						type="text"
 						name="labelId"
-						value={values.labelId}
+						bind:value={form.labelId}
 						required
 						class="field-input"
 						placeholder="Menuju Madya Mandala"
@@ -162,11 +250,18 @@
 				</label>
 				<label class="mt-4 block">
 					<span class="field-label">Judul informasi</span>
-					<input type="text" name="titleId" value={values.titleId} required class="field-input" />
+					<input
+						type="text"
+						name="titleId"
+						bind:value={form.titleId}
+						required
+						class="field-input"
+					/>
 				</label>
 				<label class="mt-4 block">
 					<span class="field-label">Deskripsi</span>
-					<textarea name="bodyId" rows="4" required class="field-input">{values.bodyId}</textarea>
+					<textarea name="bodyId" rows="4" required class="field-input" bind:value={form.bodyId}
+					></textarea>
 				</label>
 			</div>
 
@@ -177,7 +272,7 @@
 					<input
 						type="text"
 						name="labelEn"
-						value={values.labelEn}
+						bind:value={form.labelEn}
 						required
 						class="field-input"
 						placeholder="To Madya Mandala"
@@ -185,11 +280,18 @@
 				</label>
 				<label class="mt-4 block">
 					<span class="field-label">Information title</span>
-					<input type="text" name="titleEn" value={values.titleEn} required class="field-input" />
+					<input
+						type="text"
+						name="titleEn"
+						bind:value={form.titleEn}
+						required
+						class="field-input"
+					/>
 				</label>
 				<label class="mt-4 block">
 					<span class="field-label">Description</span>
-					<textarea name="bodyEn" rows="4" required class="field-input">{values.bodyEn}</textarea>
+					<textarea name="bodyEn" rows="4" required class="field-input" bind:value={form.bodyEn}
+					></textarea>
 				</label>
 			</div>
 		</div>
@@ -199,7 +301,7 @@
 			<input
 				type="url"
 				name="externalUrl"
-				value={values.externalUrl}
+				bind:value={form.externalUrl}
 				class="field-input"
 				placeholder="https://..."
 			/>

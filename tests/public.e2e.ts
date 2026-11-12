@@ -138,6 +138,27 @@ test.describe('admin dashboard', () => {
 		await expect(page.getByRole('button', { name: 'Simpan konten' })).toBeVisible();
 	});
 
+	test('picks scene coordinates from the panorama', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+
+		await loginAsAdmin(page);
+		await page.goto('/admin/scenes');
+		await page.getByRole('link', { name: 'Edit' }).first().click();
+		await page.getByRole('button', { name: 'Buka pemilih' }).click();
+
+		const viewer = page.locator('[role="application"]').first();
+		await expect(viewer).toBeVisible();
+		await viewer.scrollIntoViewIfNeeded();
+		await expect(page.locator('.coordinate-pick-marker')).toHaveCount(1);
+
+		const box = await viewer.boundingBox();
+		if (!box) throw new Error('Viewer tidak memiliki ukuran.');
+
+		const yaw = page.getByRole('spinbutton', { name: 'Yaw', exact: true });
+		await page.mouse.click(box.x + box.width * 0.75, box.y + box.height * 0.5);
+		await expect(yaw).not.toHaveValue('0.00');
+	});
+
 	test('rejects a non-image panorama upload', async ({ page }) => {
 		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
 

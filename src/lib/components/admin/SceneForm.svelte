@@ -1,8 +1,16 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import PanoramaViewer from '#lib/components/tour/PanoramaViewer.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import type { Locale } from '#lib/i18n/locales.ts';
 	import type { SceneFormValues } from '#lib/schemas/scene.ts';
+	import {
+		degreesToRadians,
+		formatDegrees,
+		parseCoordinate,
+		radiansToDegrees
+	} from '#lib/tour/coordinates.ts';
+	import type { TourScene } from '#lib/tour/scenes.ts';
 
 	let {
 		values,
@@ -19,6 +27,46 @@
 		submitLabel: string;
 		action?: string;
 	} = $props();
+
+	// Local editable copy of server values; reset when a form action returns new values.
+	// svelte-ignore state_referenced_locally
+	// eslint-disable-next-line svelte/prefer-writable-derived
+	let form = $state<SceneFormValues>({ ...values });
+	let pickerOpen = $state(false);
+
+	$effect(() => {
+		form = { ...values };
+	});
+
+	const selectedAsset = $derived(assets.find((asset) => asset.id === form.panoramaAssetId));
+	const previewScene = $derived(
+		selectedAsset
+			? ({
+					id: selectedAsset.id,
+					slug: 'preview',
+					panorama: {
+						src: selectedAsset.originalPath,
+						thumbnail: '',
+						width: selectedAsset.width
+					},
+					initialView: {
+						yaw: degreesToRadians(parseCoordinate(form.initialYaw)),
+						pitch: degreesToRadians(parseCoordinate(form.initialPitch)),
+						fov: degreesToRadians(parseCoordinate(form.initialFov, 90))
+					},
+					translations: {
+						id: { title: '', description: '' },
+						en: { title: '', description: '' }
+					},
+					hotspots: []
+				} satisfies TourScene)
+			: null
+	);
+
+	function handleCoordinatePick(coords: { yaw: number; pitch: number }): void {
+		form.initialYaw = formatDegrees(radiansToDegrees(coords.yaw));
+		form.initialPitch = formatDegrees(radiansToDegrees(coords.pitch));
+	}
 
 	function areaLabel(area: (typeof areas)[number]): string {
 		return area.translations.find((item) => item.locale === 'id')?.title ?? area.id;
@@ -58,7 +106,7 @@
 				<input
 					type="text"
 					name="slug"
-					value={values.slug}
+					bind:value={form.slug}
 					required
 					aria-invalid={errors.slug ? 'true' : undefined}
 					class="field-input"
@@ -69,19 +117,19 @@
 
 			<label class="block">
 				<span class="field-label">Status</span>
-				<select name="status" class="field-input">
-					<option value="draft" selected={values.status === 'draft'}>Draf</option>
-					<option value="published" selected={values.status === 'published'}>Tayang</option>
+				<select name="status" class="field-input" bind:value={form.status}>
+					<option value="draft">Draf</option>
+					<option value="published">Tayang</option>
 				</select>
 				{#if errors.status}<p class="field-error">{errors.status}</p>{/if}
 			</label>
 
 			<label class="block">
 				<span class="field-label">Area</span>
-				<select name="areaId" class="field-input">
-					<option value="" selected={values.areaId === ''}>— Tidak ada —</option>
+				<select name="areaId" class="field-input" bind:value={form.areaId}>
+					<option value="">— Tidak ada —</option>
 					{#each areas as area (area.id)}
-						<option value={area.id} selected={values.areaId === area.id}>{areaLabel(area)}</option>
+						<option value={area.id}>{areaLabel(area)}</option>
 					{/each}
 				</select>
 				{#if errors.areaId}<p class="field-error">{errors.areaId}</p>{/if}
@@ -89,12 +137,10 @@
 
 			<label class="block">
 				<span class="field-label">Aset panorama</span>
-				<select name="panoramaAssetId" class="field-input">
-					<option value="" selected={values.panoramaAssetId === ''}>— Belum dipilih —</option>
+				<select name="panoramaAssetId" class="field-input" bind:value={form.panoramaAssetId}>
+					<option value="">— Belum dipilih —</option>
 					{#each assets as asset (asset.id)}
-						<option value={asset.id} selected={values.panoramaAssetId === asset.id}
-							>{assetLabel(asset)}</option
-						>
+						<option value={asset.id}>{assetLabel(asset)}</option>
 					{/each}
 				</select>
 				{#if errors.panoramaAssetId}<p class="field-error">{errors.panoramaAssetId}</p>{/if}
@@ -105,7 +151,7 @@
 				<input
 					type="number"
 					name="sortOrder"
-					value={values.sortOrder}
+					bind:value={form.sortOrder}
 					min="0"
 					step="1"
 					class="field-input"
@@ -128,7 +174,7 @@
 				<input
 					type="number"
 					name="initialYaw"
-					value={values.initialYaw}
+					bind:value={form.initialYaw}
 					min="-180"
 					max="180"
 					step="0.1"
@@ -142,7 +188,7 @@
 				<input
 					type="number"
 					name="initialPitch"
-					value={values.initialPitch}
+					bind:value={form.initialPitch}
 					min="-90"
 					max="90"
 					step="0.1"
@@ -156,7 +202,7 @@
 				<input
 					type="number"
 					name="initialFov"
-					value={values.initialFov}
+					bind:value={form.initialFov}
 					min="30"
 					max="100"
 					step="0.1"
@@ -164,6 +210,51 @@
 				/>
 				{#if errors.initialFov}<p class="field-error">{errors.initialFov}</p>{/if}
 			</label>
+		</div>
+
+		<div class="mt-5 border-t border-charcoal/10 pt-4">
+			<div class="flex flex-wrap items-start justify-between gap-3">
+				<div>
+					<p class="field-label">Pilih arah awal dari panorama</p>
+					<p class="field-help mt-1">
+						Klik titik pada panorama untuk mengisi yaw/pitch. Geser panorama untuk mencari objek.
+					</p>
+				</div>
+				<button
+					type="button"
+					class="btn btn--outline btn--sm"
+					disabled={!selectedAsset}
+					onclick={() => (pickerOpen = !pickerOpen)}
+				>
+					<Icon name="map-pin" class="h-3.5 w-3.5" />
+					{pickerOpen ? 'Tutup pemilih' : 'Buka pemilih'}
+				</button>
+			</div>
+
+			{#if pickerOpen}
+				<div class="mt-4">
+					{#if selectedAsset && previewScene}
+						{#key selectedAsset.id}
+							<PanoramaViewer
+								scenes={[previewScene]}
+								sceneId={previewScene.id}
+								lang="id"
+								pickMode
+								compact
+								onCoordinatePick={handleCoordinatePick}
+							/>
+						{/key}
+						<p class="field-help mt-2">
+							Marker emas menunjukkan arah awal terpilih. Nilai yaw/pitch di atas diperbarui
+							otomatis.
+						</p>
+					{:else}
+						<p class="alert alert--warning">
+							Pilih aset panorama terlebih dahulu untuk membuka pemilih koordinat.
+						</p>
+					{/if}
+				</div>
+			{/if}
 		</div>
 	</section>
 
@@ -178,14 +269,23 @@
 				<h3 class="meta text-gold-dark">Bahasa Indonesia</h3>
 				<label class="mt-4 block">
 					<span class="field-label">Judul</span>
-					<input type="text" name="titleId" value={values.titleId} required class="field-input" />
+					<input
+						type="text"
+						name="titleId"
+						bind:value={form.titleId}
+						required
+						class="field-input"
+					/>
 					{#if errors.titleId}<p class="field-error">{errors.titleId}</p>{/if}
 				</label>
 				<label class="mt-4 block">
 					<span class="field-label">Deskripsi</span>
-					<textarea name="descriptionId" rows="4" required class="field-input"
-						>{values.descriptionId}</textarea
-					>
+					<textarea
+						name="descriptionId"
+						rows="4"
+						required
+						class="field-input"
+						bind:value={form.descriptionId}></textarea>
 					{#if errors.descriptionId}<p class="field-error">{errors.descriptionId}</p>{/if}
 				</label>
 			</div>
@@ -194,14 +294,23 @@
 				<h3 class="meta text-gold-dark">English</h3>
 				<label class="mt-4 block">
 					<span class="field-label">Title</span>
-					<input type="text" name="titleEn" value={values.titleEn} required class="field-input" />
+					<input
+						type="text"
+						name="titleEn"
+						bind:value={form.titleEn}
+						required
+						class="field-input"
+					/>
 					{#if errors.titleEn}<p class="field-error">{errors.titleEn}</p>{/if}
 				</label>
 				<label class="mt-4 block">
 					<span class="field-label">Description</span>
-					<textarea name="descriptionEn" rows="4" required class="field-input"
-						>{values.descriptionEn}</textarea
-					>
+					<textarea
+						name="descriptionEn"
+						rows="4"
+						required
+						class="field-input"
+						bind:value={form.descriptionEn}></textarea>
 					{#if errors.descriptionEn}<p class="field-error">{errors.descriptionEn}</p>{/if}
 				</label>
 			</div>

@@ -219,6 +219,7 @@ Ritme section yang disarankan: gelap → kertas → gelap → ivory → sand →
 - **Dashboard:** header + empat kartu statistik + daftar scene terbaru + aksi cepat + status publikasi.
 - **Daftar:** panel tunggal dengan baris berbagi garis; status dan aksi di kanan.
 - **Form:** section bernomor (01, 02, 03) dengan jarak konsisten; aksi simpan di akhir.
+- **Koordinat:** form scene dan hotspot memiliki pemilih panorama. Pengguna menggeser panorama, mengklik satu titik, lalu yaw/pitch terisi otomatis dan marker emas menandai posisi.
 - **Media:** metadata dan upload dipisahkan; panel panduan gelap mendampingi form.
 - **Konten:** mengelola informasi kunjungan ID/EN, status Draf/Tayang, identitas pengelola, dan tautan peta. Field kosong tidak ditampilkan.
 
@@ -240,6 +241,7 @@ Catatan admin:
 - Status dan error tidak boleh disampaikan hanya lewat warna.
 - Semua kontrol viewer memiliki `aria-label` yang mengikuti locale.
 - Viewer panorama dapat difokuskan dan dioperasikan dengan tombol panah, `+`, `−`, dan `R`; scene list tetap menjadi alternatif navigasi.
+- Pemilih koordinat tetap menyediakan input yaw/pitch manual sebagai alternatif klik.
 - Hormati `prefers-reduced-motion`.
 - Jangan menonaktifkan outline tanpa pengganti.
 
