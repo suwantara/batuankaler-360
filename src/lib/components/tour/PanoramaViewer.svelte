@@ -33,6 +33,7 @@
 	let fullscreen = $state(false);
 	let ready = $state(false);
 	let activeSceneId = $state('');
+	let showHint = $state(true);
 
 	let viewer: Viewer | null = null;
 	let activeView: View | null = null;
@@ -160,6 +161,53 @@
 		activeMarzipanoScene.lookTo(scene.initialView, 600);
 	}
 
+	function handleKeydown(event: KeyboardEvent): void {
+		const view = activeView;
+		const scene = activeMarzipanoScene;
+
+		if (!view || !scene) return;
+
+		const step = Math.PI / 24;
+		const pitch = (offset: number) =>
+			Math.max(-Math.PI / 2, Math.min(Math.PI / 2, view.pitch() + offset));
+
+		let handled = true;
+
+		switch (event.key) {
+			case 'ArrowLeft':
+				scene.lookTo({ yaw: view.yaw() - step, pitch: view.pitch(), fov: view.fov() }, 160);
+				break;
+			case 'ArrowRight':
+				scene.lookTo({ yaw: view.yaw() + step, pitch: view.pitch(), fov: view.fov() }, 160);
+				break;
+			case 'ArrowUp':
+				scene.lookTo({ yaw: view.yaw(), pitch: pitch(step), fov: view.fov() }, 160);
+				break;
+			case 'ArrowDown':
+				scene.lookTo({ yaw: view.yaw(), pitch: pitch(-step), fov: view.fov() }, 160);
+				break;
+			case '+':
+			case '=':
+				zoom(0.85);
+				break;
+			case '-':
+			case '_':
+				zoom(1.15);
+				break;
+			case 'r':
+			case 'R':
+				resetView();
+				break;
+			default:
+				handled = false;
+		}
+
+		if (handled) {
+			event.preventDefault();
+			showHint = false;
+		}
+	}
+
 	async function toggleFullscreen(): Promise<void> {
 		if (!container) return;
 
@@ -215,9 +263,16 @@
 </script>
 
 <div class="relative overflow-hidden border border-ivory/15 bg-navy-deep">
+	<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+	<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 	<div
 		bind:this={container}
-		class="relative h-[58vh] min-h-[420px] w-full sm:h-[66vh] xl:h-[70vh]"
+		role="application"
+		tabindex="0"
+		aria-label={labels.keyboardLabel}
+		onkeydown={handleKeydown}
+		onpointerdown={() => (showHint = false)}
+		class="relative h-[58vh] min-h-[420px] w-full outline-none focus-visible:ring-2 focus-visible:ring-gold/70 focus-visible:ring-inset sm:h-[66vh] xl:h-[70vh]"
 	></div>
 
 	{#if loading}
@@ -243,6 +298,36 @@
 			<button type="button" onclick={retry} class="btn btn--gold btn--sm">
 				{labels.retry}
 			</button>
+		</div>
+	{/if}
+
+	{#if showHint && !loading && !error}
+		<div
+			class="absolute inset-x-3 bottom-24 z-30 sm:inset-x-auto sm:right-4 sm:bottom-24 sm:left-auto sm:w-80"
+		>
+			<div class="surface relative p-4 pr-12 shadow-2xl">
+				<button
+					type="button"
+					onclick={() => (showHint = false)}
+					aria-label={labels.hintDismiss}
+					class="absolute top-1 right-1 flex h-11 w-11 items-center justify-center rounded-full text-muted transition-colors hover:bg-charcoal/5 hover:text-navy"
+				>
+					<Icon name="close" class="h-4 w-4" />
+				</button>
+
+				<div class="flex items-start gap-3">
+					<Icon name="compass" class="mt-0.5 h-5 w-5 shrink-0 text-gold-dark" />
+					<div>
+						<p class="text-sm font-semibold text-navy">{labels.hintTitle}</p>
+						<p class="mt-1 text-xs leading-relaxed text-body">{labels.hintDrag}</p>
+						<p
+							class="mt-2 border-t border-charcoal/10 pt-2 text-[0.7rem] leading-relaxed text-muted"
+						>
+							{labels.keyboardHint}
+						</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	{/if}
 

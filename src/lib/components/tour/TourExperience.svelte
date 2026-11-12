@@ -49,6 +49,27 @@
 		</p>
 	</div>
 {:else}
+	<div class="mb-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-ivory/60">
+		<span class="inline-flex items-center gap-2">
+			<span
+				class="flex h-5 w-5 items-center justify-center rounded-full bg-ivory font-display text-[0.65rem] text-ink italic"
+				aria-hidden="true">i</span
+			>
+			{panelLabels.legendInfo}
+		</span>
+		<span class="inline-flex items-center gap-2">
+			<span
+				class="flex h-5 w-5 items-center justify-center rounded-full bg-gold text-[0.7rem] font-bold text-ink"
+				aria-hidden="true">→</span
+			>
+			{panelLabels.legendNavigate}
+		</span>
+		<span class="inline-flex items-center gap-2">
+			<Icon name="compass" class="h-4 w-4 text-gold-light/70" />
+			{panelLabels.legendDrag}
+		</span>
+	</div>
+
 	<div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_21rem]">
 		<div class="relative min-w-0">
 			<PanoramaViewer

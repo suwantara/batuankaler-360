@@ -30,6 +30,29 @@ const id = {
 		readGuide: 'Baca Panduan',
 		readHistory: 'Baca Sejarah'
 	},
+	visitInfo: {
+		eyebrow: 'Informasi kunjungan',
+		title: 'Sebelum Anda datang.',
+		description:
+			'Informasi praktis dari pengelola kawasan untuk membantu kunjungan yang tertib, hormat, dan terencana.',
+		empty: 'Informasi kunjungan sedang disiapkan oleh pengelola.',
+		updated: 'Terakhir diperbarui',
+		openMap: 'Buka peta',
+		managerSite: 'Situs pengelola',
+		guideLink: 'Baca panduan kunjungan',
+		fallback:
+			'Terjemahan Inggris belum lengkap. Sebagian informasi ditampilkan dalam Bahasa Indonesia.',
+		labels: {
+			location: 'Lokasi',
+			hours: 'Jam kunjungan',
+			access: 'Akses',
+			dressCode: 'Pakaian',
+			photoPolicy: 'Ketentuan foto',
+			etiquette: 'Etika kunjungan',
+			contact: 'Kontak',
+			manager: 'Pengelola'
+		}
+	},
 	footer: {
 		description:
 			'Dokumentasi digital kawasan Pura Batuan Kaler dalam bentuk virtual tour 360 derajat. Disusun untuk mendukung orientasi pengunjung dengan tetap menghormati nilai dan aturan tempat.',
@@ -161,7 +184,10 @@ const id = {
 				closeInfo: 'Tutup informasi',
 				emptyScenes: 'Belum ada scene yang dipublikasikan.',
 				emptyScenesHint:
-					'Scene yang berstatus published akan tampil di sini. Administrator dapat mengelola scene melalui dashboard.'
+					'Scene yang berstatus published akan tampil di sini. Administrator dapat mengelola scene melalui dashboard.',
+				legendInfo: 'Hotspot informasi',
+				legendNavigate: 'Hotspot pindah area',
+				legendDrag: 'Geser panorama untuk melihat'
 			},
 			controls: {
 				loading: 'Memuat panorama…',
@@ -172,7 +198,18 @@ const id = {
 				reset: 'Reset tampilan',
 				fullscreen: 'Layar penuh',
 				exitFullscreen: 'Keluar layar penuh',
-				gesture: 'Geser · Zoom · 360°'
+				gesture: 'Geser · Zoom · 360°',
+				hintTitle: 'Cara menjelajah',
+				hintDrag: 'Geser atau sentuh panorama untuk melihat sekeliling.',
+				hintDismiss: 'Tutup petunjuk',
+				keyboardHint: 'Gunakan tombol panah untuk melihat, dan + / − untuk zoom.',
+				keyboardLabel:
+					'Panorama 360 derajat. Gunakan tombol panah untuk melihat sekeliling dan tombol plus atau minus untuk zoom.'
+			},
+			glossary: {
+				title: 'Istilah kawasan',
+				hint: 'Kenali nama area sebelum mulai menjelajah.',
+				note: 'Deskripsi area masih dalam proses verifikasi pengelola.'
 			},
 			tips: [
 				{
@@ -218,6 +255,8 @@ const id = {
 			title: 'Informasi sebelum berkunjung.',
 			description:
 				'Panduan kunjungan akan memuat informasi praktis mengenai etika, pakaian, akses, dan ketentuan pengelola pura.',
+			guideEyebrow: 'Panduan umum',
+			guideTitle: 'Prinsip yang perlu dijaga.',
 			notice:
 				'Informasi pada tahap ini bersifat umum. Ketentuan resmi akan ditambahkan setelah dikonfirmasi oleh pengelola.'
 		}
@@ -255,6 +294,28 @@ const en: SiteDictionary = {
 		openGallery: 'Open Gallery',
 		readGuide: 'Read the Guide',
 		readHistory: 'Read the History'
+	},
+	visitInfo: {
+		eyebrow: 'Visit information',
+		title: 'Before you arrive.',
+		description:
+			'Practical information from the site management to help make your visit respectful, orderly, and well planned.',
+		empty: 'Visit information is being prepared by the management.',
+		updated: 'Last updated',
+		openMap: 'Open map',
+		managerSite: 'Management website',
+		guideLink: 'Read the visit guide',
+		fallback: 'The English translation is incomplete. Some information is shown in Indonesian.',
+		labels: {
+			location: 'Location',
+			hours: 'Visiting hours',
+			access: 'Access',
+			dressCode: 'Dress code',
+			photoPolicy: 'Photography policy',
+			etiquette: 'Visit etiquette',
+			contact: 'Contact',
+			manager: 'Managed by'
+		}
 	},
 	footer: {
 		description:
@@ -387,7 +448,10 @@ const en: SiteDictionary = {
 				closeInfo: 'Close information',
 				emptyScenes: 'No published scenes yet.',
 				emptyScenesHint:
-					'Published scenes will appear here. An administrator can manage scenes through the dashboard.'
+					'Published scenes will appear here. An administrator can manage scenes through the dashboard.',
+				legendInfo: 'Information hotspot',
+				legendNavigate: 'Area navigation hotspot',
+				legendDrag: 'Drag the panorama to look around'
 			},
 			controls: {
 				loading: 'Loading panorama…',
@@ -398,7 +462,18 @@ const en: SiteDictionary = {
 				reset: 'Reset view',
 				fullscreen: 'Full screen',
 				exitFullscreen: 'Exit full screen',
-				gesture: 'Drag · Zoom · 360°'
+				gesture: 'Drag · Zoom · 360°',
+				hintTitle: 'How to explore',
+				hintDrag: 'Drag or touch the panorama to look around.',
+				hintDismiss: 'Dismiss hint',
+				keyboardHint: 'Use the arrow keys to look around, and + / − to zoom.',
+				keyboardLabel:
+					'360-degree panorama. Use the arrow keys to look around and the plus or minus buttons to zoom.'
+			},
+			glossary: {
+				title: 'Site terms',
+				hint: 'Learn the area names before you start exploring.',
+				note: 'Area descriptions are still undergoing management verification.'
 			},
 			tips: [
 				{
@@ -444,6 +519,8 @@ const en: SiteDictionary = {
 			title: 'Information before your visit.',
 			description:
 				'The visit guide will contain practical information about etiquette, dress, access, and the rules of the temple management.',
+			guideEyebrow: 'General guidance',
+			guideTitle: 'Principles to keep in mind.',
 			notice:
 				'Information at this stage is general. Official requirements will be added after confirmation by the management.'
 		}

@@ -2,6 +2,7 @@
 	import AreaCard from '#lib/components/public/AreaCard.svelte';
 	import GalleryCard from '#lib/components/public/GalleryCard.svelte';
 	import GuideCard from '#lib/components/public/GuideCard.svelte';
+	import VisitInformation from '#lib/components/public/VisitInformation.svelte';
 	import ArrowLink from '#lib/components/ui/ArrowLink.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import Ornament from '#lib/components/ui/Ornament.svelte';
@@ -98,13 +99,22 @@
 	</div>
 
 	<div class="container-page relative pb-8">
-		<p
-			class="hidden max-w-xl border-t border-ivory/10 pt-4 text-[0.65rem] leading-relaxed tracking-[0.1em] text-ivory/55 uppercase sm:block"
+		<div
+			class="hidden max-w-2xl flex-wrap items-center gap-3 border-t border-ivory/10 pt-4 sm:flex"
 		>
-			{hero.note}
-		</p>
+			{#if data.visitInfo?.heritageLabel}
+				<span class="badge badge--gold">{data.visitInfo.heritageLabel}</span>
+			{/if}
+			<p class="text-[0.65rem] leading-relaxed tracking-[0.1em] text-ivory/55 uppercase">
+				{data.visitInfo?.verificationNote || hero.note}
+			</p>
+		</div>
 	</div>
 </section>
+
+{#if data.visitInfo}
+	<VisitInformation content={content.visitInfo} data={data.visitInfo} lang={data.lang} />
+{/if}
 
 <!-- Pengenalan -->
 <section class="section section--paper">

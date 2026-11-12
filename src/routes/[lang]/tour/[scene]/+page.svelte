@@ -23,4 +23,10 @@
 	description={sceneTranslation.description}
 />
 
-<TourStage lang={data.lang} scenes={data.scenes} initialSceneId={data.sceneId} {pageContent} />
+<TourStage
+	lang={data.lang}
+	scenes={data.scenes}
+	initialSceneId={data.sceneId}
+	areas={content.home.areas.items}
+	{pageContent}
+/>

@@ -21,4 +21,4 @@
 	description={pageContent.description}
 />
 
-<TourStage lang={data.lang} scenes={data.scenes} {pageContent} />
+<TourStage lang={data.lang} scenes={data.scenes} areas={content.home.areas.items} {pageContent} />

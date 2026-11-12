@@ -83,9 +83,9 @@ Skala:
 | `.display-md`    | `clamp(1.6rem, 2.4vw, 2.25rem)` | Judul kartu besar              |
 | `.title-sm`      | `clamp(1.2rem, 1.5vw, 1.4rem)`  | Judul kartu/panel              |
 | `.lede`          | `clamp(1.0625rem, 1.25vw, 1.25rem)` | Paragraf pembuka          |
-| `.body-copy`     | `0.9375rem / 1.78`              | Paragraf umum                  |
-| `.meta`          | `0.6875rem`, tracking `0.2em`   | Label, nomor, metadata         |
-| `.eyebrow`       | `0.6875rem`, tracking `0.24em`  | Label section dengan garis     |
+| `.body-copy`     | `1rem / 1.75`                   | Paragraf umum                  |
+| `.meta`          | `0.75rem`, tracking `0.16em`    | Label, nomor, metadata         |
+| `.eyebrow`       | `0.75rem`, tracking `0.2em`     | Label section dengan garis     |
 
 Aturan:
 
@@ -188,10 +188,13 @@ Jangan menumpuk `.surface` di dalam `.surface` tanpa alasan hierarki.
 | `ui/ArrowLink.svelte`            | Tautan aksi dengan panah                       |
 | `ui/Ornament.svelte`             | Garis pemisah dengan motif berlian             |
 | `public/PageIntro.svelte`        | Hero halaman dalam                             |
+| `public/VisitInformation.svelte` | Blok informasi kunjungan dari database         |
 | `public/GalleryCard.svelte`      | Pelat dokumentasi dengan ilustrasi garis       |
 | `public/AreaCard.svelte`         | Baris area bernomor                            |
 | `public/GuideCard.svelte`        | Baris panduan bernomor                         |
-| `tour/TourStage.svelte`          | Panggung tour gelap + tips                     |
+| `admin/SiteContentForm.svelte`   | Form konten situs ID/EN                        |
+| `admin/VisitField.svelte`        | Field form konten dengan label dan error       |
+| `tour/TourStage.svelte`          | Panggung tour gelap + tips + glosarium         |
 | `tour/TourExperience.svelte`     | Viewer + panel scene + panel informasi         |
 | `tour/PanoramaViewer.svelte`     | Isolasi lifecycle Marzipano dan kontrol viewer |
 | `tour/ViewerControl.svelte`      | Tombol kontrol viewer dengan label aksesibel   |
@@ -202,7 +205,7 @@ Jangan menumpuk `.surface` di dalam `.surface` tanpa alasan hierarki.
 
 ### 4.1 Publik
 
-- **Beranda:** hero gelap + arsip pengenalan + preview tour + kutipan sejarah + daftar area + galeri pelat + panduan + footer CTA.
+- **Beranda:** hero gelap + informasi kunjungan (jika sudah tayang) + arsip pengenalan + preview tour + kutipan sejarah + daftar area + galeri pelat + panduan + footer CTA.
 - **Halaman dalam:** `PageIntro` (eyebrow, H1, deskripsi) diikuti satu section editorial.
 - **Tour:** intro terang, lalu panggung gelap penuh untuk viewer; tips di bawah viewer.
 - **Footer:** CTA besar, identitas, navigasi, catatan kunjungan, dan watermark tipografis.
@@ -217,6 +220,7 @@ Ritme section yang disarankan: gelap → kertas → gelap → ivory → sand →
 - **Daftar:** panel tunggal dengan baris berbagi garis; status dan aksi di kanan.
 - **Form:** section bernomor (01, 02, 03) dengan jarak konsisten; aksi simpan di akhir.
 - **Media:** metadata dan upload dipisahkan; panel panduan gelap mendampingi form.
+- **Konten:** mengelola informasi kunjungan ID/EN, status Draf/Tayang, identitas pengelola, dan tautan peta. Field kosong tidak ditampilkan.
 
 Catatan admin:
 
@@ -235,6 +239,7 @@ Catatan admin:
 - Gambar dekoratif memakai `alt=""`; gambar informatif memiliki alt bermakna.
 - Status dan error tidak boleh disampaikan hanya lewat warna.
 - Semua kontrol viewer memiliki `aria-label` yang mengikuti locale.
+- Viewer panorama dapat difokuskan dan dioperasikan dengan tombol panah, `+`, `−`, dan `R`; scene list tetap menjadi alternatif navigasi.
 - Hormati `prefers-reduced-motion`.
 - Jangan menonaktifkan outline tanpa pengganti.
 

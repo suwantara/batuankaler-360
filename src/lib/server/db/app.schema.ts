@@ -153,6 +153,43 @@ export const hotspotTranslation = pgTable(
 	})
 );
 
+export const siteContent = pgTable('site_content', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	slug: varchar('slug', { length: 80 }).notNull().unique(),
+	status: contentStatus('status').notNull().default('draft'),
+	managerName: varchar('manager_name', { length: 200 }).notNull().default(''),
+	managerUrl: text('manager_url').notNull().default(''),
+	mapUrl: text('map_url').notNull().default(''),
+	createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull()
+});
+
+export const siteContentTranslation = pgTable(
+	'site_content_translation',
+	{
+		id: uuid('id').primaryKey().defaultRandom(),
+		contentId: uuid('content_id')
+			.notNull()
+			.references(() => siteContent.id, { onDelete: 'cascade' }),
+		locale: contentLocale('locale').notNull(),
+		heritageLabel: varchar('heritage_label', { length: 120 }).notNull().default(''),
+		location: text('location').notNull().default(''),
+		visitingHours: text('visiting_hours').notNull().default(''),
+		access: text('access').notNull().default(''),
+		dressCode: text('dress_code').notNull().default(''),
+		photoPolicy: text('photo_policy').notNull().default(''),
+		etiquette: text('etiquette').notNull().default(''),
+		contact: text('contact').notNull().default(''),
+		verificationNote: varchar('verification_note', { length: 300 }).notNull().default('')
+	},
+	(table) => ({
+		contentLocaleUnique: uniqueIndex('site_content_translation_content_locale_unique').on(
+			table.contentId,
+			table.locale
+		)
+	})
+);
+
 export const panoramaAssetRelations = relations(panoramaAsset, ({ many }) => ({
 	scenes: many(scene)
 }));
@@ -208,5 +245,16 @@ export const hotspotTranslationRelations = relations(hotspotTranslation, ({ one 
 	hotspot: one(hotspot, {
 		fields: [hotspotTranslation.hotspotId],
 		references: [hotspot.id]
+	})
+}));
+
+export const siteContentRelations = relations(siteContent, ({ many }) => ({
+	translations: many(siteContentTranslation)
+}));
+
+export const siteContentTranslationRelations = relations(siteContentTranslation, ({ one }) => ({
+	content: one(siteContent, {
+		fields: [siteContentTranslation.contentId],
+		references: [siteContent.id]
 	})
 }));

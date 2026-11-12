@@ -8,6 +8,13 @@
       "when": 1794231101795,
       "tag": "0000_init",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794466209535,
+      "tag": "0001_cold_sabra",
+      "breakpoints": true
     }
   ]
 }

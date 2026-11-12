@@ -126,6 +126,18 @@ test.describe('admin dashboard', () => {
 		await expect(page.getByText('scene-jaba.jpg').first()).toBeVisible();
 	});
 
+	test('loads the visit information editor', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+
+		await loginAsAdmin(page);
+		await page.goto('/admin/content');
+
+		await expect(page.getByRole('heading', { name: 'Informasi kunjungan' })).toBeVisible();
+		await expect(page.getByLabel('Nama pengelola')).toBeVisible();
+		await expect(page.getByLabel('Lokasi (ID)')).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Simpan konten' })).toBeVisible();
+	});
+
 	test('rejects a non-image panorama upload', async ({ page }) => {
 		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
 

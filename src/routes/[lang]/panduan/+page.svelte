@@ -1,6 +1,7 @@
 <script lang="ts">
 	import GuideCard from '#lib/components/public/GuideCard.svelte';
 	import PageIntro from '#lib/components/public/PageIntro.svelte';
+	import VisitInformation from '#lib/components/public/VisitInformation.svelte';
 	import ArrowLink from '#lib/components/ui/ArrowLink.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
 	import { localeHref } from '#lib/i18n/index.ts';
@@ -23,11 +24,15 @@
 	description={pageContent.description}
 />
 
+{#if data.visitInfo}
+	<VisitInformation content={content.visitInfo} data={data.visitInfo} lang={data.lang} compact />
+{/if}
+
 <section class="section section--paper">
 	<div class="container-page grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:gap-20">
 		<div class="lg:sticky lg:top-28 lg:self-start">
-			<p class="eyebrow">{content.home.guide.eyebrow}</p>
-			<h2 class="display-xl mt-6 text-navy">{content.home.guide.title}</h2>
+			<p class="eyebrow">{pageContent.guideEyebrow}</p>
+			<h2 class="display-xl mt-6 text-navy">{pageContent.guideTitle}</h2>
 			<p class="mt-6 max-w-md text-base leading-relaxed text-body">
 				{content.home.guide.body}
 			</p>
