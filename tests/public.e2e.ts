@@ -138,6 +138,23 @@ test.describe('admin dashboard', () => {
 		await expect(page.getByRole('button', { name: 'Aktifkan mode terang' })).toBeVisible();
 	});
 
+	test('loads the history page editor and adds an article block', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+
+		await loginAsAdmin(page);
+		await page.goto('/admin/pages');
+
+		await expect(page.getByRole('heading', { name: 'Halaman', exact: true })).toBeVisible();
+		await expect(page.getByText('Sejarah').first()).toBeVisible();
+		await page.getByRole('link', { name: 'Edit halaman' }).first().click();
+
+		await expect(page.getByRole('heading', { name: 'Artikel' })).toBeVisible();
+		await page.getByRole('button', { name: 'Tambah bagian' }).first().click();
+
+		await expect(page.getByLabel('Subjudul (ID)')).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Simpan halaman' })).toBeVisible();
+	});
+
 	test('loads the visit information editor', async ({ page }) => {
 		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
 

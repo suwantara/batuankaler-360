@@ -2,7 +2,7 @@
 	let {
 		name,
 		label,
-		value,
+		value = $bindable(''),
 		error = '',
 		placeholder = '',
 		hint = '',
@@ -33,15 +33,15 @@
 			{rows}
 			{placeholder}
 			class="field-input"
-			aria-invalid={error ? 'true' : undefined}>{value}</textarea
-		>
+			bind:value
+			aria-invalid={error ? 'true' : undefined}></textarea>
 	{:else}
 		<input
 			{name}
 			{type}
-			{value}
 			{placeholder}
 			class="field-input"
+			bind:value
 			aria-invalid={error ? 'true' : undefined}
 		/>
 	{/if}

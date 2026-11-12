@@ -195,7 +195,9 @@ Jangan menumpuk `.surface` di dalam `.surface` tanpa alasan hierarki.
 | `public/AreaCard.svelte`         | Baris area bernomor                            |
 | `public/GuideCard.svelte`        | Baris panduan bernomor                         |
 | `admin/SiteContentForm.svelte`   | Form konten situs ID/EN                        |
+| `admin/PageContentForm.svelte`   | Editor halaman + blok artikel ID/EN             |
 | `admin/VisitField.svelte`        | Field form konten dengan label dan error       |
+| `public/SitePageArticle.svelte`  | Artikel publik dengan daftar isi dan blok      |
 | `tour/TourStage.svelte`          | Panggung tour gelap + tips + glosarium         |
 | `tour/TourExperience.svelte`     | Viewer + panel scene + panel informasi         |
 | `tour/PanoramaViewer.svelte`     | Isolasi lifecycle Marzipano dan kontrol viewer |
@@ -224,7 +226,8 @@ Ritme section yang disarankan: gelap → kertas → gelap → ivory → sand →
 - **Koordinat:** form scene dan hotspot memiliki pemilih panorama. Pengguna menggeser panorama, mengklik satu titik, lalu yaw/pitch terisi otomatis dan marker emas menandai posisi.
 - **Media:** metadata dan upload dipisahkan; panel panduan gelap mendampingi form.
 - **Hotspot:** daftar seluruh hotspot dikelompokkan per scene, lengkap dengan tipe, tujuan, koordinat, dan status aktif. Tombol Edit membuka langsung hotspot terkait di halaman scene.
-- **Konten:** mengelola informasi kunjungan ID/EN, status Draf/Tayang, identitas pengelola, dan tautan peta. Field kosong tidak ditampilkan.
+- **Kunjungan:** mengelola informasi kunjungan ID/EN, status Draf/Tayang, identitas pengelola, dan tautan peta. Field kosong tidak ditampilkan.
+- **Halaman:** mengelola metadata halaman publik dan artikel berbasis blok. Blok `section`, `quote`, dan `source` dapat ditambah, diurutkan ulang, dan dihapus. Halaman Sejarah menjadi implementasi pertama.
 - **Mode gelap:** toggle tersedia di topbar admin dan halaman login. Pilihan disimpan di `localStorage`, mengikuti preferensi sistem saat belum ada pilihan, dan hanya memengaruhi area `.admin-shell`; situs publik tetap terang.
 
 Catatan admin:
@@ -232,6 +235,25 @@ Catatan admin:
 - Semua route admin tetap dilindungi sesi di server.
 - Aksi hapus memakai konfirmasi dan mempertahankan `data-testid` yang diuji E2E.
 - Status ditampilkan sebagai teks, bukan warna saja.
+
+---
+
+### 4.3 Model Konten Halaman
+
+Konten halaman publik menggunakan model generik:
+
+- `site_page` — identitas halaman dan status Draf/Tayang.
+- `site_page_translation` — eyebrow, judul, deskripsi, dan catatan verifikasi per locale.
+- `site_page_block` — blok artikel berurutan dengan tipe `section`, `quote`, atau `source`.
+- `site_page_block_translation` — judul dan isi blok per locale.
+
+Aturan:
+
+- Urutan blok mengikuti `sort_order`; editor admin mengirim ulang urutan tersebut.
+- Konten ID menjadi sumber utama; field EN kosong memakai fallback ID dengan indikator di halaman publik.
+- Halaman publik hanya membaca halaman berstatus Tayang.
+- Halaman tanpa konten tayang memakai fallback statis agar situs tidak kosong.
+- Untuk saat ini halaman Sejarah sudah tersambung; halaman lain mengikuti model yang sama pada tahap berikutnya.
 
 ---
 

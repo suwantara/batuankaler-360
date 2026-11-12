@@ -233,7 +233,13 @@ const id = {
 			description:
 				'Halaman ini akan memuat ringkasan sejarah Pura Batuan Kaler setelah melalui verifikasi dan persetujuan pengelola.',
 			notice:
-				'Konten sejarah belum dipublikasikan. Kerangka halaman disiapkan agar informasi yang nantinya tampil memiliki sumber yang dapat dipertanggungjawabkan.'
+				'Konten sejarah belum dipublikasikan. Kerangka halaman disiapkan agar informasi yang nantinya tampil memiliki sumber yang dapat dipertanggungjawabkan.',
+			toc: 'Dalam halaman ini',
+			updated: 'Terakhir diperbarui',
+			source: 'Sumber',
+			empty: 'Artikel sejarah sedang disiapkan oleh pengelola.',
+			fallback:
+				'Terjemahan Inggris belum lengkap. Sebagian artikel ditampilkan dalam Bahasa Indonesia.'
 		},
 		area: {
 			eyebrow: 'Area',
@@ -498,7 +504,12 @@ const en: SiteDictionary = {
 			description:
 				'This page will present a summary of the history of Pura Batuan Kaler after verification and approval by the management.',
 			notice:
-				'Historical content has not been published yet. The page framework is prepared so that the information shown later has accountable sources.'
+				'Historical content has not been published yet. The page framework is prepared so that the information shown later has accountable sources.',
+			toc: 'On this page',
+			updated: 'Last updated',
+			source: 'Source',
+			empty: 'The history article is being prepared by the management.',
+			fallback: 'The English translation is incomplete. Part of the article is shown in Indonesian.'
 		},
 		area: {
 			eyebrow: 'Areas',

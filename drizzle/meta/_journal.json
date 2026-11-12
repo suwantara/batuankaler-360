@@ -15,6 +15,13 @@
       "when": 1794466209535,
       "tag": "0001_cold_sabra",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794475104033,
+      "tag": "0002_lonely_wolf_cub",
+      "breakpoints": true
     }
   ]
 }

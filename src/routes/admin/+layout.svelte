@@ -15,7 +15,8 @@
 		{ label: 'Scene', href: resolve('admin/scenes'), icon: 'layers' },
 		{ label: 'Hotspot', href: resolve('admin/hotspots'), icon: 'map-pin' },
 		{ label: 'Media', href: resolve('admin/media'), icon: 'image' },
-		{ label: 'Konten', href: resolve('admin/content'), icon: 'file' },
+		{ label: 'Halaman', href: resolve('admin/pages'), icon: 'file' },
+		{ label: 'Kunjungan', href: resolve('admin/content'), icon: 'compass' },
 		{ label: 'Pengaturan', href: resolve('admin/settings'), icon: 'settings' }
 	];
 

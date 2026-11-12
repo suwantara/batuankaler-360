@@ -190,6 +190,72 @@ export const siteContentTranslation = pgTable(
 	})
 );
 
+export const sitePage = pgTable('site_page', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	slug: varchar('slug', { length: 80 }).notNull().unique(),
+	status: contentStatus('status').notNull().default('draft'),
+	sortOrder: integer('sort_order').notNull().default(0),
+	createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+	updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull()
+});
+
+export const sitePageTranslation = pgTable(
+	'site_page_translation',
+	{
+		id: uuid('id').primaryKey().defaultRandom(),
+		pageId: uuid('page_id')
+			.notNull()
+			.references(() => sitePage.id, { onDelete: 'cascade' }),
+		locale: contentLocale('locale').notNull(),
+		eyebrow: varchar('eyebrow', { length: 200 }).notNull().default(''),
+		title: varchar('title', { length: 300 }).notNull().default(''),
+		description: text('description').notNull().default(''),
+		verificationNote: varchar('verification_note', { length: 500 }).notNull().default('')
+	},
+	(table) => ({
+		pageLocaleUnique: uniqueIndex('site_page_translation_page_locale_unique').on(
+			table.pageId,
+			table.locale
+		)
+	})
+);
+
+export const sitePageBlock = pgTable(
+	'site_page_block',
+	{
+		id: uuid('id').primaryKey().defaultRandom(),
+		pageId: uuid('page_id')
+			.notNull()
+			.references(() => sitePage.id, { onDelete: 'cascade' }),
+		type: varchar('type', { length: 32 }).notNull().default('section'),
+		sortOrder: integer('sort_order').notNull().default(0),
+		createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+		updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull()
+	},
+	(table) => ({
+		pageOrderIdx: index('site_page_block_page_order_idx').on(table.pageId, table.sortOrder)
+	})
+);
+
+export const sitePageBlockTranslation = pgTable(
+	'site_page_block_translation',
+	{
+		id: uuid('id').primaryKey().defaultRandom(),
+		blockId: uuid('block_id')
+			.notNull()
+			.references(() => sitePageBlock.id, { onDelete: 'cascade' }),
+		locale: contentLocale('locale').notNull(),
+		heading: varchar('heading', { length: 300 }).notNull().default(''),
+		body: text('body').notNull().default('')
+	},
+	(table) => ({
+		blockLocaleUnique: uniqueIndex('site_page_block_translation_block_locale_unique').on(
+			table.blockId,
+			table.locale
+		)
+	})
+);
+
 export const panoramaAssetRelations = relations(panoramaAsset, ({ many }) => ({
 	scenes: many(scene)
 }));
@@ -256,5 +322,32 @@ export const siteContentTranslationRelations = relations(siteContentTranslation,
 	content: one(siteContent, {
 		fields: [siteContentTranslation.contentId],
 		references: [siteContent.id]
+	})
+}));
+
+export const sitePageRelations = relations(sitePage, ({ many }) => ({
+	translations: many(sitePageTranslation),
+	blocks: many(sitePageBlock)
+}));
+
+export const sitePageTranslationRelations = relations(sitePageTranslation, ({ one }) => ({
+	page: one(sitePage, {
+		fields: [sitePageTranslation.pageId],
+		references: [sitePage.id]
+	})
+}));
+
+export const sitePageBlockRelations = relations(sitePageBlock, ({ one, many }) => ({
+	page: one(sitePage, {
+		fields: [sitePageBlock.pageId],
+		references: [sitePage.id]
+	}),
+	translations: many(sitePageBlockTranslation)
+}));
+
+export const sitePageBlockTranslationRelations = relations(sitePageBlockTranslation, ({ one }) => ({
+	block: one(sitePageBlock, {
+		fields: [sitePageBlockTranslation.blockId],
+		references: [sitePageBlock.id]
 	})
 }));
