@@ -1,6 +1,8 @@
+import { eq } from 'drizzle-orm';
 import { betterAuth } from 'better-auth/minimal';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { db, closeDb } from './script-db.ts';
+import { user } from './schema.ts';
 
 const email = process.env.ADMIN_EMAIL;
 const password = process.env.ADMIN_PASSWORD;
@@ -22,6 +24,17 @@ const provisioningAuth = betterAuth({
 });
 
 async function createAdmin(): Promise<void> {
+	const existing = await db
+		.select({ id: user.id })
+		.from(user)
+		.where(eq(user.email, email!))
+		.limit(1);
+
+	if (existing.length > 0) {
+		console.log(`Admin sudah ada: ${email}`);
+		return;
+	}
+
 	await provisioningAuth.api.signUpEmail({
 		body: { email: email!, password: password!, name }
 	});

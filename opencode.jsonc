@@ -1,0 +1,24 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+	"mcp": {
+		"servers": {
+			"dokploy": {
+				"type": "local",
+				"command": ["sh", ".opencode/dokploy-mcp.sh"],
+				"cwd": ".",
+				"environment": {
+					"DOKPLOY_TOOL_PRESET": "deploy"
+				},
+				"timeout": {
+					"startup": 60000
+				}
+			}
+		}
+	},
+	"commands": {
+		"deploy-dokploy": {
+			"description": "Deploy this application via the Dokploy MCP server",
+			"template": "Use the dokploy MCP server to deploy this project. First list Dokploy projects and applications and identify the application for batuankaler-360. Confirm that the application uses the Dockerfile build type and the main branch. Ask for confirmation before triggering the deployment. Then trigger a deployment, poll its status, and if it fails, read the build logs and summarize the cause. Do not modify or delete unrelated applications."
+		}
+	}
+}

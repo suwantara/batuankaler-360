@@ -29,3 +29,14 @@ test-results
 
 # Uploaded panorama assets
 /uploads/
+
+# Build-time generated Docker tools
+/docker/seed.mjs
+/docker/create-admin.mjs
+
+# Local OpenCode/Dokploy env
+.opencode/dokploy.env
+
+# Local performance-testing artifacts (not part of the web app)
+/performance-testing/
+/docs/performance-testing-audit.md

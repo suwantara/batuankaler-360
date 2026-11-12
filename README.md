@@ -14,7 +14,6 @@ Dokumen produk dan aturan implementasi:
 - [x] Fase 3 — multi-scene, hotspot navigasi/informasi, scene list, panel informasi, dan deep link scene.
 - [x] Fase 4 — PostgreSQL, Drizzle schema domain, Better Auth, login admin, CRUD scene/hotspot, status draft/published, dan panel admin.
 - [x] Fase 5 — upload aset panorama, thumbnail/preview, preview admin, validasi publikasi, dan pengelolaan media.
-- [ ] Fase 6 — deployment VPS, HTTPS, backup, dan smoke test.
 
 Public tour membaca scene **published** dari database. Halaman sejarah, area, galeri, dan panduan masih placeholder sampai fase konten berikutnya.
 
@@ -220,4 +219,4 @@ Data awal di `src/lib/tour/scenes.ts` dipakai oleh `pnpm db:seed`; setelah di-se
 - Rate limit login diaktifkan melalui konfigurasi Better Auth.
 - Upload aset divalidasi berdasarkan isi gambar, ekstensi, ukuran, rasio panorama, dan nama file yang dibuat ulang.
 - Route `/uploads/panoramas/...` hanya menyajikan gambar dan menolak path traversal.
-- Ganti `BETTER_AUTH_SECRET` dan password admin sebelum deployment produksi.
+- Ganti `BETTER_AUTH_SECRET` dan password admin sebelum dipakai di lingkungan produksi.

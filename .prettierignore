@@ -14,3 +14,11 @@ PRD.md
 
 # Playwright MCP artifacts
 .playwright-mcp
+
+# User performance-testing artifacts
+/performance-testing/
+/docs/
+
+# Build-time generated Docker tools
+/docker/seed.mjs
+/docker/create-admin.mjs
