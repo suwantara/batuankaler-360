@@ -94,7 +94,7 @@
 		</div>
 	</div>
 
-	<div class="container-page relative -mb-2 overflow-hidden pt-4" aria-hidden="true">
-		<p class="watermark -mb-[0.24em] text-ivory">Batuan Kaler</p>
+	<div class="container-page relative overflow-hidden pt-4 pb-8" aria-hidden="true">
+		<p class="watermark">Batuan Kaler</p>
 	</div>
 </footer>
