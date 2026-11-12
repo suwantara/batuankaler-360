@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import ConfirmDeleteForm from '#lib/components/admin/ConfirmDeleteForm.svelte';
 	import HotspotForm from '#lib/components/admin/HotspotForm.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import { emptyHotspotFormValues, type HotspotFormValues } from '#lib/schemas/scene.ts';
@@ -152,19 +153,14 @@
 							submitLabel="Simpan hotspot"
 						/>
 
-						<form
-							method="POST"
+						<ConfirmDeleteForm
 							action="?/delete"
-							class="mt-5 border-t border-danger/15 pt-4"
-							onsubmit={(event) => {
-								if (!confirm('Hapus hotspot ini?')) {
-									event.preventDefault();
-								}
-							}}
-						>
-							<input type="hidden" name="hotspotId" value={hotspot.id} />
-							<button type="submit" class="btn btn--danger btn--sm">Hapus hotspot</button>
-						</form>
+							fields={{ hotspotId: hotspot.id }}
+							buttonLabel="Hapus hotspot"
+							formClass="mt-5 border-t border-danger/15 pt-4"
+							confirmTitle="Hapus hotspot?"
+							confirmDescription="Hotspot akan dihapus dari scene ini. Tindakan ini tidak dapat dibatalkan."
+						/>
 					</div>
 				</details>
 			{/each}

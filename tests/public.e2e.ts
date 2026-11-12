@@ -324,9 +324,15 @@ test.describe('admin dashboard', () => {
 		await page
 			.locator('input[name="thumbnail"]')
 			.setInputFiles('static/images/panoramas/scene-jaba-thumb.jpg');
+		await page.route('**/admin/media/upload/api', async (route) => {
+			await new Promise((resolve) => setTimeout(resolve, 500));
+			await route.continue();
+		});
 		await page.getByRole('button', { name: 'Unggah aset' }).click();
 
-		await expect(page).toHaveURL(/\/admin\/media$/);
+		await expect(page.getByRole('progressbar', { name: 'Progres unggah aset' })).toBeVisible();
+		await expect(page).toHaveURL(/\/admin\/media\?uploaded=1$/);
+		await expect(page.getByRole('status')).toContainText('berhasil diunggah');
 		await expect(page.getByTestId('asset-row')).toHaveCount(initialRows + 1);
 		await expect(page.getByTestId('asset-row').last()).toContainText('/uploads/panoramas/');
 
@@ -335,8 +341,15 @@ test.describe('admin dashboard', () => {
 		await expect(page.locator('canvas')).toBeVisible({ timeout: 15_000 });
 
 		await page.goto('/admin/media');
-		page.once('dialog', (dialog) => dialog.accept());
 		await page.getByTestId('asset-row').last().getByTestId('delete-asset').click();
+		const deleteDialog = page.getByRole('dialog', { name: 'Hapus aset panorama?' });
+		await expect(deleteDialog).toBeVisible();
+		await deleteDialog.getByRole('button', { name: 'Batal' }).click();
+		await expect(deleteDialog).toBeHidden();
+		await expect(page.getByTestId('asset-row')).toHaveCount(initialRows + 1);
+
+		await page.getByTestId('asset-row').last().getByTestId('delete-asset').click();
+		await deleteDialog.getByRole('button', { name: 'Hapus', exact: true }).click();
 		await expect(page.getByTestId('asset-row')).toHaveCount(initialRows);
 	});
 
@@ -381,8 +394,10 @@ test.describe('admin dashboard', () => {
 		await page.getByRole('button', { name: 'Publikasikan' }).click();
 		await expect(page.getByRole('link', { name: 'Lihat di situs' })).toBeVisible();
 
-		page.once('dialog', (dialog) => dialog.accept());
 		await page.getByRole('button', { name: 'Hapus scene' }).click();
+		const sceneDialog = page.getByRole('dialog', { name: 'Hapus scene?' });
+		await expect(sceneDialog).toBeVisible();
+		await sceneDialog.getByRole('button', { name: 'Hapus', exact: true }).click();
 
 		await expect(page).toHaveURL(/\/admin\/scenes$/);
 		await expect(page.getByText(slug)).toHaveCount(0);

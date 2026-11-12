@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
+	import ConfirmDeleteForm from '#lib/components/admin/ConfirmDeleteForm.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import { emptyPanoramaAssetFormValues } from '#lib/schemas/scene.ts';
 	import type { PageProps } from './$types';
@@ -7,6 +9,7 @@
 	let { data, form }: PageProps = $props();
 
 	const values = $derived(form?.values ?? emptyPanoramaAssetFormValues);
+	const uploadSucceeded = $derived(page.url.searchParams.get('uploaded') === '1');
 </script>
 
 <svelte:head>
@@ -29,8 +32,10 @@
 		</a>
 	</header>
 
-	{#if form?.success}
-		<div class="alert alert--success" role="status">Aset panorama berhasil disimpan.</div>
+	{#if form?.success || uploadSucceeded}
+		<div class="alert alert--success" role="status">
+			{uploadSucceeded ? 'Aset panorama berhasil diunggah.' : 'Aset panorama berhasil disimpan.'}
+		</div>
 	{/if}
 
 	{#if form?.errors?.form}
@@ -217,25 +222,15 @@
 								Preview
 								<Icon name="eye" class="h-3.5 w-3.5" />
 							</a>
-							<form
-								method="POST"
+							<ConfirmDeleteForm
 								action="?/delete"
-								onsubmit={(event) => {
-									if (!confirm('Hapus aset panorama ini?')) {
-										event.preventDefault();
-									}
-								}}
-							>
-								<input type="hidden" name="assetId" value={asset.id} />
-								<button
-									type="submit"
-									data-testid="delete-asset"
-									class="inline-flex items-center gap-1.5 text-xs font-semibold text-danger transition-colors hover:text-danger/70"
-								>
-									Hapus
-									<Icon name="trash" class="h-3.5 w-3.5" />
-								</button>
-							</form>
+								fields={{ assetId: asset.id }}
+								buttonLabel="Hapus"
+								buttonClass="inline-flex items-center gap-1.5 text-xs font-semibold text-danger transition-colors hover:text-danger/70"
+								buttonTestId="delete-asset"
+								confirmTitle="Hapus aset panorama?"
+								confirmDescription="Aset dan file panorama akan dihapus permanen. Tindakan ini tidak dapat dibatalkan."
+							/>
 						</div>
 					</div>
 				{/each}

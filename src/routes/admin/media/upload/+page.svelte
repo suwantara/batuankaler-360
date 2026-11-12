@@ -1,10 +1,109 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { onDestroy } from 'svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import { ALLOWED_IMAGE_LABEL, UPLOAD_LIMITS } from '#lib/upload/limits.ts';
 	import type { PageProps } from './$types';
 
+	interface UploadResult {
+		ok: boolean;
+		message?: string;
+	}
+
 	let { form }: PageProps = $props();
+
+	let uploading = $state(false);
+	let progress = $state(0);
+	let uploadError = $state('');
+	let activeRequest: XMLHttpRequest | null = null;
+
+	const processing = $derived(uploading && progress >= 100);
+
+	function readMessage(payload: unknown): string | undefined {
+		if (payload && typeof payload === 'object' && 'message' in payload) {
+			const message = payload.message;
+
+			if (typeof message === 'string') return message;
+		}
+
+		return undefined;
+	}
+
+	function sendUpload(formData: FormData): Promise<UploadResult> {
+		return new Promise((finish) => {
+			const request = new XMLHttpRequest();
+			activeRequest = request;
+			request.open('POST', resolve('admin/media/upload/api'));
+
+			request.upload.addEventListener('progress', (event) => {
+				if (!event.lengthComputable || event.total === 0) return;
+
+				progress = Math.min(99, Math.round((event.loaded / event.total) * 100));
+			});
+
+			request.addEventListener('load', () => {
+				activeRequest = null;
+				progress = 100;
+
+				let payload: unknown;
+
+				try {
+					payload = JSON.parse(request.responseText);
+				} catch {
+					payload = null;
+				}
+
+				const succeeded = request.status >= 200 && request.status < 300;
+
+				finish({
+					ok: succeeded,
+					message:
+						readMessage(payload) ?? (succeeded ? undefined : 'Gagal mengunggah aset panorama.')
+				});
+			});
+
+			request.addEventListener('error', () => {
+				activeRequest = null;
+				finish({
+					ok: false,
+					message: 'Koneksi ke server terputus. Periksa jaringan lalu coba lagi.'
+				});
+			});
+
+			request.addEventListener('abort', () => {
+				activeRequest = null;
+				finish({ ok: false, message: 'Unggahan dibatalkan.' });
+			});
+
+			request.send(formData);
+		});
+	}
+
+	async function handleSubmit(event: SubmitEvent): Promise<void> {
+		event.preventDefault();
+
+		const formElement = event.currentTarget;
+
+		if (!(formElement instanceof HTMLFormElement) || uploading) return;
+		if (!formElement.reportValidity()) return;
+
+		uploadError = '';
+		uploading = true;
+		progress = 0;
+
+		const result = await sendUpload(new FormData(formElement));
+
+		uploading = false;
+
+		if (!result.ok) {
+			uploadError = result.message ?? 'Gagal mengunggah aset panorama.';
+			return;
+		}
+
+		window.location.assign(`${resolve('admin/media')}?uploaded=1`);
+	}
+
+	onDestroy(() => activeRequest?.abort());
 </script>
 
 <svelte:head>
@@ -32,11 +131,17 @@
 		<div class="alert alert--error" role="alert">{form.message}</div>
 	{/if}
 
+	{#if uploadError}
+		<div class="alert alert--error" role="alert">{uploadError}</div>
+	{/if}
+
 	<div class="grid gap-6 xl:grid-cols-[1.35fr_0.65fr]">
 		<form
 			method="POST"
 			enctype="multipart/form-data"
 			class="surface flex flex-col gap-6 p-5 sm:p-6"
+			aria-busy={uploading}
+			onsubmit={handleSubmit}
 		>
 			<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 				<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
@@ -94,9 +199,34 @@
 				</label>
 			</div>
 
+			{#if uploading}
+				<div class="border-t border-charcoal/10 pt-5" aria-live="polite">
+					<div class="flex items-center justify-between gap-3 text-xs font-semibold text-heading">
+						<span>{processing ? 'Memproses aset…' : 'Mengunggah aset…'}</span>
+						<span class="tabular-nums">{progress}%</span>
+					</div>
+					<div
+						class="mt-2 h-2 overflow-hidden rounded-full bg-line/10"
+						role="progressbar"
+						aria-label="Progres unggah aset"
+						aria-valuemin="0"
+						aria-valuemax="100"
+						aria-valuenow={progress}
+					>
+						<div
+							class="h-full rounded-full bg-gold-dark transition-[width] duration-200 ease-out"
+							style={`width: ${progress}%`}
+						></div>
+					</div>
+					<p class="mt-2 text-xs leading-relaxed text-muted">
+						Jangan tutup halaman ini sampai proses selesai.
+					</p>
+				</div>
+			{/if}
+
 			<div class="flex flex-wrap items-center gap-4 border-t border-charcoal/10 pt-5">
-				<button type="submit" class="btn btn--primary">
-					Unggah aset
+				<button type="submit" class="btn btn--primary" disabled={uploading}>
+					{uploading ? 'Mengunggah…' : 'Unggah aset'}
 					<Icon name="upload" class="h-4 w-4" />
 				</button>
 				<a

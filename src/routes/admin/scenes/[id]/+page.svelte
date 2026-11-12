@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import ConfirmDeleteForm from '#lib/components/admin/ConfirmDeleteForm.svelte';
 	import SceneForm from '#lib/components/admin/SceneForm.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import type { PageProps } from './$types';
@@ -90,18 +91,14 @@
 					Scene yang masih menjadi tujuan hotspot tidak dapat dihapus. Pindahkan atau hapus hotspot
 					terkait terlebih dahulu.
 				</p>
-				<form
-					method="POST"
+				<ConfirmDeleteForm
 					action="?/delete"
-					class="mt-4"
-					onsubmit={(event) => {
-						if (!confirm('Hapus scene ini? Tindakan ini tidak dapat dibatalkan.')) {
-							event.preventDefault();
-						}
-					}}
-				>
-					<button type="submit" class="btn btn--danger btn--sm">Hapus scene</button>
-				</form>
+					fields={{}}
+					buttonLabel="Hapus scene"
+					formClass="mt-4"
+					confirmTitle="Hapus scene?"
+					confirmDescription="Scene akan dihapus permanen. Scene yang masih menjadi tujuan hotspot tidak dapat dihapus."
+				/>
 			</div>
 		</div>
 	</section>
