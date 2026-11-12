@@ -21,6 +21,10 @@
 	];
 
 	function isActive(href: string): boolean {
+		if (href === resolve('admin/pages') && page.url.pathname === resolve('admin/home')) {
+			return true;
+		}
+
 		return page.url.pathname === href || page.url.pathname.startsWith(`${href}/`);
 	}
 

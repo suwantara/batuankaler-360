@@ -210,7 +210,8 @@ export const sitePageTranslation = pgTable(
 		eyebrow: varchar('eyebrow', { length: 200 }).notNull().default(''),
 		title: varchar('title', { length: 300 }).notNull().default(''),
 		description: text('description').notNull().default(''),
-		verificationNote: varchar('verification_note', { length: 500 }).notNull().default('')
+		verificationNote: varchar('verification_note', { length: 500 }).notNull().default(''),
+		data: jsonb('data').$type<unknown>().notNull().default({})
 	},
 	(table) => ({
 		pageLocaleUnique: uniqueIndex('site_page_translation_page_locale_unique').on(

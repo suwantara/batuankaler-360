@@ -138,6 +138,22 @@ test.describe('admin dashboard', () => {
 		await expect(page.getByRole('button', { name: 'Aktifkan mode terang' })).toBeVisible();
 	});
 
+	test('loads the home content editor and switches language', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+
+		await loginAsAdmin(page);
+		await page.goto('/admin/pages');
+
+		await expect(page.getByRole('link', { name: 'Edit beranda' })).toBeVisible();
+		await page.getByRole('link', { name: 'Edit beranda' }).click();
+
+		await expect(page.getByRole('heading', { name: 'Beranda', exact: true })).toBeVisible();
+		await expect(page.getByLabel('Baris utama judul (ID)')).toBeVisible();
+
+		await page.getByRole('button', { name: 'English' }).click();
+		await expect(page.getByLabel('Baris utama judul (EN)')).toBeVisible();
+	});
+
 	test('loads the history page editor and adds an article block', async ({ page }) => {
 		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
 

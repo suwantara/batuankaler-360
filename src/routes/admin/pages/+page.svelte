@@ -63,10 +63,17 @@
 					</div>
 
 					<div class="flex flex-wrap items-center gap-2 lg:flex-col lg:items-end">
-						<a href={resolve(`admin/pages/${page.slug}`)} class="btn btn--primary btn--sm">
-							<Icon name="file" class="h-3.5 w-3.5" />
-							Edit halaman
-						</a>
+						{#if page.slug === 'beranda'}
+							<a href={resolve('admin/home')} class="btn btn--primary btn--sm">
+								<Icon name="file" class="h-3.5 w-3.5" />
+								Edit beranda
+							</a>
+						{:else}
+							<a href={resolve(`admin/pages/${page.slug}`)} class="btn btn--primary btn--sm">
+								<Icon name="file" class="h-3.5 w-3.5" />
+								Edit halaman
+							</a>
+						{/if}
 						{#if page.status === 'published' && definition}
 							<a href={localeHref('id', definition.path)} class="btn btn--outline btn--sm">
 								Lihat halaman
@@ -82,8 +89,8 @@
 	<div class="surface flex items-start gap-4 p-5">
 		<Icon name="info" class="mt-0.5 h-5 w-5 shrink-0 text-gold-dark/70" />
 		<p class="max-w-3xl text-sm leading-relaxed text-muted">
-			Halaman Beranda dan Virtual Tour belum memakai editor ini. Halaman Sejarah, Panduan, Area, dan
-			Galeri sudah tersambung ke model konten halaman.
+			Beranda, Sejarah, Panduan, Area, dan Galeri sudah bisa diedit. Konten Virtual Tour dan foto
+			galeri masih menunggu tahap berikutnya.
 		</p>
 	</div>
 </div>

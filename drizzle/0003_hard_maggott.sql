@@ -1,0 +1,1 @@
+ALTER TABLE "site_page_translation" ADD COLUMN "data" jsonb DEFAULT '{}'::jsonb NOT NULL;

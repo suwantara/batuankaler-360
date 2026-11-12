@@ -30,6 +30,13 @@ export interface SitePageAdmin {
 	blocks: SitePageBlockAdmin[];
 }
 
+export interface SitePageDataAdmin {
+	slug: string;
+	status: 'draft' | 'published';
+	updatedAt: string;
+	data: Record<Locale, unknown>;
+}
+
 export interface SitePageBlockView {
 	id: string;
 	type: SitePageBlockType;

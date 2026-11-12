@@ -19,6 +19,7 @@ import type {
 	SitePageBlockAdmin,
 	SitePageBlockTranslation,
 	SitePageBlockView,
+	SitePageDataAdmin,
 	SitePageTranslation,
 	SitePageView
 } from '#lib/types/site-page.ts';
@@ -268,6 +269,68 @@ export async function saveSitePage(
 	});
 
 	return toAdminView(await requireSitePage(slug));
+}
+
+type SitePageDataRow = Pick<SitePageRow, 'slug' | 'status' | 'updatedAt' | 'translations'>;
+
+function translationData(translations: SitePageRow['translations'], locale: Locale): unknown {
+	return translations.find((item) => item.locale === locale)?.data ?? {};
+}
+
+function toDataAdminView(page: SitePageDataRow): SitePageDataAdmin {
+	return {
+		slug: page.slug,
+		status: page.status,
+		updatedAt: page.updatedAt.toISOString(),
+		data: {
+			id: translationData(page.translations, 'id'),
+			en: translationData(page.translations, 'en')
+		}
+	};
+}
+
+export async function getOrCreateSitePageData(slug: string): Promise<SitePageDataAdmin> {
+	return toDataAdminView(await ensureSitePage(slug));
+}
+
+export async function saveSitePageData(
+	slug: string,
+	status: 'draft' | 'published',
+	data: Record<Locale, unknown>
+): Promise<SitePageDataAdmin> {
+	const current = await ensureSitePage(slug);
+
+	await db.transaction(async (tx) => {
+		await tx
+			.update(sitePage)
+			.set({ status, updatedAt: new Date() })
+			.where(eq(sitePage.id, current.id));
+
+		for (const locale of locales) {
+			await tx
+				.insert(sitePageTranslation)
+				.values({
+					pageId: current.id,
+					locale,
+					data: data[locale]
+				})
+				.onConflictDoUpdate({
+					target: [sitePageTranslation.pageId, sitePageTranslation.locale],
+					set: { data: data[locale] }
+				});
+		}
+	});
+
+	return getOrCreateSitePageData(slug);
+}
+
+export async function getPublishedSitePageData(slug: string): Promise<SitePageDataAdmin | null> {
+	const page = await db.query.sitePage.findFirst({
+		where: and(eq(sitePage.slug, slug), eq(sitePage.status, 'published')),
+		with: { translations: true }
+	});
+
+	return page ? toDataAdminView(page) : null;
 }
 
 export async function getPublishedSitePage(

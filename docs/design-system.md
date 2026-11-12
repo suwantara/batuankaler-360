@@ -196,6 +196,8 @@ Jangan menumpuk `.surface` di dalam `.surface` tanpa alasan hierarki.
 | `public/GuideCard.svelte`        | Baris panduan bernomor                         |
 | `admin/SiteContentForm.svelte`   | Form konten situs ID/EN                        |
 | `admin/PageContentForm.svelte`   | Editor halaman + blok artikel ID/EN             |
+| `admin/HomeContentForm.svelte`   | Editor terstruktur beranda ID/EN                |
+| `admin/HomeLocaleFields.svelte`  | Field per bagian beranda untuk satu locale      |
 | `admin/VisitField.svelte`        | Field form konten dengan label dan error       |
 | `public/SitePageArticle.svelte`  | Artikel publik dengan daftar isi dan blok      |
 | `public/SitePageIndex.svelte`    | Daftar area bernomor dari blok halaman         |
@@ -229,7 +231,7 @@ Ritme section yang disarankan: gelap → kertas → gelap → ivory → sand →
 - **Media:** metadata dan upload dipisahkan; panel panduan gelap mendampingi form.
 - **Hotspot:** daftar seluruh hotspot dikelompokkan per scene, lengkap dengan tipe, tujuan, koordinat, dan status aktif. Tombol Edit membuka langsung hotspot terkait di halaman scene.
 - **Kunjungan:** mengelola informasi kunjungan ID/EN, status Draf/Tayang, identitas pengelola, dan tautan peta. Field kosong tidak ditampilkan.
-- **Halaman:** mengelola metadata halaman publik dan konten berbasis blok. Blok `section`, `quote`, dan `source` dapat ditambah, diurutkan ulang, dan dihapus. Tipe halaman: artikel (Sejarah, Panduan), indeks area, dan galeri.
+- **Halaman:** mengelola metadata halaman publik dan konten berbasis blok. Blok `section`, `quote`, dan `source` dapat ditambah, diurutkan ulang, dan dihapus. Tipe halaman: beranda terstruktur, artikel (Sejarah, Panduan), indeks area, dan galeri.
 - **Mode gelap:** toggle tersedia di topbar admin dan halaman login. Pilihan disimpan di `localStorage`, mengikuti preferensi sistem saat belum ada pilihan, dan hanya memengaruhi area `.admin-shell`; situs publik tetap terang.
 
 Catatan admin:
@@ -245,7 +247,7 @@ Catatan admin:
 Konten halaman publik menggunakan model generik:
 
 - `site_page` — identitas halaman dan status Draf/Tayang.
-- `site_page_translation` — eyebrow, judul, deskripsi, dan catatan verifikasi per locale.
+- `site_page_translation` — eyebrow, judul, deskripsi, catatan verifikasi, dan `data` JSONB untuk konten terstruktur per locale.
 - `site_page_block` — blok artikel berurutan dengan tipe `section`, `quote`, atau `source`.
 - `site_page_block_translation` — judul dan isi blok per locale.
 
@@ -255,8 +257,9 @@ Aturan:
 - Konten ID menjadi sumber utama; field EN kosong memakai fallback ID dengan indikator di halaman publik.
 - Halaman publik hanya membaca halaman berstatus Tayang.
 - Halaman tanpa konten tayang memakai fallback statis agar situs tidak kosong.
-- Halaman yang sudah tersambung: Sejarah dan Panduan (artikel), Area (indeks bernomor), Galeri (kartu). Beranda dan Virtual Tour mengikuti pada tahap berikutnya.
-- Editor menyesuaikan label berdasarkan `kind` halaman: `article`, `index`, atau `gallery`.
+- Halaman yang sudah tersambung: Beranda (konten terstruktur), Sejarah dan Panduan (artikel), Area (indeks bernomor), Galeri (kartu). Virtual Tour dan foto galeri mengikuti pada tahap berikutnya.
+- Editor menyesuaikan label berdasarkan `kind` halaman: `home`, `article`, `index`, atau `gallery`.
+- Beranda menyimpan konten terstruktur di `site_page_translation.data` dengan default dari dictionary; editor menampilkan tab ID/EN.
 
 ---
 

@@ -14,7 +14,8 @@
 	let { data }: PageProps = $props();
 
 	const content = $derived(dictionary[data.lang]);
-	const hero = $derived(content.home.hero);
+	const home = $derived(data.home ?? content.home);
+	const hero = $derived(home.hero);
 
 	function href(path = '') {
 		return localeHref(data.lang, path);
@@ -112,6 +113,12 @@
 	</div>
 </section>
 
+{#if data.homeFallback}
+	<div class="container-page py-4">
+		<div class="alert alert--info">{content.visitInfo.fallback}</div>
+	</div>
+{/if}
+
 {#if data.visitInfo}
 	<VisitInformation content={content.visitInfo} data={data.visitInfo} lang={data.lang} />
 {/if}
@@ -120,16 +127,16 @@
 <section class="section section--paper">
 	<div class="container-page grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
 		<div class="lg:sticky lg:top-28 lg:self-start">
-			<p class="eyebrow">{content.home.intro.eyebrow}</p>
-			<h2 class="display-xl mt-6 text-navy">{content.home.intro.title}</h2>
+			<p class="eyebrow">{home.intro.eyebrow}</p>
+			<h2 class="display-xl mt-6 text-navy">{home.intro.title}</h2>
 			<Ornament class="mt-8 h-3 w-44 text-gold-dark/45" />
 		</div>
 
 		<div>
-			<p class="lede max-w-2xl">{content.home.intro.body}</p>
+			<p class="lede max-w-2xl">{home.intro.body}</p>
 
 			<div class="mt-10 border-t border-charcoal/12">
-				{#each content.home.intro.points as point, index (point.title)}
+				{#each home.intro.points as point, index (point.title)}
 					<div
 						class="grid gap-2 border-b border-charcoal/12 py-6 sm:grid-cols-[2.5rem_10rem_1fr] sm:gap-5"
 					>
@@ -156,9 +163,9 @@
 
 	<div class="container-page relative grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
 		<div class="max-w-xl">
-			<p class="eyebrow">{content.home.tour.eyebrow}</p>
-			<h2 class="display-xl mt-6 text-ivory">{content.home.tour.title}</h2>
-			<p class="mt-6 text-base leading-relaxed text-ivory/60">{content.home.tour.body}</p>
+			<p class="eyebrow">{home.tour.eyebrow}</p>
+			<h2 class="display-xl mt-6 text-ivory">{home.tour.title}</h2>
+			<p class="mt-6 text-base leading-relaxed text-ivory/60">{home.tour.body}</p>
 			<div class="mt-8">
 				<ArrowLink href={href('/tour')} label={content.actions.exploreTour} tone="light" />
 			</div>
@@ -173,7 +180,7 @@
 			>
 				<img
 					src="/images/panoramas/scene-jaba.jpg"
-					alt={content.home.tour.previewLabel}
+					alt={home.tour.previewLabel}
 					class="aspect-[16/10] w-full object-cover opacity-90 transition duration-700 ease-out group-hover:scale-[1.025]"
 				/>
 				<div
@@ -188,7 +195,7 @@
 
 				<div class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5">
 					<p class="text-[0.65rem] tracking-[0.18em] text-ivory/65 uppercase">
-						{content.home.tour.previewLabel}
+						{home.tour.previewLabel}
 					</p>
 					<span class="meta text-gold-light/70">360°</span>
 				</div>
@@ -201,8 +208,8 @@
 <section class="section section--ivory">
 	<div class="container-page grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
 		<div>
-			<p class="eyebrow">{content.home.history.eyebrow}</p>
-			<h2 class="display-xl mt-6 text-navy">{content.home.history.title}</h2>
+			<p class="eyebrow">{home.history.eyebrow}</p>
+			<h2 class="display-xl mt-6 text-navy">{home.history.title}</h2>
 			<Ornament class="mt-8 h-3 w-40 text-gold-dark/45" />
 		</div>
 
@@ -212,11 +219,11 @@
 				aria-hidden="true"
 			></span>
 			<p class="meta text-gold-dark">
-				{content.home.history.noteLabel} · {content.home.history.status}
+				{home.history.noteLabel} · {home.history.status}
 			</p>
 			<blockquote class="mt-6">
 				<p class="font-display text-2xl leading-snug text-navy italic sm:text-3xl">
-					“{content.home.history.body}”
+					“{home.history.body}”
 				</p>
 			</blockquote>
 			<div class="mt-8">
@@ -230,9 +237,9 @@
 <section class="section section--sand">
 	<div class="container-page">
 		<SectionHeading
-			eyebrow={content.home.areas.eyebrow}
-			title={content.home.areas.title}
-			description={content.home.areas.body}
+			eyebrow={home.areas.eyebrow}
+			title={home.areas.title}
+			description={home.areas.body}
 		>
 			{#snippet action()}
 				<ArrowLink href={href('/area')} label={content.actions.viewAllAreas} />
@@ -240,7 +247,7 @@
 		</SectionHeading>
 
 		<div class="mt-12 border-b border-charcoal/12">
-			{#each content.home.areas.items as area, index (area.name)}
+			{#each home.areas.items as area, index (area.name)}
 				<AreaCard
 					name={area.name}
 					description={area.description}
@@ -257,9 +264,9 @@
 <section class="section section--paper">
 	<div class="container-page">
 		<SectionHeading
-			eyebrow={content.home.gallery.eyebrow}
-			title={content.home.gallery.title}
-			description={content.home.gallery.body}
+			eyebrow={home.gallery.eyebrow}
+			title={home.gallery.title}
+			description={home.gallery.body}
 		>
 			{#snippet action()}
 				<ArrowLink href={href('/galeri')} label={content.actions.openGallery} />
@@ -267,13 +274,13 @@
 		</SectionHeading>
 
 		<div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-			{#each content.home.gallery.items as item, index (item.title)}
+			{#each home.gallery.items as item, index (item.title)}
 				<div class={index === 1 ? 'lg:mt-10' : ''}>
 					<GalleryCard
 						title={item.title}
 						caption={item.caption}
 						{index}
-						pending={content.home.gallery.pending}
+						pending={home.gallery.pending}
 					/>
 				</div>
 			{/each}
@@ -285,14 +292,14 @@
 <section class="section section--ivory">
 	<div class="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
 		<div>
-			<p class="eyebrow">{content.home.guide.eyebrow}</p>
-			<h2 class="display-xl mt-6 text-navy">{content.home.guide.title}</h2>
+			<p class="eyebrow">{home.guide.eyebrow}</p>
+			<h2 class="display-xl mt-6 text-navy">{home.guide.title}</h2>
 			<p class="mt-6 max-w-md text-base leading-relaxed text-body">
-				{content.home.guide.body}
+				{home.guide.body}
 			</p>
 
 			<div class="mt-8 max-w-md border-l-2 border-gold-dark/40 pl-5">
-				<p class="meta text-gold-dark">{content.home.history.noteLabel}</p>
+				<p class="meta text-gold-dark">{home.history.noteLabel}</p>
 				<p class="mt-2 text-sm leading-relaxed text-muted">{content.footer.note}</p>
 			</div>
 
@@ -302,7 +309,7 @@
 		</div>
 
 		<div class="border-b border-charcoal/12">
-			{#each content.home.guide.items as item, index (item.title)}
+			{#each home.guide.items as item, index (item.title)}
 				<GuideCard title={item.title} body={item.body} {index} />
 			{/each}
 		</div>

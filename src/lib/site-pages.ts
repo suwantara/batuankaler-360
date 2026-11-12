@@ -1,6 +1,15 @@
-export type SitePageKind = 'article' | 'index' | 'gallery';
+export type SitePageKind = 'home' | 'article' | 'index' | 'gallery';
 
 export const sitePageRegistry = [
+	{
+		slug: 'beranda',
+		label: 'Beranda',
+		path: '/',
+		description:
+			'Konten utama beranda: hero, pengenalan, tour, sejarah, area, galeri, dan panduan.',
+		sortOrder: -1,
+		kind: 'home'
+	},
 	{
 		slug: 'sejarah',
 		label: 'Sejarah',
