@@ -82,8 +82,8 @@
 	<div class="surface flex items-start gap-4 p-5">
 		<Icon name="info" class="mt-0.5 h-5 w-5 shrink-0 text-gold-dark/70" />
 		<p class="max-w-3xl text-sm leading-relaxed text-muted">
-			Halaman lain seperti Beranda, Area, Galeri, dan Panduan akan ditambahkan dengan model konten
-			yang sama. Untuk saat ini, halaman Sejarah sudah dapat dikelola penuh dari sini.
+			Halaman Beranda dan Virtual Tour belum memakai editor ini. Halaman Sejarah, Panduan, Area, dan
+			Galeri sudah tersambung ke model konten halaman.
 		</p>
 	</div>
 </div>

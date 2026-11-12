@@ -1,16 +1,19 @@
 <script lang="ts">
 	import Icon from '#lib/components/ui/Icon.svelte';
+	import type { SitePageKind } from '#lib/site-pages.ts';
 	import type { SitePageBlockFormValues, SitePageFormValues } from '#lib/schemas/site-page.ts';
 	import VisitField from './VisitField.svelte';
 
 	let {
 		values,
 		errors = {},
-		action
+		action,
+		kind
 	}: {
 		values: SitePageFormValues;
 		errors?: Record<string, string>;
 		action: string;
+		kind: SitePageKind;
 	} = $props();
 
 	type BlockDraft = SitePageBlockFormValues & { key: string };
@@ -38,6 +41,27 @@
 	const blockError = $derived(
 		Object.entries(errors).find(([key]) => key === 'blocks' || key.startsWith('blocks.'))?.[1] ?? ''
 	);
+	const sectionTitle = $derived(
+		kind === 'index' ? 'Daftar area' : kind === 'gallery' ? 'Item galeri' : 'Artikel'
+	);
+	const sectionDescription = $derived(
+		kind === 'index'
+			? 'Setiap bagian menjadi satu baris area bernomor.'
+			: kind === 'gallery'
+				? 'Setiap bagian menjadi satu kartu dokumentasi.'
+				: 'Susun konten sebagai bagian-bagian yang berurutan. Kutipan dan sumber opsional.'
+	);
+	const addLabel = $derived(
+		kind === 'index' ? 'Tambah area' : kind === 'gallery' ? 'Tambah item' : 'Tambah bagian'
+	);
+	const emptyLabel = $derived(
+		kind === 'index'
+			? 'Belum ada area.'
+			: kind === 'gallery'
+				? 'Belum ada item galeri.'
+				: 'Belum ada bagian artikel.'
+	);
+	const itemLabel = $derived(kind === 'index' ? 'Area' : kind === 'gallery' ? 'Galeri' : 'Bagian');
 
 	function addBlock(): void {
 		form.blocks.push({
@@ -65,18 +89,24 @@
 	}
 
 	function headingLabel(type: SitePageBlockFormValues['type']): string {
+		if (kind === 'index') return 'Nama area';
+		if (kind === 'gallery') return 'Judul foto';
 		if (type === 'quote') return 'Judul kutipan (opsional)';
 		if (type === 'source') return 'Judul sumber (opsional)';
 		return 'Subjudul';
 	}
 
 	function bodyLabel(type: SitePageBlockFormValues['type']): string {
+		if (kind === 'index') return 'Deskripsi area';
+		if (kind === 'gallery') return 'Keterangan foto';
 		if (type === 'quote') return 'Kutipan';
 		if (type === 'source') return 'Isi sumber';
 		return 'Isi bagian';
 	}
 
 	function typeHint(type: SitePageBlockFormValues['type']): string {
+		if (kind === 'index') return 'Tampil sebagai baris area bernomor.';
+		if (kind === 'gallery') return 'Tampil sebagai kartu dokumentasi.';
 		if (type === 'quote') return 'Tampil sebagai kutipan besar dengan garis emas.';
 		if (type === 'source') return 'Tampil sebagai catatan sumber di akhir artikel.';
 		return 'Pisahkan paragraf dengan satu baris kosong.';
@@ -187,10 +217,8 @@
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
 			<div>
-				<h2 class="title-sm text-heading">Artikel</h2>
-				<p class="field-help">
-					Susun konten sebagai bagian-bagian yang berurutan. Kutipan dan sumber opsional.
-				</p>
+				<h2 class="title-sm text-heading">{sectionTitle}</h2>
+				<p class="field-help">{sectionDescription}</p>
 			</div>
 		</div>
 
@@ -203,10 +231,10 @@
 		{#if form.blocks.length === 0}
 			<div class="surface surface--sand mt-5 flex flex-col items-center px-5 py-10 text-center">
 				<Icon name="file" class="h-6 w-6 text-heading/25" />
-				<p class="mt-3 text-sm text-muted">Belum ada bagian artikel.</p>
+				<p class="mt-3 text-sm text-muted">{emptyLabel}</p>
 				<button type="button" class="btn btn--outline btn--sm mt-4" onclick={addBlock}>
 					<Icon name="plus" class="h-3.5 w-3.5" />
-					Tambah bagian
+					{addLabel}
 				</button>
 			</div>
 		{:else}
@@ -216,16 +244,21 @@
 						<div class="flex flex-wrap items-center justify-between gap-3">
 							<div class="flex flex-wrap items-center gap-2">
 								<span class="meta text-[0.65rem] text-muted">
-									Bagian {String(index + 1).padStart(2, '0')}
+									{itemLabel}
+									{String(index + 1).padStart(2, '0')}
 								</span>
-								<select
-									class="field-input mt-0 min-h-9 w-auto py-1 text-xs"
-									bind:value={block.type}
-								>
-									<option value="section">Bagian artikel</option>
-									<option value="quote">Kutipan</option>
-									<option value="source">Sumber</option>
-								</select>
+								{#if kind === 'article'}
+									<select
+										class="field-input mt-0 min-h-9 w-auto py-1 text-xs"
+										bind:value={block.type}
+									>
+										<option value="section">Bagian artikel</option>
+										<option value="quote">Kutipan</option>
+										<option value="source">Sumber</option>
+									</select>
+								{:else}
+									<span class="badge badge--quiet">{itemLabel}</span>
+								{/if}
 							</div>
 
 							<div class="flex items-center gap-1">
@@ -308,7 +341,7 @@
 
 			<button type="button" class="btn btn--outline btn--sm mt-4" onclick={addBlock}>
 				<Icon name="plus" class="h-3.5 w-3.5" />
-				Tambah bagian
+				{addLabel}
 			</button>
 		{/if}
 	</section>

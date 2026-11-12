@@ -10,6 +10,13 @@
 	const values = $derived(form?.values ?? data.values);
 	const status = $derived(values.status);
 	const title = $derived(values.titleId.trim() || data.definition.label);
+	const kindLabel = $derived(
+		data.definition.kind === 'article'
+			? 'artikel'
+			: data.definition.kind === 'index'
+				? 'daftar area'
+				: 'item galeri'
+	);
 	const updatedAt = $derived(form?.updatedAt ?? data.page.updatedAt);
 	const updatedLabel = $derived(
 		new Intl.DateTimeFormat('id-ID', {
@@ -41,8 +48,7 @@
 					</span>
 				</div>
 				<p class="body-copy mt-3 max-w-2xl">
-					Kelola metadata dan artikel halaman {data.definition.label}. Konten disusun sebagai
-					bagian-bagian berurutan.
+					Kelola metadata dan {kindLabel} halaman {data.definition.label}.
 				</p>
 				<p class="mt-2 text-xs text-muted">Terakhir diperbarui: {updatedLabel}</p>
 			</div>
@@ -71,7 +77,7 @@
 	{/if}
 
 	<div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_19rem]">
-		<PageContentForm {values} errors={form?.errors} action="?/save" />
+		<PageContentForm {values} errors={form?.errors} action="?/save" kind={data.definition.kind} />
 
 		<aside class="surface surface--dark h-fit p-6 xl:sticky xl:top-24">
 			<p class="meta text-[0.65rem] text-gold-light/60">Catatan pengisian</p>
@@ -86,7 +92,13 @@
 				</li>
 				<li class="flex gap-3">
 					<span class="font-display text-sm text-gold-light/70">03</span>
-					<span>Kutipan tampil sebagai teks besar; sumber tampil sebagai catatan.</span>
+					<span>
+						{data.definition.kind === 'article'
+							? 'Kutipan tampil sebagai teks besar; sumber tampil sebagai catatan.'
+							: data.definition.kind === 'index'
+								? 'Setiap area tampil sebagai baris bernomor.'
+								: 'Setiap item tampil sebagai kartu dokumentasi.'}
+					</span>
 				</li>
 				<li class="flex gap-3">
 					<span class="font-display text-sm text-gold-light/70">04</span>

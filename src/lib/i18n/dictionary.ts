@@ -247,7 +247,11 @@ const id = {
 			description:
 				'Setiap area memiliki fungsi dan aturan kunjungan yang berbeda. Daftar berikut merupakan kerangka konten yang akan dilengkapi setelah verifikasi pengelola.',
 			notice:
-				'Nama, deskripsi, dan batas area masih menunggu validasi. Jangan menggunakan halaman ini sebagai panduan resmi sebelum konten final dipublikasikan.'
+				'Nama, deskripsi, dan batas area masih menunggu validasi. Jangan menggunakan halaman ini sebagai panduan resmi sebelum konten final dipublikasikan.',
+			updated: 'Terakhir diperbarui',
+			empty: 'Daftar area sedang disiapkan oleh pengelola.',
+			fallback:
+				'Terjemahan Inggris belum lengkap. Sebagian daftar ditampilkan dalam Bahasa Indonesia.'
 		},
 		galeri: {
 			eyebrow: 'Galeri',
@@ -255,7 +259,11 @@ const id = {
 			description:
 				'Galeri akan menampilkan foto dan media kawasan setelah izin dokumentasi dan validasi konten selesai.',
 			notice:
-				'Belum ada media final yang dipublikasikan. Elemen pada halaman ini merupakan placeholder untuk tata letak galeri.'
+				'Belum ada media final yang dipublikasikan. Elemen pada halaman ini merupakan placeholder untuk tata letak galeri.',
+			updated: 'Terakhir diperbarui',
+			empty: 'Galeri sedang disiapkan oleh pengelola.',
+			fallback:
+				'Terjemahan Inggris belum lengkap. Sebagian keterangan ditampilkan dalam Bahasa Indonesia.'
 		},
 		panduan: {
 			eyebrow: 'Panduan kunjungan',
@@ -265,7 +273,13 @@ const id = {
 			guideEyebrow: 'Panduan umum',
 			guideTitle: 'Prinsip yang perlu dijaga.',
 			notice:
-				'Informasi pada tahap ini bersifat umum. Ketentuan resmi akan ditambahkan setelah dikonfirmasi oleh pengelola.'
+				'Informasi pada tahap ini bersifat umum. Ketentuan resmi akan ditambahkan setelah dikonfirmasi oleh pengelola.',
+			toc: 'Dalam halaman ini',
+			updated: 'Terakhir diperbarui',
+			source: 'Sumber',
+			empty: 'Artikel panduan sedang disiapkan oleh pengelola.',
+			fallback:
+				'Terjemahan Inggris belum lengkap. Sebagian artikel ditampilkan dalam Bahasa Indonesia.'
 		}
 	}
 };
@@ -517,7 +531,10 @@ const en: SiteDictionary = {
 			description:
 				'Each area has a different function and set of visiting rules. The list below is a content framework to be completed after management verification.',
 			notice:
-				'Area names, descriptions, and boundaries are awaiting validation. Do not use this page as an official guide until the final content is published.'
+				'Area names, descriptions, and boundaries are awaiting validation. Do not use this page as an official guide until the final content is published.',
+			updated: 'Last updated',
+			empty: 'The area list is being prepared by the management.',
+			fallback: 'The English translation is incomplete. Part of the list is shown in Indonesian.'
 		},
 		galeri: {
 			eyebrow: 'Gallery',
@@ -525,7 +542,10 @@ const en: SiteDictionary = {
 			description:
 				'The gallery will present photographs and media of the grounds once documentation permission and content review are complete.',
 			notice:
-				'No final media has been published yet. The elements on this page are placeholders for the gallery layout.'
+				'No final media has been published yet. The elements on this page are placeholders for the gallery layout.',
+			updated: 'Last updated',
+			empty: 'The gallery is being prepared by the management.',
+			fallback: 'The English translation is incomplete. Some captions are shown in Indonesian.'
 		},
 		panduan: {
 			eyebrow: 'Visit guide',
@@ -535,7 +555,12 @@ const en: SiteDictionary = {
 			guideEyebrow: 'General guidance',
 			guideTitle: 'Principles to keep in mind.',
 			notice:
-				'Information at this stage is general. Official requirements will be added after confirmation by the management.'
+				'Information at this stage is general. Official requirements will be added after confirmation by the management.',
+			toc: 'On this page',
+			updated: 'Last updated',
+			source: 'Source',
+			empty: 'The visit guide article is being prepared by the management.',
+			fallback: 'The English translation is incomplete. Part of the article is shown in Indonesian.'
 		}
 	}
 };

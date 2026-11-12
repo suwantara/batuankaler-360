@@ -198,6 +198,8 @@ Jangan menumpuk `.surface` di dalam `.surface` tanpa alasan hierarki.
 | `admin/PageContentForm.svelte`   | Editor halaman + blok artikel ID/EN             |
 | `admin/VisitField.svelte`        | Field form konten dengan label dan error       |
 | `public/SitePageArticle.svelte`  | Artikel publik dengan daftar isi dan blok      |
+| `public/SitePageIndex.svelte`    | Daftar area bernomor dari blok halaman         |
+| `public/SitePageGallery.svelte`  | Kartu galeri dari blok halaman                 |
 | `tour/TourStage.svelte`          | Panggung tour gelap + tips + glosarium         |
 | `tour/TourExperience.svelte`     | Viewer + panel scene + panel informasi         |
 | `tour/PanoramaViewer.svelte`     | Isolasi lifecycle Marzipano dan kontrol viewer |
@@ -227,7 +229,7 @@ Ritme section yang disarankan: gelap → kertas → gelap → ivory → sand →
 - **Media:** metadata dan upload dipisahkan; panel panduan gelap mendampingi form.
 - **Hotspot:** daftar seluruh hotspot dikelompokkan per scene, lengkap dengan tipe, tujuan, koordinat, dan status aktif. Tombol Edit membuka langsung hotspot terkait di halaman scene.
 - **Kunjungan:** mengelola informasi kunjungan ID/EN, status Draf/Tayang, identitas pengelola, dan tautan peta. Field kosong tidak ditampilkan.
-- **Halaman:** mengelola metadata halaman publik dan artikel berbasis blok. Blok `section`, `quote`, dan `source` dapat ditambah, diurutkan ulang, dan dihapus. Halaman Sejarah menjadi implementasi pertama.
+- **Halaman:** mengelola metadata halaman publik dan konten berbasis blok. Blok `section`, `quote`, dan `source` dapat ditambah, diurutkan ulang, dan dihapus. Tipe halaman: artikel (Sejarah, Panduan), indeks area, dan galeri.
 - **Mode gelap:** toggle tersedia di topbar admin dan halaman login. Pilihan disimpan di `localStorage`, mengikuti preferensi sistem saat belum ada pilihan, dan hanya memengaruhi area `.admin-shell`; situs publik tetap terang.
 
 Catatan admin:
@@ -253,7 +255,8 @@ Aturan:
 - Konten ID menjadi sumber utama; field EN kosong memakai fallback ID dengan indikator di halaman publik.
 - Halaman publik hanya membaca halaman berstatus Tayang.
 - Halaman tanpa konten tayang memakai fallback statis agar situs tidak kosong.
-- Untuk saat ini halaman Sejarah sudah tersambung; halaman lain mengikuti model yang sama pada tahap berikutnya.
+- Halaman yang sudah tersambung: Sejarah dan Panduan (artikel), Area (indeks bernomor), Galeri (kartu). Beranda dan Virtual Tour mengikuti pada tahap berikutnya.
+- Editor menyesuaikan label berdasarkan `kind` halaman: `article`, `index`, atau `gallery`.
 
 ---
 
