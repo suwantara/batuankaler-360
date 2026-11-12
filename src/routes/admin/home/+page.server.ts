@@ -5,8 +5,11 @@ import {
 	homeContentFormValuesFromData,
 	homeContentFormValuesFromRaw
 } from '#lib/schemas/home-content.ts';
-import { getOrCreateSitePageData, saveSitePageData } from '#lib/server/services/site-page.ts';
+import { saveHomeContent } from '#lib/server/services/home.ts';
+import { listPanoramaAssets } from '#lib/server/services/panorama.ts';
+import { getOrCreateSitePageData } from '#lib/server/services/site-page.ts';
 import { getSitePageDefinition } from '#lib/site-pages.ts';
+import type { SiteMediaAsset } from '#lib/types/site-page.ts';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
@@ -16,12 +19,24 @@ export const load: PageServerLoad = async () => {
 		error(404, 'Halaman tidak ditemukan.');
 	}
 
-	const page = await getOrCreateSitePageData('beranda');
+	const [page, assets] = await Promise.all([
+		getOrCreateSitePageData('beranda'),
+		listPanoramaAssets()
+	]);
+	const mediaAssets: SiteMediaAsset[] = assets.map((asset) => ({
+		id: asset.id,
+		originalPath: asset.originalPath,
+		thumbnailPath: asset.thumbnailPath,
+		previewPath: asset.previewPath,
+		width: asset.width,
+		height: asset.height
+	}));
 
 	return {
 		page,
 		definition,
-		values: homeContentFormValuesFromData(page)
+		values: homeContentFormValuesFromData(page),
+		assets: mediaAssets
 	};
 };
 
@@ -45,7 +60,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			const page = await saveSitePageData('beranda', result.data.status, result.data.content);
+			const page = await saveHomeContent(result.data);
 
 			return {
 				success: true,

@@ -20,6 +20,7 @@ import type {
 	SitePageBlockTranslation,
 	SitePageBlockView,
 	SitePageDataAdmin,
+	SitePageMeta,
 	SitePageTranslation,
 	SitePageView
 } from '#lib/types/site-page.ts';
@@ -271,10 +272,19 @@ export async function saveSitePage(
 	return toAdminView(await requireSitePage(slug));
 }
 
-type SitePageDataRow = Pick<SitePageRow, 'slug' | 'status' | 'updatedAt' | 'translations'>;
+type SitePageDataRow = Pick<SitePageRow, 'slug' | 'status' | 'updatedAt' | 'translations' | 'data'>;
 
 function translationData(translations: SitePageRow['translations'], locale: Locale): unknown {
 	return translations.find((item) => item.locale === locale)?.data ?? {};
+}
+
+function translationMeta(translations: SitePageRow['translations'], locale: Locale): SitePageMeta {
+	const translation = translations.find((item) => item.locale === locale);
+
+	return {
+		title: translation?.title ?? '',
+		description: translation?.description ?? ''
+	};
 }
 
 function toDataAdminView(page: SitePageDataRow): SitePageDataAdmin {
@@ -285,7 +295,12 @@ function toDataAdminView(page: SitePageDataRow): SitePageDataAdmin {
 		data: {
 			id: translationData(page.translations, 'id'),
 			en: translationData(page.translations, 'en')
-		}
+		},
+		meta: {
+			id: translationMeta(page.translations, 'id'),
+			en: translationMeta(page.translations, 'en')
+		},
+		shared: page.data
 	};
 }
 
@@ -293,17 +308,23 @@ export async function getOrCreateSitePageData(slug: string): Promise<SitePageDat
 	return toDataAdminView(await ensureSitePage(slug));
 }
 
+export interface SaveSitePageDataInput {
+	status: 'draft' | 'published';
+	content: Record<Locale, unknown>;
+	meta: Record<Locale, SitePageMeta>;
+	shared: unknown;
+}
+
 export async function saveSitePageData(
 	slug: string,
-	status: 'draft' | 'published',
-	data: Record<Locale, unknown>
+	input: SaveSitePageDataInput
 ): Promise<SitePageDataAdmin> {
 	const current = await ensureSitePage(slug);
 
 	await db.transaction(async (tx) => {
 		await tx
 			.update(sitePage)
-			.set({ status, updatedAt: new Date() })
+			.set({ status: input.status, data: input.shared, updatedAt: new Date() })
 			.where(eq(sitePage.id, current.id));
 
 		for (const locale of locales) {
@@ -312,11 +333,17 @@ export async function saveSitePageData(
 				.values({
 					pageId: current.id,
 					locale,
-					data: data[locale]
+					title: input.meta[locale].title,
+					description: input.meta[locale].description,
+					data: input.content[locale]
 				})
 				.onConflictDoUpdate({
 					target: [sitePageTranslation.pageId, sitePageTranslation.locale],
-					set: { data: data[locale] }
+					set: {
+						title: input.meta[locale].title,
+						description: input.meta[locale].description,
+						data: input.content[locale]
+					}
 				});
 		}
 	});

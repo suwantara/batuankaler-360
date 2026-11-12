@@ -195,6 +195,7 @@ export const sitePage = pgTable('site_page', {
 	slug: varchar('slug', { length: 80 }).notNull().unique(),
 	status: contentStatus('status').notNull().default('draft'),
 	sortOrder: integer('sort_order').notNull().default(0),
+	data: jsonb('data').$type<unknown>().notNull().default({}),
 	createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 	updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull()
 });

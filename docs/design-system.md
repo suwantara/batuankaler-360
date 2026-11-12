@@ -198,6 +198,7 @@ Jangan menumpuk `.surface` di dalam `.surface` tanpa alasan hierarki.
 | `admin/PageContentForm.svelte`   | Editor halaman + blok artikel ID/EN             |
 | `admin/HomeContentForm.svelte`   | Editor terstruktur beranda ID/EN                |
 | `admin/HomeLocaleFields.svelte`  | Field per bagian beranda untuk satu locale      |
+| `admin/HomeSeoFields.svelte`     | Judul dan deskripsi SEO beranda per locale      |
 | `admin/VisitField.svelte`        | Field form konten dengan label dan error       |
 | `public/SitePageArticle.svelte`  | Artikel publik dengan daftar isi dan blok      |
 | `public/SitePageIndex.svelte`    | Daftar area bernomor dari blok halaman         |
@@ -246,8 +247,8 @@ Catatan admin:
 
 Konten halaman publik menggunakan model generik:
 
-- `site_page` — identitas halaman dan status Draf/Tayang.
-- `site_page_translation` — eyebrow, judul, deskripsi, catatan verifikasi, dan `data` JSONB untuk konten terstruktur per locale.
+- `site_page` — identitas halaman, status Draf/Tayang, dan `data` JSONB untuk pengaturan bersama seperti gambar hero dan pratinjau.
+- `site_page_translation` — eyebrow, judul, deskripsi, catatan verifikasi, dan `data` JSONB untuk konten terstruktur per locale. Judul dan deskripsi dipakai sebagai metadata SEO.
 - `site_page_block` — blok artikel berurutan dengan tipe `section`, `quote`, atau `source`.
 - `site_page_block_translation` — judul dan isi blok per locale.
 
@@ -260,6 +261,8 @@ Aturan:
 - Halaman yang sudah tersambung: Beranda (konten terstruktur), Sejarah dan Panduan (artikel), Area (indeks bernomor), Galeri (kartu). Virtual Tour dan foto galeri mengikuti pada tahap berikutnya.
 - Editor menyesuaikan label berdasarkan `kind` halaman: `home`, `article`, `index`, atau `gallery`.
 - Beranda menyimpan konten terstruktur di `site_page_translation.data` dengan default dari dictionary; editor menampilkan tab ID/EN.
+- Beranda memilih gambar hero dan pratinjau tour dari aset panorama melalui `site_page.data.media`; gambar dipakai bersama kedua bahasa. Aset yang masih dipakai beranda tidak dapat dihapus.
+- Judul dan deskripsi SEO per bahasa disimpan di `site_page_translation` dan dipakai untuk `<title>` serta meta description beranda; field kosong memakai default dictionary.
 
 ---
 

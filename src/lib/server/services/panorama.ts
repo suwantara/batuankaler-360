@@ -1,8 +1,9 @@
 import { asc, eq } from 'drizzle-orm';
 import { db } from '#lib/server/db/index.ts';
-import { panoramaAsset, scene } from '#lib/server/db/schema.ts';
+import { panoramaAsset, scene, sitePage } from '#lib/server/db/schema.ts';
 import { ConflictError, NotFoundError } from '#lib/server/errors.ts';
 import { deletePanoramaFile } from '#lib/server/storage/local.ts';
+import { parseHomeShared } from '#lib/schemas/home-content.ts';
 import type { PanoramaConfig } from '#lib/types/panorama.ts';
 
 export interface PanoramaAssetInput {
@@ -75,6 +76,17 @@ export async function deletePanoramaAsset(id: string) {
 
 	if (referencing.length > 0) {
 		throw new ConflictError('Aset panorama masih digunakan oleh scene.');
+	}
+
+	const pages = await db.select({ data: sitePage.data }).from(sitePage);
+	const usedByHome = pages.some((page) => {
+		const media = parseHomeShared(page.data);
+
+		return media.heroAssetId === id || media.previewAssetId === id;
+	});
+
+	if (usedByHome) {
+		throw new ConflictError('Aset panorama masih digunakan oleh halaman beranda.');
 	}
 
 	await db.delete(panoramaAsset).where(eq(panoramaAsset.id, id));

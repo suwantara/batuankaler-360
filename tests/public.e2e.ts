@@ -1,14 +1,25 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type BrowserContext, type Page } from '@playwright/test';
 
 const adminEmail = process.env.ADMIN_EMAIL;
 const adminPassword = process.env.ADMIN_PASSWORD;
 
+let adminCookies: Awaited<ReturnType<BrowserContext['cookies']>> | undefined;
+
 async function loginAsAdmin(page: Page): Promise<void> {
+	if (adminCookies) {
+		await page.context().addCookies(adminCookies);
+		await page.goto('/admin/dashboard');
+		await expect(page).toHaveURL(/\/admin\/dashboard/);
+		return;
+	}
+
 	await page.goto('/admin/login');
 	await page.getByLabel('Email').fill(adminEmail!);
 	await page.getByLabel('Password').fill(adminPassword!);
 	await page.getByRole('button', { name: 'Masuk' }).click();
 	await expect(page).toHaveURL(/\/admin\/dashboard/);
+
+	adminCookies = await page.context().cookies();
 }
 
 test.describe('public website', () => {
@@ -181,9 +192,14 @@ test.describe('admin dashboard', () => {
 
 		await expect(page.getByRole('heading', { name: 'Beranda', exact: true })).toBeVisible();
 		await expect(page.getByLabel('Baris utama judul (ID)')).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Gambar halaman' })).toBeVisible();
+		await expect(page.getByLabel('Gambar hero')).toBeVisible();
+		await expect(page.getByText('SEO halaman (ID)')).toBeVisible();
 
 		await page.getByRole('button', { name: 'English' }).click();
 		await expect(page.getByLabel('Baris utama judul (EN)')).toBeVisible();
+		await expect(page.getByText('SEO halaman (EN)')).toBeVisible();
+		await expect(page.getByLabel('Gambar pratinjau virtual tour')).toBeVisible();
 	});
 
 	test('loads the history page editor and adds an article block', async ({ page }) => {

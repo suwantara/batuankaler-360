@@ -30,11 +30,27 @@ export interface SitePageAdmin {
 	blocks: SitePageBlockAdmin[];
 }
 
+export interface SitePageMeta {
+	title: string;
+	description: string;
+}
+
 export interface SitePageDataAdmin {
 	slug: string;
 	status: 'draft' | 'published';
 	updatedAt: string;
 	data: Record<Locale, unknown>;
+	meta: Record<Locale, SitePageMeta>;
+	shared: unknown;
+}
+
+export interface SiteMediaAsset {
+	id: string;
+	originalPath: string;
+	thumbnailPath: string;
+	previewPath: string | null;
+	width: number;
+	height: number | null;
 }
 
 export interface SitePageBlockView {

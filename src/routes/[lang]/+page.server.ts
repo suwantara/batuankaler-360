@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { isLocale } from '#lib/i18n/index.ts';
-import { getPublishedHomeContent } from '#lib/server/services/home.ts';
+import { DEFAULT_HOME_MEDIA, getPublishedHomeContent } from '#lib/server/services/home.ts';
 import { getPublishedVisitInformation } from '#lib/server/services/site-content.ts';
 import type { PageServerLoad } from './$types';
 
@@ -17,6 +17,8 @@ export const load: PageServerLoad = async ({ params }) => {
 	return {
 		visitInfo,
 		home: homeResult?.content ?? null,
-		homeFallback: homeResult?.fallbackUsed ?? false
+		homeFallback: homeResult?.fallbackUsed ?? false,
+		homeMedia: homeResult?.media ?? DEFAULT_HOME_MEDIA,
+		homeSeo: homeResult?.seo ?? null
 	};
 };

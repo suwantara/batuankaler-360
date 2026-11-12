@@ -70,7 +70,7 @@
 	{/if}
 
 	<div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_19rem]">
-		<HomeContentForm {values} errors={form?.errors} action="?/save" />
+		<HomeContentForm {values} assets={data.assets} errors={form?.errors} action="?/save" />
 
 		<aside class="surface surface--dark h-fit p-6 xl:sticky xl:top-24">
 			<p class="meta text-[0.65rem] text-gold-light/60">Catatan pengisian</p>

@@ -23,14 +23,14 @@
 </script>
 
 <svelte:head>
-	<title>{content.meta.title}</title>
-	<meta name="description" content={content.meta.description} />
+	<title>{data.homeSeo?.title ?? content.meta.title}</title>
+	<meta name="description" content={data.homeSeo?.description ?? content.meta.description} />
 </svelte:head>
 
 <!-- Hero -->
 <section class="dark-surface relative isolate overflow-hidden bg-navy-deep">
 	<img
-		src="/images/hero-pura.svg"
+		src={data.homeMedia.heroBackgroundPath}
 		alt=""
 		class="absolute inset-0 h-full w-full object-cover opacity-70"
 	/>
@@ -81,7 +81,7 @@
 				class="arch-frame frame-inset relative ml-auto w-full max-w-[24rem] border border-ivory/15 bg-navy"
 			>
 				<img
-					src="/images/panoramas/scene-jaba.jpg"
+					src={data.homeMedia.heroImagePath}
 					alt={hero.viewLabel}
 					class="h-[32rem] w-full object-cover object-[58%_62%] opacity-85"
 				/>
@@ -94,7 +94,7 @@
 				</div>
 			</div>
 			<p class="mt-5 text-right text-[0.6rem] tracking-[0.18em] text-ivory/55 uppercase">
-				Jaba Pura · Batuan Kaler
+				Pura Batuan Kaler
 			</p>
 		</div>
 	</div>
@@ -179,7 +179,7 @@
 				aria-label={content.actions.exploreTour}
 			>
 				<img
-					src="/images/panoramas/scene-jaba.jpg"
+					src={data.homeMedia.previewImagePath}
 					alt={home.tour.previewLabel}
 					class="aspect-[16/10] w-full object-cover opacity-90 transition duration-700 ease-out group-hover:scale-[1.025]"
 				/>

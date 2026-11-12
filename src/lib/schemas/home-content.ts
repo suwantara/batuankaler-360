@@ -5,6 +5,18 @@ import type { SitePageDataAdmin } from '#lib/types/site-page.ts';
 
 export type HomeContent = SiteDictionary['home'];
 
+export interface HomeMedia {
+	heroAssetId: string;
+	previewAssetId: string;
+}
+
+export interface HomeSeo {
+	title: string;
+	description: string;
+}
+
+export type HomeSeoValues = Record<Locale, HomeSeo>;
+
 const text = (max: number) =>
 	z.string().trim().max(max, `Maksimal ${max} karakter.`).optional().default('');
 
@@ -31,6 +43,29 @@ const galleryItemSchema = z.object({
 const guideItemSchema = z.object({
 	title: text(200),
 	body: text(1500)
+});
+
+const assetIdSchema = z.preprocess(
+	(value) => (typeof value === 'string' ? value.trim() : value),
+	z
+		.union([z.literal(''), z.uuid()])
+		.optional()
+		.default('')
+);
+
+export const homeMediaSchema = z.object({
+	heroAssetId: assetIdSchema,
+	previewAssetId: assetIdSchema
+});
+
+export const homeSeoLocaleSchema = z.object({
+	title: text(300),
+	description: text(500)
+});
+
+export const homeSeoFormSchema = z.object({
+	id: homeSeoLocaleSchema,
+	en: homeSeoLocaleSchema
 });
 
 export const homeLocaleSchema = z.object({
@@ -84,24 +119,28 @@ export const homeLocaleSchema = z.object({
 	})
 });
 
+function parseJsonContent(value: unknown): unknown {
+	if (typeof value !== 'string') return value;
+
+	try {
+		return JSON.parse(value);
+	} catch {
+		return null;
+	}
+}
+
 export const homeContentFormSchema = z
 	.object({
 		status: z.enum(['draft', 'published']),
 		content: z.preprocess(
-			(value) => {
-				if (typeof value !== 'string') return value;
-
-				try {
-					return JSON.parse(value);
-				} catch {
-					return null;
-				}
-			},
+			parseJsonContent,
 			z.object({
 				id: homeLocaleSchema,
 				en: homeLocaleSchema
 			})
-		)
+		),
+		seo: z.preprocess(parseJsonContent, homeSeoFormSchema),
+		media: z.preprocess(parseJsonContent, homeMediaSchema)
 	})
 	.superRefine((value, context) => {
 		if (value.status !== 'published') return;
@@ -130,24 +169,43 @@ export function parseHomeContent(value: unknown): HomeContent | null {
 	return result.success ? (result.data as HomeContent) : null;
 }
 
+export function parseHomeMedia(value: unknown): HomeMedia {
+	const result = homeMediaSchema.safeParse(value);
+
+	return result.success ? result.data : { heroAssetId: '', previewAssetId: '' };
+}
+
+export function parseHomeShared(value: unknown): HomeMedia {
+	if (typeof value !== 'object' || value === null) {
+		return { heroAssetId: '', previewAssetId: '' };
+	}
+
+	return parseHomeMedia((value as { media?: unknown }).media);
+}
+
+export function parseHomeSeo(value: unknown): HomeSeoValues {
+	const result = homeSeoFormSchema.safeParse(value);
+	return result.success
+		? result.data
+		: {
+				id: { title: '', description: '' },
+				en: { title: '', description: '' }
+			};
+}
+
 export function homeContentFormValuesFromData(page: SitePageDataAdmin): HomeContentFormValues {
 	return {
 		status: page.status,
 		content: {
 			id: parseHomeContent(page.data.id) ?? dictionary.id.home,
 			en: parseHomeContent(page.data.en) ?? dictionary.en.home
-		}
+		},
+		seo: {
+			id: { ...page.meta.id },
+			en: { ...page.meta.en }
+		},
+		media: parseHomeShared(page.shared)
 	};
-}
-
-function parseJsonContent(value: string | undefined): unknown {
-	if (!value) return null;
-
-	try {
-		return JSON.parse(value);
-	} catch {
-		return null;
-	}
 }
 
 export function homeContentFormValuesFromRaw(raw: Record<string, string>): HomeContentFormValues {
@@ -160,7 +218,9 @@ export function homeContentFormValuesFromRaw(raw: Record<string, string>): HomeC
 		content: {
 			id: parseHomeContent(content.id) ?? dictionary.id.home,
 			en: parseHomeContent(content.en) ?? dictionary.en.home
-		}
+		},
+		seo: parseHomeSeo(parseJsonContent(raw.seo)),
+		media: parseHomeMedia(parseJsonContent(raw.media))
 	};
 }
 
