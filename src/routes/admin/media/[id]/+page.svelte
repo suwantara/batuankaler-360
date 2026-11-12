@@ -37,15 +37,15 @@
 <div class="flex flex-col gap-6">
 	<header class="flex flex-col gap-4">
 		<nav class="flex items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
-			<a href={resolve('admin/media')} class="transition-colors hover:text-navy">Media</a>
+			<a href={resolve('admin/media')} class="transition-colors hover:text-heading">Media</a>
 			<Icon name="chevron-right" class="h-3 w-3" />
-			<span class="text-navy/60">Preview</span>
+			<span class="text-heading/60">Preview</span>
 		</nav>
 
 		<div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 			<div>
 				<p class="eyebrow">Media</p>
-				<h1 class="display-lg mt-4 text-navy">Preview aset</h1>
+				<h1 class="display-lg mt-4 text-heading">Preview aset</h1>
 				<p class="mt-2 max-w-xl truncate text-sm text-muted">{data.asset.originalPath}</p>
 				<p class="mt-1 text-xs text-muted">
 					{data.asset.width}{data.asset.height ? ` × ${data.asset.height}` : ''} px ·

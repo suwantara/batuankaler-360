@@ -65,6 +65,8 @@ Aturan:
 - Gunakan `--color-gold-light` untuk aksen di permukaan gelap.
 - Jangan menyampaikan status hanya lewat warna; badge selalu punya teks.
 - Teks normal minimal 4.5:1; elemen UI minimal 3:1.
+- Admin memiliki **soft dark mode** yang dicakup oleh `.admin-shell`. Publik tetap terang agar karakter kertas tidak hilang.
+- Token semantik `--color-heading` dan `--color-line` memisahkan warna teks/judul dari warna latar gelap, sehingga mode gelap tidak membalik section navy secara keliru.
 
 ### 2.2 Tipografi
 
@@ -222,6 +224,7 @@ Ritme section yang disarankan: gelap → kertas → gelap → ivory → sand →
 - **Koordinat:** form scene dan hotspot memiliki pemilih panorama. Pengguna menggeser panorama, mengklik satu titik, lalu yaw/pitch terisi otomatis dan marker emas menandai posisi.
 - **Media:** metadata dan upload dipisahkan; panel panduan gelap mendampingi form.
 - **Konten:** mengelola informasi kunjungan ID/EN, status Draf/Tayang, identitas pengelola, dan tautan peta. Field kosong tidak ditampilkan.
+- **Mode gelap:** toggle tersedia di topbar admin dan halaman login. Pilihan disimpan di `localStorage`, mengikuti preferensi sistem saat belum ada pilihan, dan hanya memengaruhi area `.admin-shell`; situs publik tetap terang.
 
 Catatan admin:
 
@@ -242,6 +245,7 @@ Catatan admin:
 - Semua kontrol viewer memiliki `aria-label` yang mengikuti locale.
 - Viewer panorama dapat difokuskan dan dioperasikan dengan tombol panah, `+`, `−`, dan `R`; scene list tetap menjadi alternatif navigasi.
 - Pemilih koordinat tetap menyediakan input yaw/pitch manual sebagai alternatif klik.
+- Mode gelap admin diaudit untuk kontras teks, field, badge, alert, dan focus state.
 - Hormati `prefers-reduced-motion`.
 - Jangan menonaktifkan outline tanpa pengganti.
 

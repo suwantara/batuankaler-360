@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import ThemeToggle from '#lib/components/admin/ThemeToggle.svelte';
 	import BrandLockup from '#lib/components/ui/BrandLockup.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import Ornament from '#lib/components/ui/Ornament.svelte';
@@ -12,7 +13,9 @@
 	<title>Masuk Admin — Pura Batuan Kaler 360</title>
 </svelte:head>
 
-<div class="grid min-h-dvh bg-paper lg:grid-cols-[1.04fr_0.96fr]">
+<div class="relative grid min-h-dvh bg-paper lg:grid-cols-[1.04fr_0.96fr]">
+	<ThemeToggle class="absolute top-5 right-5 z-20" />
+
 	<section
 		class="dark-surface relative hidden overflow-hidden p-10 lg:flex lg:flex-col lg:justify-between xl:p-14"
 	>
@@ -50,7 +53,7 @@
 			</a>
 
 			<p class="eyebrow mt-10 lg:mt-0">Akses administrator</p>
-			<h1 class="display-lg mt-5 text-navy">Masuk ke panel admin</h1>
+			<h1 class="display-lg mt-5 text-heading">Masuk ke panel admin</h1>
 			<p class="mt-4 max-w-sm text-sm leading-relaxed text-body">
 				Gunakan akun administrator yang telah dibuat melalui proses provisioning.
 			</p>
@@ -95,7 +98,7 @@
 			<div class="mt-8 border-t border-charcoal/10 pt-5">
 				<a
 					href={resolve('id')}
-					class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-navy uppercase transition-colors hover:text-gold-dark"
+					class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-heading uppercase transition-colors hover:text-gold-dark"
 				>
 					<Icon name="arrow-left" class="h-3.5 w-3.5" />
 					Kembali ke situs publik

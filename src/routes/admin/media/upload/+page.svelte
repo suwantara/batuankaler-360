@@ -14,13 +14,13 @@
 <div class="flex flex-col gap-6">
 	<header class="flex flex-col gap-4">
 		<nav class="flex items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
-			<a href={resolve('admin/media')} class="transition-colors hover:text-navy">Media</a>
+			<a href={resolve('admin/media')} class="transition-colors hover:text-heading">Media</a>
 			<Icon name="chevron-right" class="h-3 w-3" />
-			<span class="text-navy/60">Upload</span>
+			<span class="text-heading/60">Upload</span>
 		</nav>
 		<div>
 			<p class="eyebrow">Media baru</p>
-			<h1 class="display-lg mt-4 text-navy">Upload panorama</h1>
+			<h1 class="display-lg mt-4 text-heading">Upload panorama</h1>
 			<p class="body-copy mt-3 max-w-2xl">
 				Unggah panorama equirectangular beserta thumbnail dan preview opsional. File disimpan di
 				storage lokal server.
@@ -40,7 +40,7 @@
 		>
 			<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 				<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
-				<h2 class="title-sm text-navy">Berkas panorama</h2>
+				<h2 class="title-sm text-heading">Berkas panorama</h2>
 			</div>
 
 			<div class="grid gap-5 sm:grid-cols-2">
@@ -101,7 +101,7 @@
 				</button>
 				<a
 					href={resolve('admin/media')}
-					class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-muted uppercase transition-colors hover:text-navy"
+					class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-muted uppercase transition-colors hover:text-heading"
 				>
 					<Icon name="arrow-left" class="h-3.5 w-3.5" />
 					Batal

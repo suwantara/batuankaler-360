@@ -106,7 +106,7 @@
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
-			<h3 class="title-sm text-navy">Posisi &amp; tujuan</h3>
+			<h3 class="title-sm text-heading">Posisi &amp; tujuan</h3>
 		</div>
 
 		<div class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -166,12 +166,12 @@
 				/>
 			</label>
 
-			<label class="mt-7 flex items-center gap-2.5 text-sm font-medium text-navy">
+			<label class="mt-7 flex items-center gap-2.5 text-sm font-medium text-heading">
 				<input
 					type="checkbox"
 					name="isActive"
 					bind:checked={form.isActive}
-					class="h-4 w-4 rounded-xs border-navy/25 text-navy accent-[var(--color-navy)]"
+					class="h-4 w-4 rounded-xs border-line/25 text-heading accent-[var(--color-navy)]"
 				/>
 				Aktif
 			</label>
@@ -231,7 +231,7 @@
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
-			<h3 class="title-sm text-navy">Konten hotspot</h3>
+			<h3 class="title-sm text-heading">Konten hotspot</h3>
 		</div>
 
 		<div class="mt-5 grid gap-8 lg:grid-cols-2 lg:gap-10">

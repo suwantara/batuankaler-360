@@ -126,6 +126,18 @@ test.describe('admin dashboard', () => {
 		await expect(page.getByText('scene-jaba.jpg').first()).toBeVisible();
 	});
 
+	test('toggles and persists admin dark mode', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+
+		await loginAsAdmin(page);
+		await page.getByRole('button', { name: 'Aktifkan mode gelap' }).click();
+		await expect(page.locator('html')).toHaveAttribute('data-admin-theme', 'dark');
+
+		await page.reload();
+		await expect(page.locator('html')).toHaveAttribute('data-admin-theme', 'dark');
+		await expect(page.getByRole('button', { name: 'Aktifkan mode terang' })).toBeVisible();
+	});
+
 	test('loads the visit information editor', async ({ page }) => {
 		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
 

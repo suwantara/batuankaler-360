@@ -26,7 +26,7 @@
 		<div>
 			<p class="eyebrow">Konten situs</p>
 			<div class="mt-4 flex flex-wrap items-center gap-3">
-				<h1 class="display-lg text-navy">Informasi kunjungan</h1>
+				<h1 class="display-lg text-heading">Informasi kunjungan</h1>
 				<span class="badge {status === 'published' ? 'badge--published' : 'badge--draft'}">
 					{status === 'published' ? 'Tayang' : 'Draf'}
 				</span>

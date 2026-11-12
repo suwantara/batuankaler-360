@@ -97,7 +97,7 @@
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
-			<h2 class="title-sm text-navy">Informasi scene</h2>
+			<h2 class="title-sm text-heading">Informasi scene</h2>
 		</div>
 
 		<div class="mt-5 grid gap-5 sm:grid-cols-2">
@@ -164,7 +164,7 @@
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
-			<h2 class="title-sm text-navy">Pandangan awal</h2>
+			<h2 class="title-sm text-heading">Pandangan awal</h2>
 		</div>
 		<p class="field-help mt-3">Nilai dalam derajat. Konversi ke radian dilakukan saat disimpan.</p>
 
@@ -261,7 +261,7 @@
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">03</span>
-			<h2 class="title-sm text-navy">Terjemahan</h2>
+			<h2 class="title-sm text-heading">Terjemahan</h2>
 		</div>
 
 		<div class="mt-5 grid gap-8 lg:grid-cols-2 lg:gap-10">
@@ -324,7 +324,7 @@
 		</button>
 		<a
 			href={resolve('admin/scenes')}
-			class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-muted uppercase transition-colors hover:text-navy"
+			class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-muted uppercase transition-colors hover:text-heading"
 		>
 			<Icon name="arrow-left" class="h-3.5 w-3.5" />
 			Batal

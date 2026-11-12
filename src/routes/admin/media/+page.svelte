@@ -17,7 +17,7 @@
 	<header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 		<div>
 			<p class="eyebrow">Media</p>
-			<h1 class="display-lg mt-4 text-navy">Aset panorama</h1>
+			<h1 class="display-lg mt-4 text-heading">Aset panorama</h1>
 			<p class="body-copy mt-3 max-w-2xl">
 				Upload panorama equirectangular dan kelola metadata aset. File disimpan di storage lokal
 				server.
@@ -41,7 +41,7 @@
 		<section class="surface p-5 sm:p-6">
 			<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 				<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
-				<h2 class="title-sm text-navy">Tambah metadata aset</h2>
+				<h2 class="title-sm text-heading">Tambah metadata aset</h2>
 			</div>
 
 			<form method="POST" action="?/metadata" class="mt-5 grid gap-5 sm:grid-cols-2">
@@ -173,13 +173,13 @@
 
 	<section class="surface overflow-hidden">
 		<div class="flex items-center justify-between gap-4 border-b border-charcoal/10 px-5 py-4">
-			<h2 class="title-sm text-navy">Daftar aset</h2>
+			<h2 class="title-sm text-heading">Daftar aset</h2>
 			<span class="badge badge--quiet">{data.assets.length} aset</span>
 		</div>
 
 		{#if data.assets.length === 0}
 			<div class="flex flex-col items-center px-5 py-14 text-center">
-				<Icon name="image" class="h-7 w-7 text-navy/20" />
+				<Icon name="image" class="h-7 w-7 text-heading/20" />
 				<p class="mt-4 text-sm text-muted">Belum ada aset panorama.</p>
 				<a href={resolve('admin/media/upload')} class="btn btn--outline btn--sm mt-5">
 					Upload panorama pertama
@@ -200,7 +200,7 @@
 								loading="lazy"
 							/>
 							<div class="min-w-0">
-								<p class="truncate text-sm font-medium text-navy">{asset.originalPath}</p>
+								<p class="truncate text-sm font-medium text-heading">{asset.originalPath}</p>
 								<p class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
 									<span>{asset.width}{asset.height ? ` × ${asset.height}` : ''} px</span>
 									<span class="h-1 w-1 rounded-full bg-charcoal/20" aria-hidden="true"></span>
@@ -212,7 +212,7 @@
 							<span class="badge badge--quiet">{asset.processingStatus}</span>
 							<a
 								href={resolve(`admin/media/${asset.id}`)}
-								class="inline-flex items-center gap-1.5 text-xs font-semibold text-navy transition-colors hover:text-gold-dark"
+								class="inline-flex items-center gap-1.5 text-xs font-semibold text-heading transition-colors hover:text-gold-dark"
 							>
 								Preview
 								<Icon name="eye" class="h-3.5 w-3.5" />

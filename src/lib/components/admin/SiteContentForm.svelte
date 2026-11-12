@@ -25,7 +25,7 @@
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
-			<h2 class="title-sm text-navy">Publikasi &amp; identitas</h2>
+			<h2 class="title-sm text-heading">Publikasi &amp; identitas</h2>
 		</div>
 
 		<div class="mt-5 grid gap-5 sm:grid-cols-2">
@@ -73,7 +73,7 @@
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
 			<div>
-				<h2 class="title-sm text-navy">Bahasa Indonesia</h2>
+				<h2 class="title-sm text-heading">Bahasa Indonesia</h2>
 				<p class="field-help">Kosongkan field yang belum diverifikasi pengelola.</p>
 			</div>
 		</div>
@@ -155,7 +155,7 @@
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">03</span>
 			<div>
-				<h2 class="title-sm text-navy">English</h2>
+				<h2 class="title-sm text-heading">English</h2>
 				<p class="field-help">
 					Jika kosong, pengunjung versi Inggris akan melihat versi Indonesia dengan indikator
 					fallback.
@@ -242,7 +242,7 @@
 		</button>
 		<a
 			href={previewHref}
-			class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-muted uppercase transition-colors hover:text-navy"
+			class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-muted uppercase transition-colors hover:text-heading"
 		>
 			Lihat beranda
 			<Icon name="external" class="h-3.5 w-3.5" />

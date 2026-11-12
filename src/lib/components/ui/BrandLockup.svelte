@@ -7,13 +7,13 @@
 		class: className = ''
 	}: { tone?: 'dark' | 'light'; tagline?: boolean; class?: string } = $props();
 
-	const nameClass = $derived(tone === 'light' ? 'text-ivory' : 'text-navy');
+	const nameClass = $derived(tone === 'light' ? 'text-ivory' : 'text-heading');
 	const accentClass = $derived(tone === 'light' ? 'text-gold-light' : 'text-gold-dark');
-	const taglineClass = $derived(tone === 'light' ? 'text-ivory/60' : 'text-navy/55');
+	const taglineClass = $derived(tone === 'light' ? 'text-ivory/60' : 'text-heading/55');
 </script>
 
 <span class="flex items-center gap-3 {className}">
-	<TempleMark class="h-9 w-9 shrink-0 {tone === 'light' ? 'text-gold-light' : 'text-navy'}" />
+	<TempleMark class="h-9 w-9 shrink-0 {tone === 'light' ? 'text-gold-light' : 'text-heading'}" />
 	<span class="min-w-0">
 		<span class="block font-display text-[1.12rem] leading-none tracking-tight {nameClass}">
 			Batuan Kaler <span class={accentClass}>360</span>

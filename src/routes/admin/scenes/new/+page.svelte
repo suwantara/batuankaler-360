@@ -17,13 +17,13 @@
 <div class="flex flex-col gap-6">
 	<header class="flex flex-col gap-4">
 		<nav class="flex items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
-			<a href={resolve('admin/scenes')} class="transition-colors hover:text-navy">Scene</a>
+			<a href={resolve('admin/scenes')} class="transition-colors hover:text-heading">Scene</a>
 			<Icon name="chevron-right" class="h-3 w-3" />
-			<span class="text-navy/60">Tambah</span>
+			<span class="text-heading/60">Tambah</span>
 		</nav>
 		<div>
 			<p class="eyebrow">Scene baru</p>
-			<h1 class="display-lg mt-4 text-navy">Tambah scene</h1>
+			<h1 class="display-lg mt-4 text-heading">Tambah scene</h1>
 			<p class="body-copy mt-3 max-w-2xl">
 				Buat scene baru, hubungkan dengan aset panorama, lalu tentukan status publikasinya.
 			</p>

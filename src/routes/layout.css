@@ -31,6 +31,8 @@
 	--color-gold-dark: #7d6230;
 	--color-charcoal: #141829;
 	--color-ink: #141829;
+	--color-heading: #21294c;
+	--color-line: #21294c;
 	--color-body: #45454b;
 	--color-muted: #625d53;
 
@@ -362,9 +364,9 @@
 	}
 
 	.btn--outline {
-		border-color: color-mix(in srgb, var(--color-navy) 24%, transparent);
+		border-color: color-mix(in srgb, var(--color-heading) 24%, transparent);
 		background-color: transparent;
-		color: var(--color-navy);
+		color: var(--color-heading);
 	}
 
 	.btn--outline:hover {
@@ -385,7 +387,7 @@
 	.btn--ghost {
 		min-height: auto;
 		padding: 0.25rem 0;
-		color: var(--color-navy);
+		color: var(--color-heading);
 	}
 
 	.btn--ghost:hover {
@@ -415,7 +417,7 @@
 		gap: 0.65rem;
 		padding-bottom: 0.35rem;
 		border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent);
-		color: var(--color-navy);
+		color: var(--color-heading);
 		font-size: 0.6875rem;
 		font-weight: 650;
 		letter-spacing: 0.14em;
@@ -469,7 +471,7 @@
 	}
 
 	.surface--sand {
-		border-color: color-mix(in srgb, var(--color-navy) 10%, transparent);
+		border-color: color-mix(in srgb, var(--color-heading) 10%, transparent);
 		background-color: color-mix(in srgb, var(--color-sand) 62%, var(--color-paper));
 	}
 
@@ -525,10 +527,10 @@
 		align-items: center;
 		gap: 0.42rem;
 		padding: 0.32rem 0.62rem;
-		border: 1px solid color-mix(in srgb, var(--color-navy) 14%, transparent);
+		border: 1px solid color-mix(in srgb, var(--color-heading) 14%, transparent);
 		border-radius: 9999px;
-		background-color: color-mix(in srgb, var(--color-navy) 4%, transparent);
-		color: var(--color-navy);
+		background-color: color-mix(in srgb, var(--color-heading) 4%, transparent);
+		color: var(--color-heading);
 		font-size: 0.625rem;
 		font-weight: 650;
 		letter-spacing: 0.13em;
@@ -597,9 +599,9 @@
 	}
 
 	.alert--info {
-		border-color: color-mix(in srgb, var(--color-navy) 16%, transparent);
+		border-color: color-mix(in srgb, var(--color-heading) 16%, transparent);
 		background-color: color-mix(in srgb, var(--color-sand) 50%, transparent);
-		color: var(--color-navy);
+		color: var(--color-heading);
 	}
 
 	/* ---------------------------------------------------------------------
@@ -607,7 +609,7 @@
 	 * ------------------------------------------------------------------- */
 	.field-label {
 		display: block;
-		color: var(--color-navy);
+		color: var(--color-heading);
 		font-size: 0.75rem;
 		font-weight: 650;
 		letter-spacing: 0.1em;
@@ -621,7 +623,7 @@
 		min-height: 2.9rem;
 		margin-top: 0.5rem;
 		padding: 0.7rem 0.85rem;
-		border: 1px solid color-mix(in srgb, var(--color-navy) 20%, transparent);
+		border: 1px solid color-mix(in srgb, var(--color-heading) 20%, transparent);
 		border-radius: var(--radius-xs);
 		background-color: #fffdf6;
 		color: var(--color-charcoal);
@@ -926,4 +928,79 @@
 			white-space: nowrap;
 		}
 	}
+}
+
+/*
+ * ============================================================================
+ * ADMIN DARK THEME
+ * Scoped to .admin-shell so the public, paper-first site stays unchanged.
+ * ============================================================================
+ */
+html[data-admin-theme='dark'] .admin-shell {
+	--color-paper: #151e33;
+	--color-sand: #101728;
+	--color-charcoal: #e9e3d3;
+	--color-ink: #f4eedc;
+	--color-heading: #f6f0df;
+	--color-line: #f4eedc;
+	--color-body: #c3beb2;
+	--color-muted: #9c978a;
+	--color-gold-dark: #d9bb75;
+	--color-stone: #35415f;
+	--color-success: #8bd8b0;
+	--color-success-soft: #12382b;
+	--color-warning: #f2c77a;
+	--color-warning-soft: #3a2c10;
+	--color-danger: #f1a69c;
+	--color-danger-soft: #3c1d1a;
+	background-color: #0b1120;
+	color-scheme: dark;
+}
+
+html[data-admin-theme='dark'] .admin-shell .field-input {
+	border-color: color-mix(in srgb, var(--color-ivory) 18%, transparent);
+	background-color: #0c1425;
+	color: var(--color-ivory);
+}
+
+html[data-admin-theme='dark'] .admin-shell .field-input::placeholder {
+	color: color-mix(in srgb, var(--color-ivory) 60%, transparent);
+}
+
+html[data-admin-theme='dark'] .admin-shell input[type='file'].field-input::file-selector-button {
+	background-color: color-mix(in srgb, var(--color-ivory) 10%, transparent);
+	color: var(--color-ivory);
+}
+
+html[data-admin-theme='dark'] .admin-shell .btn--primary,
+html[data-admin-theme='dark'] .admin-shell .btn--gold {
+	background-color: var(--color-gold);
+	color: #141829;
+}
+
+html[data-admin-theme='dark'] .admin-shell .btn--primary:hover,
+html[data-admin-theme='dark'] .admin-shell .btn--gold:hover {
+	background-color: var(--color-gold-light);
+}
+
+html[data-admin-theme='dark'] .admin-shell .badge--gold {
+	border-color: color-mix(in srgb, var(--color-gold) 30%, transparent);
+	background-color: color-mix(in srgb, var(--color-gold) 12%, transparent);
+	color: var(--color-gold-light);
+}
+
+.theme-icon--sun {
+	display: none;
+}
+
+.theme-icon--moon {
+	display: block;
+}
+
+html[data-admin-theme='dark'] .theme-icon--sun {
+	display: block;
+}
+
+html[data-admin-theme='dark'] .theme-icon--moon {
+	display: none;
 }

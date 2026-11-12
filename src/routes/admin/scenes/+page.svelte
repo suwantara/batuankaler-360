@@ -18,7 +18,7 @@
 	<header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 		<div>
 			<p class="eyebrow">Konten</p>
-			<h1 class="display-lg mt-4 text-navy">Scene</h1>
+			<h1 class="display-lg mt-4 text-heading">Scene</h1>
 			<p class="body-copy mt-3 max-w-2xl">Kelola scene panorama, status publikasi, dan hotspot.</p>
 		</div>
 		<a href={resolve('admin/scenes/new')} class="btn btn--primary btn--sm w-fit">
@@ -33,7 +33,7 @@
 				<span
 					class="flex h-12 w-12 items-center justify-center rounded-full border border-charcoal/10 bg-sand/60"
 				>
-					<Icon name="layers" class="h-5 w-5 text-navy/35" />
+					<Icon name="layers" class="h-5 w-5 text-heading/35" />
 				</span>
 				<p class="mt-5 text-sm text-muted">Belum ada scene.</p>
 				<a href={resolve('admin/scenes/new')} class="btn btn--outline btn--sm mt-5">
@@ -62,7 +62,7 @@
 								</div>
 							{/if}
 							<div class="min-w-0">
-								<p class="truncate text-sm font-semibold text-navy">{title(scene)}</p>
+								<p class="truncate text-sm font-semibold text-heading">{title(scene)}</p>
 								<p class="mt-0.5 truncate text-xs text-muted">/{scene.slug}</p>
 								<p
 									class="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.7rem] text-muted"
@@ -87,14 +87,14 @@
 							</span>
 							<a
 								href={resolve(`admin/scenes/${scene.id}/hotspots`)}
-								class="inline-flex items-center gap-1.5 text-xs font-semibold text-muted transition-colors hover:text-navy"
+								class="inline-flex items-center gap-1.5 text-xs font-semibold text-muted transition-colors hover:text-heading"
 							>
 								<Icon name="map-pin" class="h-3.5 w-3.5" />
 								Hotspot
 							</a>
 							<a
 								href={resolve(`admin/scenes/${scene.id}`)}
-								class="inline-flex items-center gap-1.5 text-xs font-semibold text-navy transition-colors hover:text-gold-dark"
+								class="inline-flex items-center gap-1.5 text-xs font-semibold text-heading transition-colors hover:text-gold-dark"
 							>
 								Edit
 								<Icon name="arrow-right" class="h-3.5 w-3.5" />

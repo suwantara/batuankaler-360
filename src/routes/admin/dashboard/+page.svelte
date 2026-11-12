@@ -30,7 +30,7 @@
 	<header class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
 		<div>
 			<p class="eyebrow">Ringkasan</p>
-			<h1 class="display-lg mt-4 text-navy">Dashboard</h1>
+			<h1 class="display-lg mt-4 text-heading">Dashboard</h1>
 			<p class="body-copy mt-3 max-w-xl">
 				Pantau jumlah scene, hotspot, dan aset panorama yang tersedia.
 			</p>
@@ -51,7 +51,7 @@
 					<p class="meta text-[0.58rem] text-muted">{stat.label}</p>
 					<Icon name={stat.icon} class="h-4 w-4 text-gold-dark/55" />
 				</div>
-				<p class="mt-6 font-display text-5xl leading-none text-navy">{stat.value}</p>
+				<p class="mt-6 font-display text-5xl leading-none text-heading">{stat.value}</p>
 				<div class="mt-5 h-px w-full bg-charcoal/10">
 					<div class="h-px w-10 bg-gold-dark/70"></div>
 				</div>
@@ -62,10 +62,10 @@
 	<div class="grid gap-6 xl:grid-cols-[1.45fr_1fr]">
 		<section class="surface overflow-hidden">
 			<div class="flex items-center justify-between gap-4 border-b border-charcoal/10 px-5 py-4">
-				<h2 class="title-sm text-navy">Scene terbaru</h2>
+				<h2 class="title-sm text-heading">Scene terbaru</h2>
 				<a
 					href={resolve('admin/scenes')}
-					class="inline-flex items-center gap-1.5 text-xs font-semibold text-navy transition-colors hover:text-gold-dark"
+					class="inline-flex items-center gap-1.5 text-xs font-semibold text-heading transition-colors hover:text-gold-dark"
 				>
 					Lihat semua
 					<Icon name="arrow-right" class="h-3.5 w-3.5" />
@@ -74,11 +74,11 @@
 
 			{#if data.scenes.length === 0}
 				<div class="flex flex-col items-center px-5 py-12 text-center">
-					<Icon name="layers" class="h-7 w-7 text-navy/20" />
+					<Icon name="layers" class="h-7 w-7 text-heading/20" />
 					<p class="mt-4 text-sm text-muted">Belum ada scene.</p>
 					<a
 						href={resolve('admin/scenes/new')}
-						class="mt-4 text-xs font-semibold text-navy underline decoration-gold-dark/40 underline-offset-4 hover:text-gold-dark"
+						class="mt-4 text-xs font-semibold text-heading underline decoration-gold-dark/40 underline-offset-4 hover:text-gold-dark"
 					>
 						Buat scene pertama
 					</a>
@@ -105,7 +105,7 @@
 							</div>
 
 							<div class="min-w-0 flex-1">
-								<p class="truncate text-sm font-semibold text-navy">{sceneTitle(scene)}</p>
+								<p class="truncate text-sm font-semibold text-heading">{sceneTitle(scene)}</p>
 								<p class="mt-0.5 truncate text-xs text-muted">/{scene.slug}</p>
 							</div>
 
@@ -117,7 +117,7 @@
 
 							<a
 								href={resolve(`admin/scenes/${scene.id}`)}
-								class="text-xs font-semibold text-navy transition-colors hover:text-gold-dark"
+								class="text-xs font-semibold text-heading transition-colors hover:text-gold-dark"
 							>
 								Edit
 							</a>

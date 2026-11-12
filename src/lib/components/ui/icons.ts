@@ -27,6 +27,8 @@ export type IconName =
 	| 'reset'
 	| 'settings'
 	| 'shrink'
+	| 'sun'
+	| 'moon'
 	| 'trash'
 	| 'upload'
 	| 'user';
