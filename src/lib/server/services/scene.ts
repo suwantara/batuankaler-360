@@ -2,7 +2,7 @@ import { and, asc, count, eq, ne } from 'drizzle-orm';
 import { db } from '#lib/server/db/index.ts';
 import { area, hotspot, panoramaAsset, scene, sceneTranslation } from '#lib/server/db/schema.ts';
 import { ConflictError, NotFoundError, ValidationError } from '#lib/server/errors.ts';
-import { uploadedFileExists } from '#lib/server/storage/local.ts';
+import { uploadedFileExists } from '#lib/server/storage/index.ts';
 import { locales, type Locale } from '#lib/i18n/locales.ts';
 
 export interface SceneTranslationInput {

@@ -77,6 +77,37 @@ Buka `http://localhost:5173`. Root `/` akan mengarah ke `/id`. Panel admin terse
 
 Catatan pengembangan: database lokal saat ini menggunakan role `batuankaler` dan database `batuankaler_360`. Jangan commit `.env`; kredensial hanya untuk lingkungan lokal.
 
+## Object Storage
+
+Upload dapat disimpan secara lokal atau ke object storage S3-compatible seperti Cloudflare R2, AWS S3, MinIO, Backblaze B2, atau Wasabi.
+
+Default tetap `local` agar development tidak membutuhkan layanan tambahan. Untuk memakai R2/S3, ubah environment berikut:
+
+```dotenv
+STORAGE_DRIVER="s3"
+
+S3_ENDPOINT="https://<ACCOUNT_ID>.r2.cloudflarestorage.com"
+S3_REGION="auto"
+S3_BUCKET="batuankaler-360"
+S3_ACCESS_KEY_ID=""
+S3_SECRET_ACCESS_KEY=""
+S3_SESSION_TOKEN=""
+S3_PUBLIC_URL="https://cdn.example.com"
+S3_FORCE_PATH_STYLE="true"
+```
+
+Catatan:
+
+- `S3_PUBLIC_URL` wajib dapat diakses publik karena URL ini disimpan di database dan dipakai langsung oleh halaman publik serta viewer Marzipano.
+- Untuk R2, aktifkan public access melalui custom domain atau `r2.dev`, lalu isi URL tersebut di `S3_PUBLIC_URL`.
+- Bucket perlu mengizinkan `GET` dan `HEAD` dari origin situs. Untuk viewer panorama, aktifkan CORS pada bucket/CDN dengan `AllowedOrigins` berisi domain situs (misalnya `https://batuankaler.xuanjinyu.com`).
+- `S3_FORCE_PATH_STYLE="true"` cocok untuk R2 dan MinIO. Untuk AWS S3 virtual-hosted style, set ke `false`.
+- `S3_ENDPOINT` tidak boleh diakses dari browser; hanya server yang memakainya. Jangan menaruh kredensial S3 di kode client.
+- Saat berpindah dari `local` ke `s3`, file lama tetap dapat dibaca dari volume lokal. File baru akan disimpan ke object storage. Pindahkan file lama secara manual jika ingin konsolidasi.
+- Semua operasi upload tetap melewati validasi MIME, ekstensi, dimensi, dan ukuran di server sebelum dikirim ke object storage.
+
+Saat ini UI upload yang tersedia adalah panorama (JPG/PNG/WebP). Lapisan storage bersifat generik dan dapat menerima file lain seperti audio/video/PDF ketika fitur kontennya ditambahkan, selama tipe file tersebut ditambahkan ke validasi dan schema terkait.
+
 ## Perintah
 
 ```bash

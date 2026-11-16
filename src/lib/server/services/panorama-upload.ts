@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { panoramaAsset } from '#lib/server/db/schema.ts';
 import { ValidationError } from '#lib/server/errors.ts';
 import { createPanoramaAsset } from '#lib/server/services/panorama.ts';
-import { deletePanoramaFile, savePanoramaImage } from '#lib/server/storage/local.ts';
+import { deletePanoramaFile, savePanoramaImage } from '#lib/server/storage/index.ts';
 
 export interface PanoramaUploadInput {
 	original: File | null;

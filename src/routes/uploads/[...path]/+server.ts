@@ -2,7 +2,7 @@ import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import { Readable } from 'node:stream';
 import { error } from '@sveltejs/kit';
-import { contentTypeForFile, resolveUploadedFile } from '#lib/server/storage/local.ts';
+import { contentTypeForFile, resolveUploadedFile } from '#lib/server/storage/index.ts';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ params }) => {

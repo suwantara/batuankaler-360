@@ -2,7 +2,7 @@ import { asc, eq } from 'drizzle-orm';
 import { db } from '#lib/server/db/index.ts';
 import { panoramaAsset, scene, sitePage } from '#lib/server/db/schema.ts';
 import { ConflictError, NotFoundError } from '#lib/server/errors.ts';
-import { deletePanoramaFile } from '#lib/server/storage/local.ts';
+import { deletePanoramaFile } from '#lib/server/storage/index.ts';
 import { parseHomeShared } from '#lib/schemas/home-content.ts';
 import type { PanoramaConfig } from '#lib/types/panorama.ts';
 

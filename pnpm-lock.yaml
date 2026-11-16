@@ -172,6 +172,9 @@ importers:
       '@fontsource-variable/playfair-display':
         specifier: ^5.3.0
         version: 5.3.0
+      aws4fetch:
+        specifier: ^1.0.20
+        version: 1.0.20
       better-auth:
         specifier: ^1.6.24
         version: 1.7.18(@sveltejs/kit@3.1.1(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.3(@typescript-eslint/types@8.72.1))(vite@8.3.6(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)))(svelte@5.57.3(@typescript-eslint/types@8.72.1))(typescript@6.0.3)(vite@8.3.6(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)))(drizzle-kit@0.31.11)(drizzle-orm@0.45.4(kysely@0.29.8)(postgres@3.4.9))(svelte@5.57.3(@typescript-eslint/types@8.72.1))(vitest@4.1.12)
@@ -1509,6 +1512,9 @@ packages:
     resolution: {integrity: sha512-aq7Fm7iOIwvMV3LpjKxhbM7bUbf5dK55c6KsKaaLSsrE2ML4ctJB7jMIQE30u62gPLbuX4/bJRTnnQBlgxnVtw==}
     engines: {node: '>=22.12.0'}
     hasBin: true
+
+  aws4fetch@1.0.20:
+    resolution: {integrity: sha512-/djoAN709iY65ETD6LKCtyyEI04XIBP5xVvfmNxsEP0uJB5tyaGBztSryRr4HqMStr9R06PisQE7m9zDTXKu6g==}
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -3819,6 +3825,8 @@ snapshots:
       - svelte
       - vitest
       - vue
+
+  aws4fetch@1.0.20: {}
 
   axobject-query@4.1.0: {}
 
