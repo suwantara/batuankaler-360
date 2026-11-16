@@ -12,6 +12,9 @@ bun.lockb
 # Long-form specification document
 PRD.md
 
+# Source documentation
+/Dokumentasi*.md
+
 # Playwright MCP artifacts
 .playwright-mcp
 

@@ -28,12 +28,18 @@
 		}));
 	}
 
-	// Local editable copy of server values; reset when a form action returns new values.
+	// Local editable copy of server values; reset only when the server sends a different page.
 	// svelte-ignore state_referenced_locally
-	// eslint-disable-next-line svelte/prefer-writable-derived
 	let form = $state<PageDraft>({ ...values, blocks: withKeys(values.blocks) });
+	const valuesSignature = $derived(JSON.stringify(values));
+	let lastValuesSignature: string | undefined;
 
 	$effect(() => {
+		const signature = valuesSignature;
+
+		if (signature === lastValuesSignature) return;
+
+		lastValuesSignature = signature;
 		form = { ...values, blocks: withKeys(values.blocks) };
 	});
 

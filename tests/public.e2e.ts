@@ -205,6 +205,17 @@ test.describe('admin dashboard', () => {
 		await expect(page.getByRole('button', { name: 'Aktifkan mode terang' })).toBeVisible();
 	});
 
+	test('keeps page editor input while editing', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+
+		await loginAsAdmin(page);
+		await page.goto('/admin/pages/sejarah');
+		const title = page.locator('input[name="titleId"]');
+		await title.fill('Judul sementara');
+		await page.waitForTimeout(250);
+		await expect(title).toHaveValue('Judul sementara');
+	});
+
 	test('loads the home content editor and switches language', async ({ page }) => {
 		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
 
