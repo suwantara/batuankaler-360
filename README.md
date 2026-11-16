@@ -13,7 +13,7 @@ Dokumen produk dan aturan implementasi:
 - [x] Fase 2 — integrasi Marzipano, panorama uji, kontrol zoom/reset/fullscreen, dan cleanup viewer.
 - [x] Fase 3 — multi-scene, hotspot navigasi/informasi, scene list, panel informasi, dan deep link scene.
 - [x] Fase 4 — PostgreSQL, Drizzle schema domain, Better Auth, login admin, CRUD scene/hotspot, status draft/published, dan panel admin.
-- [x] Fase 5 — upload aset panorama, thumbnail/preview, preview admin, validasi publikasi, dan pengelolaan media.
+- [x] Fase 5 — upload aset panorama, thumbnail/preview, edit thumbnail dari detail media atau dari titik awal scene, preview admin, validasi publikasi, dan pengelolaan media.
 
 Public tour membaca scene **published** dari database. Halaman sejarah, area, galeri, dan panduan masih placeholder sampai fase konten berikutnya.
 
