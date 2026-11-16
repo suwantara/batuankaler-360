@@ -6,7 +6,11 @@ export function radiansToDegrees(value: number): number {
 	return (value * 180) / Math.PI;
 }
 
-export function parseCoordinate(value: string, fallback = 0): number {
+export function parseCoordinate(value: string | number, fallback = 0): number {
+	if (typeof value === 'number') {
+		return Number.isFinite(value) ? value : fallback;
+	}
+
 	if (value.trim() === '') return fallback;
 
 	const parsed = Number(value);
