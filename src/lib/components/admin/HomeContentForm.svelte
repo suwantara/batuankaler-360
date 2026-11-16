@@ -23,10 +23,24 @@
 
 	// Local editable copy of server values; reset when a form action returns new values.
 	// svelte-ignore state_referenced_locally
-	// eslint-disable-next-line svelte/prefer-writable-derived
 	let form = $state<HomeContentFormValues>(structuredClone(values));
 
+	const valuesSignature = $derived(JSON.stringify(values));
+	let lastValuesSignature: string | undefined;
+	let initialized = false;
+
 	$effect(() => {
+		const signature = valuesSignature;
+
+		if (!initialized) {
+			initialized = true;
+			lastValuesSignature = signature;
+			return;
+		}
+
+		if (signature === lastValuesSignature) return;
+
+		lastValuesSignature = signature;
 		form = structuredClone(values);
 	});
 

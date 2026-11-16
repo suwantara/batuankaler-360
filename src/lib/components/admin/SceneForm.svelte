@@ -31,7 +31,6 @@
 
 	// Local editable copy of server values; reset when a form action returns new values.
 	// svelte-ignore state_referenced_locally
-	// eslint-disable-next-line svelte/prefer-writable-derived
 	let form = $state<SceneFormValues>({ ...values });
 	let pickerOpen = $state(false);
 	let viewerHandle: PanoramaViewerHandle | null = $state(null);
@@ -39,7 +38,22 @@
 	let thumbnailMessage = $state('');
 	let thumbnailPreview = $state('');
 
+	const valuesSignature = $derived(JSON.stringify(values));
+	let lastValuesSignature: string | undefined;
+	let initialized = false;
+
 	$effect(() => {
+		const signature = valuesSignature;
+
+		if (!initialized) {
+			initialized = true;
+			lastValuesSignature = signature;
+			return;
+		}
+
+		if (signature === lastValuesSignature) return;
+
+		lastValuesSignature = signature;
 		form = { ...values };
 	});
 
