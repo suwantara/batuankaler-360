@@ -105,6 +105,7 @@ Catatan:
 - `S3_ENDPOINT` tidak boleh diakses dari browser; hanya server yang memakainya. Jangan menaruh kredensial S3 di kode client.
 - Saat berpindah dari `local` ke `s3`, file lama tetap dapat dibaca dari volume lokal. File baru akan disimpan ke object storage. Pindahkan file lama secara manual jika ingin konsolidasi.
 - Semua operasi upload tetap melewati validasi MIME, ekstensi, dimensi, dan ukuran di server sebelum dikirim ke object storage.
+- Setelah mengisi environment dan redeploy, buka **Admin → Pengaturan**. Kartu **Penyimpanan upload** menampilkan driver aktif, bucket, URL publik, serta tombol **Uji koneksi penyimpanan** yang membuat, membaca, dan menghapus objek uji kecil.
 
 Saat ini UI upload yang tersedia adalah panorama (JPG/PNG/WebP). Lapisan storage bersifat generik dan dapat menerima file lain seperti audio/video/PDF ketika fitur kontennya ditambahkan, selama tipe file tersebut ditambahkan ke validasi dan schema terkait.
 

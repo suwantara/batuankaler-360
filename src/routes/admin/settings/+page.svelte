@@ -2,7 +2,7 @@
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import type { PageProps } from './$types';
 
-	let { data }: PageProps = $props();
+	let { data, form }: PageProps = $props();
 </script>
 
 <div class="flex flex-col gap-6">
@@ -56,4 +56,65 @@
 			</div>
 		</aside>
 	</div>
+
+	<section class="surface p-5 sm:p-6">
+		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
+			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
+			<div>
+				<h2 class="title-sm text-heading">Penyimpanan upload</h2>
+				<p class="field-help">Konfigurasi aktif untuk file panorama dan aset media.</p>
+			</div>
+		</div>
+
+		<div class="mt-5 flex flex-wrap items-center gap-3">
+			<span class="badge {data.storage.ready ? 'badge--published' : 'badge--draft'}">
+				{data.storage.ready ? 'Siap' : 'Belum lengkap'}
+			</span>
+			<p class="text-sm font-semibold text-heading">
+				{data.storage.driver === 's3' ? 'Object storage (S3-compatible)' : 'Penyimpanan lokal'}
+			</p>
+		</div>
+
+		{#if data.storage.driver === 's3' && data.storage.ready}
+			<dl class="mt-5 grid gap-3 border-t border-charcoal/10 pt-5 text-sm sm:grid-cols-[8rem_1fr]">
+				<dt class="text-muted">Bucket</dt>
+				<dd class="font-medium break-all text-heading">{data.storage.bucket}</dd>
+				<dt class="text-muted">URL publik</dt>
+				<dd class="font-medium break-all text-heading">{data.storage.publicUrl}</dd>
+			</dl>
+		{:else if data.storage.driver === 's3'}
+			<div class="alert alert--warning mt-5">
+				Lengkapi environment berikut lalu redeploy:
+				<span class="mt-2 block font-mono text-xs">{data.storage.missing.join(', ')}</span>
+			</div>
+		{:else}
+			<p class="mt-5 border-t border-charcoal/10 pt-5 text-sm leading-relaxed text-muted">
+				File disimpan pada volume lokal <code>UPLOAD_DIR</code>. Untuk memakai R2/S3, set
+				<code>STORAGE_DRIVER=s3</code> dan lengkapi environment S3.
+			</p>
+		{/if}
+
+		{#if data.storage.error}
+			<div class="alert alert--error mt-5" role="alert">{data.storage.error}</div>
+		{/if}
+
+		{#if form?.storageTest}
+			<div
+				class="alert {form.storageTest.ok ? 'alert--success' : 'alert--error'} mt-5"
+				role="status"
+			>
+				{form.storageTest.message}
+			</div>
+		{/if}
+
+		<form method="POST" action="?/testStorage" class="mt-5 border-t border-charcoal/10 pt-5">
+			<button type="submit" class="btn btn--outline btn--sm" disabled={!data.storage.ready}>
+				<Icon name="upload" class="h-3.5 w-3.5" />
+				Uji koneksi penyimpanan
+			</button>
+			<p class="mt-2 text-xs leading-relaxed text-muted">
+				Uji ini membuat objek kecil, memeriksa keberadaannya, lalu menghapusnya.
+			</p>
+		</form>
+	</section>
 </div>

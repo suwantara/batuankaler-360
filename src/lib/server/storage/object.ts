@@ -202,6 +202,55 @@ async function putS3Object(input: PutObjectInput): Promise<StoredObject> {
 	};
 }
 
+export interface StorageStatus {
+	driver: string;
+	ready: boolean;
+	missing: string[];
+	bucket?: string;
+	publicUrl?: string;
+	error?: string;
+}
+
+export function getStorageStatus(): StorageStatus {
+	const driver = env('STORAGE_DRIVER')?.toLowerCase() ?? 'local';
+
+	if (driver === 'local') {
+		return { driver, ready: true, missing: [] };
+	}
+
+	if (driver !== 's3') {
+		return {
+			driver,
+			ready: false,
+			missing: [],
+			error: 'STORAGE_DRIVER harus bernilai "local" atau "s3".'
+		};
+	}
+
+	const required = [
+		'S3_ENDPOINT',
+		'S3_BUCKET',
+		'S3_ACCESS_KEY_ID',
+		'S3_SECRET_ACCESS_KEY',
+		'S3_PUBLIC_URL'
+	];
+	const missing = required.filter((name) => !env(name));
+
+	if (missing.length > 0) {
+		return { driver, ready: false, missing };
+	}
+
+	const config = s3Config();
+
+	return {
+		driver,
+		ready: true,
+		missing: [],
+		bucket: config.bucket,
+		publicUrl: config.publicUrl
+	};
+}
+
 export async function putObject(input: PutObjectInput): Promise<StoredObject> {
 	assertSafeKey(input.key);
 

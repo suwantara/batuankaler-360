@@ -5,12 +5,20 @@ import { ALLOWED_IMAGE_LABEL, UPLOAD_LIMITS } from '#lib/upload/limits.ts';
 import {
 	contentTypeForFile,
 	deleteObject,
+	getStorageStatus,
 	objectExists,
 	putObject,
 	resolveUploadedFile
 } from './object.ts';
 
-export { contentTypeForFile, resolveUploadedFile };
+export {
+	contentTypeForFile,
+	deleteObject,
+	getStorageStatus,
+	objectExists,
+	putObject,
+	resolveUploadedFile
+};
 
 export type UploadKind = 'original' | 'thumbnail' | 'preview';
 
