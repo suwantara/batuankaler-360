@@ -33,9 +33,16 @@
 	let form = $state<PageDraft>({ ...values, blocks: withKeys(values.blocks) });
 	const valuesSignature = $derived(JSON.stringify(values));
 	let lastValuesSignature: string | undefined;
+	let initialized = false;
 
 	$effect(() => {
 		const signature = valuesSignature;
+
+		if (!initialized) {
+			initialized = true;
+			lastValuesSignature = signature;
+			return;
+		}
 
 		if (signature === lastValuesSignature) return;
 
