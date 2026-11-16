@@ -2,7 +2,7 @@ import { asc, eq } from 'drizzle-orm';
 import { db } from '#lib/server/db/index.ts';
 import { panoramaAsset, scene, sitePage } from '#lib/server/db/schema.ts';
 import { ConflictError, NotFoundError } from '#lib/server/errors.ts';
-import { deletePanoramaFile } from '#lib/server/storage/index.ts';
+import { deletePanoramaFile, savePanoramaImage } from '#lib/server/storage/index.ts';
 import { parseHomeShared } from '#lib/schemas/home-content.ts';
 import type { PanoramaConfig } from '#lib/types/panorama.ts';
 
@@ -59,6 +59,41 @@ export async function requirePanoramaAsset(id: string) {
 	}
 
 	return asset;
+}
+
+type PanoramaAsset = typeof panoramaAsset.$inferSelect;
+
+export async function updatePanoramaThumbnail(id: string, file: File): Promise<PanoramaAsset> {
+	const asset = await requirePanoramaAsset(id);
+	const saved = await savePanoramaImage(file, 'thumbnail', asset.id);
+
+	try {
+		const [updated] = await db
+			.update(panoramaAsset)
+			.set({ thumbnailPath: saved.publicPath, updatedAt: new Date() })
+			.where(eq(panoramaAsset.id, id))
+			.returning();
+
+		if (!updated) {
+			throw new NotFoundError('Aset panorama tidak ditemukan.');
+		}
+
+		try {
+			await deletePanoramaFile(asset.thumbnailPath);
+		} catch (cause) {
+			console.error('Failed to delete previous panorama thumbnail', cause);
+		}
+
+		return updated;
+	} catch (cause) {
+		try {
+			await deletePanoramaFile(saved.publicPath);
+		} catch (cleanupCause) {
+			console.error('Failed to clean up replacement panorama thumbnail', cleanupCause);
+		}
+
+		throw cause;
+	}
 }
 
 export async function deletePanoramaAsset(id: string) {

@@ -219,7 +219,7 @@
 								href={resolve(`admin/media/${asset.id}`)}
 								class="inline-flex items-center gap-1.5 text-xs font-semibold text-heading transition-colors hover:text-gold-dark"
 							>
-								Preview
+								Preview &amp; thumbnail
 								<Icon name="eye" class="h-3.5 w-3.5" />
 							</a>
 							<ConfirmDeleteForm

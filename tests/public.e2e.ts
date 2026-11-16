@@ -351,6 +351,15 @@ test.describe('admin dashboard', () => {
 		await expect(page.getByRole('heading', { name: 'Preview aset' })).toBeVisible();
 		await expect(page.locator('canvas')).toBeVisible({ timeout: 15_000 });
 
+		const currentThumbnail = page.locator('img[alt="Thumbnail saat ini"]');
+		const previousThumbnail = await currentThumbnail.getAttribute('src');
+		await page
+			.locator('input[name="thumbnail"]')
+			.setInputFiles('static/images/panoramas/scene-madya-thumb.jpg');
+		await page.getByRole('button', { name: 'Simpan thumbnail' }).click();
+		await expect(page.getByRole('status')).toContainText('Thumbnail panorama berhasil diperbarui.');
+		await expect(currentThumbnail).not.toHaveAttribute('src', previousThumbnail ?? '');
+
 		await page.goto('/admin/media');
 		await page.getByTestId('asset-row').last().getByTestId('delete-asset').click();
 		const deleteDialog = page.getByRole('dialog', { name: 'Hapus aset panorama?' });
