@@ -11,3 +11,13 @@ export interface PanoramaConfig {
 	tileSize?: number;
 	format?: string;
 }
+
+export interface PanoramaViewParams {
+	yaw: number;
+	pitch: number;
+	fov: number;
+}
+
+export interface PanoramaViewerHandle {
+	captureThumbnail(view: PanoramaViewParams): Promise<string>;
+}

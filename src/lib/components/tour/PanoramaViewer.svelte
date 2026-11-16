@@ -12,6 +12,7 @@
 	import type { Locale } from '#lib/i18n/index.ts';
 	import { createHotspotElement } from '#lib/tour/hotspot-element.ts';
 	import type { InformationHotspot, TourScene } from '#lib/tour/scenes.ts';
+	import type { PanoramaViewerHandle, PanoramaViewParams } from '#lib/types/panorama.ts';
 	import ViewerControl from './ViewerControl.svelte';
 
 	let {
@@ -21,6 +22,7 @@
 		onNavigate,
 		onInfo,
 		onCoordinatePick,
+		onready,
 		fullscreenTarget,
 		pickMode = false,
 		compact = false
@@ -31,6 +33,7 @@
 		onNavigate?: (sceneId: string) => void;
 		onInfo?: (hotspot: InformationHotspot) => void;
 		onCoordinatePick?: (coords: { yaw: number; pitch: number }) => void;
+		onready?: (handle: PanoramaViewerHandle | null) => void;
 		fullscreenTarget?: HTMLElement | null;
 		pickMode?: boolean;
 		compact?: boolean;
@@ -65,6 +68,60 @@
 			image.onerror = () => reject(new Error(`Failed to load panorama: ${url}`));
 			image.src = url;
 		});
+	}
+
+	function loadSnapshot(src: string): Promise<HTMLImageElement> {
+		return new Promise((resolve, reject) => {
+			const image = new Image();
+			image.onload = () => resolve(image);
+			image.onerror = () => reject(new Error('Gagal membaca gambar dari viewer.'));
+			image.src = src;
+		});
+	}
+
+	async function captureThumbnail(view: PanoramaViewParams): Promise<string> {
+		if (!viewer || !activeView) {
+			throw new Error('Viewer panorama belum siap.');
+		}
+
+		activeView.setYaw(view.yaw);
+		activeView.setPitch(view.pitch);
+		activeView.setFov(view.fov);
+		viewer.updateSize();
+
+		// Give the render loop a moment to load the tiles around the initial view.
+		await new Promise((resolve) => setTimeout(resolve, 300));
+
+		const snapshot = viewer.stage().takeSnapshot({ quality: 90 });
+		const image = await loadSnapshot(snapshot);
+		const canvas = document.createElement('canvas');
+		canvas.width = 480;
+		canvas.height = 240;
+
+		const context = canvas.getContext('2d');
+
+		if (!context) {
+			throw new Error('Canvas thumbnail tidak tersedia.');
+		}
+
+		const targetAspect = canvas.width / canvas.height;
+		const sourceAspect = image.width / image.height;
+		let sx = 0;
+		let sy = 0;
+		let sw = image.width;
+		let sh = image.height;
+
+		if (sourceAspect > targetAspect) {
+			sw = image.height * targetAspect;
+			sx = (image.width - sw) / 2;
+		} else {
+			sh = image.width / targetAspect;
+			sy = (image.height - sh) / 2;
+		}
+
+		context.drawImage(image, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+
+		return canvas.toDataURL('image/jpeg', 0.85);
 	}
 
 	async function setup(): Promise<void> {
@@ -140,6 +197,7 @@
 			activeSceneId = initialScene.id;
 			loading = false;
 			ready = true;
+			onready?.({ captureThumbnail });
 
 			if (pickMode) {
 				placePickMarker({
@@ -330,6 +388,7 @@
 
 		return () => {
 			disposed = true;
+			onready?.(null);
 			document.removeEventListener('fullscreenchange', onFullscreenChange);
 			resizeObserver.disconnect();
 			viewer?.destroy();

@@ -51,12 +51,17 @@ declare module 'marzipano' {
 		): { x: number | null; y: number | null };
 	}
 
+	export interface Stage {
+		takeSnapshot(options?: { quality?: number }): string;
+	}
+
 	export interface Viewer {
 		createScene(options: SceneOptions): Scene;
 		switchScene(scene: Scene, options?: { transitionDuration?: number }): void;
 		destroyScene(scene: Scene): void;
 		destroy(): void;
 		updateSize(): void;
+		stage(): Stage;
 	}
 
 	export interface ViewerOptions {

@@ -11,6 +11,7 @@
 		radiansToDegrees
 	} from '#lib/tour/coordinates.ts';
 	import type { TourScene } from '#lib/tour/scenes.ts';
+	import type { PanoramaViewerHandle } from '#lib/types/panorama.ts';
 
 	let {
 		values,
@@ -33,12 +34,21 @@
 	// eslint-disable-next-line svelte/prefer-writable-derived
 	let form = $state<SceneFormValues>({ ...values });
 	let pickerOpen = $state(false);
+	let viewerHandle: PanoramaViewerHandle | null = $state(null);
+	let thumbnailStatus = $state<'idle' | 'capturing' | 'success' | 'error'>('idle');
+	let thumbnailMessage = $state('');
+	let thumbnailPreview = $state('');
 
 	$effect(() => {
 		form = { ...values };
 	});
 
 	const selectedAsset = $derived(assets.find((asset) => asset.id === form.panoramaAssetId));
+	const initialView = $derived({
+		yaw: degreesToRadians(parseCoordinate(form.initialYaw)),
+		pitch: degreesToRadians(parseCoordinate(form.initialPitch)),
+		fov: degreesToRadians(parseCoordinate(form.initialFov, 90))
+	});
 	const previewScene = $derived(
 		selectedAsset
 			? ({
@@ -49,11 +59,7 @@
 						thumbnail: '',
 						width: selectedAsset.width
 					},
-					initialView: {
-						yaw: degreesToRadians(parseCoordinate(form.initialYaw)),
-						pitch: degreesToRadians(parseCoordinate(form.initialPitch)),
-						fov: degreesToRadians(parseCoordinate(form.initialFov, 90))
-					},
+					initialView,
 					translations: {
 						id: { title: '', description: '' },
 						en: { title: '', description: '' }
@@ -66,6 +72,73 @@
 	function handleCoordinatePick(coords: { yaw: number; pitch: number }): void {
 		form.initialYaw = formatDegrees(radiansToDegrees(coords.yaw));
 		form.initialPitch = formatDegrees(radiansToDegrees(coords.pitch));
+	}
+
+	function responseMessage(payload: unknown): string | undefined {
+		if (payload && typeof payload === 'object' && 'message' in payload) {
+			const message = payload.message;
+
+			if (typeof message === 'string') return message;
+		}
+
+		return undefined;
+	}
+
+	function responseThumbnail(payload: unknown): string | undefined {
+		if (payload && typeof payload === 'object' && 'thumbnailPath' in payload) {
+			const thumbnailPath = payload.thumbnailPath;
+
+			if (typeof thumbnailPath === 'string') return thumbnailPath;
+		}
+
+		return undefined;
+	}
+
+	function responseOk(payload: unknown): boolean {
+		return Boolean(
+			payload &&
+			typeof payload === 'object' &&
+			'ok' in payload &&
+			typeof payload.ok === 'boolean' &&
+			payload.ok
+		);
+	}
+
+	async function captureThumbnail(): Promise<void> {
+		if (!selectedAsset || !viewerHandle || thumbnailStatus === 'capturing') return;
+
+		thumbnailStatus = 'capturing';
+		thumbnailMessage = '';
+
+		try {
+			const dataUrl = await viewerHandle.captureThumbnail(initialView);
+			const response = await fetch(`/admin/media/${selectedAsset.id}/thumbnail`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ dataUrl })
+			});
+			let payload: unknown;
+
+			try {
+				payload = await response.json();
+			} catch {
+				payload = null;
+			}
+
+			if (!response.ok || !responseOk(payload)) {
+				throw new Error(responseMessage(payload) ?? 'Gagal membuat thumbnail dari panorama.');
+			}
+
+			const thumbnailPath = responseThumbnail(payload);
+			thumbnailStatus = 'success';
+			thumbnailMessage =
+				'Thumbnail berhasil dibuat dari titik awal scene dan disimpan pada aset panorama.';
+			thumbnailPreview = thumbnailPath ? `${thumbnailPath}?v=${Date.now()}` : '';
+		} catch (cause) {
+			thumbnailStatus = 'error';
+			thumbnailMessage =
+				cause instanceof Error ? cause.message : 'Gagal membuat thumbnail dari panorama.';
+		}
 	}
 
 	function areaLabel(area: (typeof areas)[number]): string {
@@ -242,6 +315,7 @@
 								pickMode
 								compact
 								onCoordinatePick={handleCoordinatePick}
+								onready={(handle) => (viewerHandle = handle)}
 							/>
 						{/key}
 						<p class="field-help mt-2">
@@ -255,6 +329,55 @@
 					{/if}
 				</div>
 			{/if}
+		</div>
+
+		<div class="mt-5 border-t border-charcoal/10 pt-4">
+			<div class="flex flex-wrap items-start justify-between gap-3">
+				<div>
+					<p class="field-label">Thumbnail scene</p>
+					<p class="field-help mt-1">
+						Ambil gambar dari titik awal scene. Thumbnail disimpan pada aset panorama dan dipakai
+						daftar scene serta navigasi tur.
+					</p>
+				</div>
+				<div class="flex flex-wrap items-center gap-3">
+					{#if thumbnailPreview}
+						<img
+							src={thumbnailPreview}
+							alt="Pratinjau thumbnail baru"
+							class="h-12 w-24 border border-charcoal/10 object-cover"
+						/>
+					{/if}
+					<button
+						type="button"
+						class="btn btn--outline btn--sm"
+						disabled={!viewerHandle || thumbnailStatus === 'capturing'}
+						onclick={captureThumbnail}
+					>
+						<Icon name="image" class="h-3.5 w-3.5" />
+						{thumbnailStatus === 'capturing'
+							? 'Mengambil thumbnail…'
+							: 'Ambil thumbnail dari titik awal'}
+					</button>
+				</div>
+			</div>
+
+			{#if !viewerHandle && thumbnailStatus !== 'success'}
+				<p class="field-help mt-2">
+					Buka pemilih panorama di atas untuk memuat viewer, lalu tombol thumbnail akan aktif.
+				</p>
+			{/if}
+
+			{#if thumbnailStatus === 'success'}
+				<p class="mt-3 text-xs leading-relaxed text-success" role="status">{thumbnailMessage}</p>
+			{:else if thumbnailStatus === 'error'}
+				<p class="mt-3 text-xs leading-relaxed text-danger" role="alert">{thumbnailMessage}</p>
+			{/if}
+
+			<p class="field-help mt-2">
+				Jika aset panorama yang sama dipakai beberapa scene, thumbnail mengikuti pengambilan
+				terakhir.
+			</p>
 		</div>
 	</section>
 
