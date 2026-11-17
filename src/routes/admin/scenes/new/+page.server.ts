@@ -1,6 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import {
 	collectFieldErrors,
+	emptySceneFormValues,
 	sceneFormSchema,
 	type SceneFormInput,
 	type SceneFormValues
@@ -49,10 +50,18 @@ function toSceneInput(data: SceneFormInput): SceneInput {
 	};
 }
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ url }) => {
 	const [areas, assets] = await Promise.all([listAreas(), listPanoramaAssets()]);
+	const requestedAssetId = url.searchParams.get('asset') ?? '';
+	const panoramaAssetId = assets.some((asset) => asset.id === requestedAssetId)
+		? requestedAssetId
+		: '';
 
-	return { areas, assets };
+	return {
+		areas,
+		assets,
+		values: { ...emptySceneFormValues, panoramaAssetId }
+	};
 };
 
 export const actions: Actions = {

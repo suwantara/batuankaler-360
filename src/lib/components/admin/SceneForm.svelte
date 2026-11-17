@@ -181,7 +181,35 @@
 		</div>
 	{/if}
 
-	<section class="surface p-5 sm:p-6">
+	<nav
+		class="surface z-20 flex flex-wrap items-center gap-1 p-2 lg:sticky lg:top-[8.25rem]"
+		aria-label="Bagian formulir scene"
+	>
+		<a
+			href="#scene-info"
+			class="inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-semibold text-muted transition-colors hover:text-heading"
+		>
+			<span class="font-display text-gold-dark">01</span> Informasi
+		</a>
+		<a
+			href="#scene-view"
+			class="inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-semibold text-muted transition-colors hover:text-heading"
+		>
+			<span class="font-display text-gold-dark">02</span> Pandangan &amp; thumbnail
+		</a>
+		<a
+			href="#scene-translations"
+			class="inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-semibold text-muted transition-colors hover:text-heading"
+		>
+			<span class="font-display text-gold-dark">03</span> Terjemahan
+		</a>
+		<button type="submit" class="btn btn--primary btn--sm ml-auto">
+			Simpan
+			<Icon name="check" class="h-3.5 w-3.5" />
+		</button>
+	</nav>
+
+	<section id="scene-info" class="surface scroll-mt-40 p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
 			<h2 class="title-sm text-heading">Informasi scene</h2>
@@ -248,7 +276,7 @@
 		</div>
 	</section>
 
-	<section class="surface p-5 sm:p-6">
+	<section id="scene-view" class="surface scroll-mt-40 p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
 			<h2 class="title-sm text-heading">Pandangan awal</h2>
@@ -395,7 +423,7 @@
 		</div>
 	</section>
 
-	<section class="surface p-5 sm:p-6">
+	<section id="scene-translations" class="surface scroll-mt-40 p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">03</span>
 			<h2 class="title-sm text-heading">Terjemahan</h2>

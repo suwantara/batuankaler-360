@@ -2,12 +2,11 @@
 	import { resolve } from '$app/paths';
 	import SceneForm from '#lib/components/admin/SceneForm.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
-	import { emptySceneFormValues } from '#lib/schemas/scene.ts';
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
 
-	const values = $derived(form?.values ?? emptySceneFormValues);
+	const values = $derived(form?.values ?? data.values);
 </script>
 
 <svelte:head>

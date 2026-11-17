@@ -90,7 +90,24 @@
 		</div>
 	</header>
 
-	<section class="surface p-5 sm:p-6">
+	<nav class="surface flex flex-wrap items-center gap-1 p-2" aria-label="Bagian hotspot">
+		<a
+			href="#hotspot-baru"
+			class="inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-semibold text-muted transition-colors hover:text-heading"
+		>
+			<Icon name="plus" class="h-3.5 w-3.5" />
+			Tambah hotspot
+		</a>
+		<a
+			href="#hotspot-daftar"
+			class="inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-semibold text-muted transition-colors hover:text-heading"
+		>
+			<Icon name="map-pin" class="h-3.5 w-3.5" />
+			Daftar hotspot ({data.scene.hotspots.length})
+		</a>
+	</nav>
+
+	<section id="hotspot-baru" class="surface scroll-mt-40 p-5 sm:p-6">
 		<div class="flex items-center gap-3 border-b border-charcoal/10 pb-4">
 			<span class="badge badge--gold">Baru</span>
 			<h2 class="title-sm text-heading">Tambah hotspot</h2>
@@ -108,7 +125,7 @@
 		</div>
 	</section>
 
-	<section class="flex flex-col gap-3">
+	<section id="hotspot-daftar" class="flex scroll-mt-40 flex-col gap-3">
 		<div class="flex items-center justify-between gap-4">
 			<h2 class="title-sm text-heading">Daftar hotspot</h2>
 			<span class="badge badge--quiet">{data.scene.hotspots.length} item</span>

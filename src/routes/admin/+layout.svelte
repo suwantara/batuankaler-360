@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
+	import ContentWorkflow from '#lib/components/admin/ContentWorkflow.svelte';
 	import ThemeToggle from '#lib/components/admin/ThemeToggle.svelte';
 	import BrandLockup from '#lib/components/ui/BrandLockup.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
@@ -12,9 +13,9 @@
 	const isLogin = $derived(page.url.pathname === '/admin/login');
 	const navItems: Array<{ label: string; href: string; icon: IconName }> = [
 		{ label: 'Dashboard', href: resolve('admin/dashboard'), icon: 'grid' },
+		{ label: 'Media', href: resolve('admin/media'), icon: 'image' },
 		{ label: 'Scene', href: resolve('admin/scenes'), icon: 'layers' },
 		{ label: 'Hotspot', href: resolve('admin/hotspots'), icon: 'map-pin' },
-		{ label: 'Media', href: resolve('admin/media'), icon: 'image' },
 		{ label: 'Halaman', href: resolve('admin/pages'), icon: 'file' },
 		{ label: 'Kunjungan', href: resolve('admin/content'), icon: 'compass' },
 		{ label: 'Pengaturan', href: resolve('admin/settings'), icon: 'settings' }
@@ -129,6 +130,14 @@
 					</div>
 				</div>
 			</header>
+
+			<div
+				class="sticky top-[3.75rem] z-20 border-b border-charcoal/10 bg-paper/95 px-4 py-2 backdrop-blur-md sm:px-6 lg:px-10"
+			>
+				<div class="mx-auto max-w-6xl">
+					<ContentWorkflow />
+				</div>
+			</div>
 
 			<main class="p-4 sm:p-6 lg:p-10">
 				<div class="mx-auto max-w-6xl">

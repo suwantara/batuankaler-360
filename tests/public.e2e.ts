@@ -347,8 +347,8 @@ test.describe('admin dashboard', () => {
 		await expect(page.getByTestId('asset-row')).toHaveCount(initialRows + 1);
 		await expect(page.getByTestId('asset-row').last()).toContainText('/uploads/panoramas/');
 
-		await page.getByTestId('asset-row').last().getByRole('link', { name: 'Preview' }).click();
-		await expect(page.getByRole('heading', { name: 'Preview aset' })).toBeVisible();
+		await page.getByTestId('asset-row').last().getByRole('link', { name: 'Detail' }).click();
+		await expect(page.getByRole('heading', { name: 'Detail aset' })).toBeVisible();
 		await expect(page.locator('canvas')).toBeVisible({ timeout: 15_000 });
 
 		const currentThumbnail = page.locator('img[alt="Thumbnail saat ini"]');

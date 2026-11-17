@@ -219,9 +219,19 @@
 								href={resolve(`admin/media/${asset.id}`)}
 								class="inline-flex items-center gap-1.5 text-xs font-semibold text-heading transition-colors hover:text-gold-dark"
 							>
-								Preview &amp; thumbnail
+								Detail aset
 								<Icon name="eye" class="h-3.5 w-3.5" />
 							</a>
+							<form method="GET" action={resolve('admin/scenes/new')}>
+								<input type="hidden" name="asset" value={asset.id} />
+								<button
+									type="submit"
+									class="inline-flex items-center gap-1.5 text-xs font-semibold text-heading transition-colors hover:text-gold-dark"
+								>
+									Buat scene
+									<Icon name="plus" class="h-3.5 w-3.5" />
+								</button>
+							</form>
 							<ConfirmDeleteForm
 								action="?/delete"
 								fields={{ assetId: asset.id }}
