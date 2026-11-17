@@ -42,8 +42,9 @@ COPY --from=build /app/drizzle ./drizzle
 COPY --from=build /app/docker ./docker
 COPY --from=build /app/package.json ./package.json
 
-RUN mkdir -p /app/uploads \
-    && chmod +x /app/docker/entrypoint.sh \
+RUN apk add --no-cache postgresql-client \
+    && mkdir -p /app/uploads \
+    && chmod +x /app/docker/entrypoint.sh /app/docker/backup.sh /app/docker/restore.sh \
     && chown -R node:node /app
 
 USER node

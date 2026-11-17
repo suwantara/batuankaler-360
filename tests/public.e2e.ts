@@ -1,7 +1,18 @@
+import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { expect, test, type BrowserContext, type Page } from '@playwright/test';
 
 const adminEmail = process.env.ADMIN_EMAIL;
 const adminPassword = process.env.ADMIN_PASSWORD;
+
+function hasPgDump(): boolean {
+	try {
+		execFileSync('pg_dump', ['--version'], { stdio: 'ignore' });
+		return true;
+	} catch {
+		return false;
+	}
+}
 
 let adminCookies: Awaited<ReturnType<BrowserContext['cookies']>> | undefined;
 
@@ -195,12 +206,7 @@ test.describe('admin dashboard', () => {
 	test('logs in and loads managed scenes', async ({ page }) => {
 		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
 
-		await page.goto('/admin/login');
-		await page.getByLabel('Email').fill(adminEmail!);
-		await page.getByLabel('Password').fill(adminPassword!);
-		await page.getByRole('button', { name: 'Masuk' }).click();
-
-		await expect(page).toHaveURL(/\/admin\/dashboard/);
+		await loginAsAdmin(page);
 		await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
 
 		await page.goto('/admin/scenes');
@@ -521,5 +527,26 @@ test.describe('admin dashboard', () => {
 
 		await expect(page).toHaveURL(/\/admin\/gallery$/);
 		await expect(page.getByText(title)).toHaveCount(0);
+	});
+
+	test('downloads a database backup from account settings', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+		test.skip(!hasPgDump(), 'pg_dump is not installed.');
+
+		await loginAsAdmin(page);
+		await page.goto('/admin/settings');
+
+		const [download] = await Promise.all([
+			page.waitForEvent('download'),
+			page.getByRole('link', { name: 'Unduh backup database' }).click()
+		]);
+
+		expect(download.suggestedFilename()).toMatch(/^batuankaler-database-.*\.dump$/);
+
+		const filePath = await download.path();
+		expect(filePath).toBeTruthy();
+
+		const buffer = readFileSync(filePath!);
+		expect(buffer.subarray(0, 5).toString()).toBe('PGDMP');
 	});
 });

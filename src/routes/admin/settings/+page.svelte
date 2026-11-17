@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import type { PageProps } from './$types';
 
@@ -209,5 +210,27 @@
 				Uji ini membuat objek kecil, memeriksa keberadaannya, lalu menghapusnya.
 			</p>
 		</form>
+	</section>
+
+	<section class="surface p-5 sm:p-6">
+		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
+			<span class="font-display text-lg leading-none text-gold-dark/55">04</span>
+			<div>
+				<h2 class="title-sm text-heading">Backup database</h2>
+				<p class="field-help">Unduh salinan database untuk disimpan di luar server.</p>
+			</div>
+		</div>
+
+		<div class="mt-5 flex flex-col items-start gap-3 border-t border-charcoal/10 pt-5">
+			<a href={resolve('admin/settings/backup')} class="btn btn--primary btn--sm" download>
+				<Icon name="file" class="h-3.5 w-3.5" />
+				Unduh backup database
+			</a>
+			<p class="max-w-3xl text-xs leading-relaxed text-muted">
+				File <code>.dump</code> dapat dipulihkan dengan <code>pg_restore</code>. Backup ini hanya
+				berisi database. Untuk database dan file upload sekaligus, jalankan
+				<code>docker/backup.sh</code> di server.
+			</p>
+		</div>
 	</section>
 </div>
