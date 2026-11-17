@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PanoramaViewer from './PanoramaViewer.svelte';
+	import TourMiniMap from './TourMiniMap.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
 	import type { Locale } from '#lib/i18n/locales.ts';
@@ -124,7 +125,21 @@
 				</p>
 			</section>
 
-			<section class="surface surface--dark p-3">
+			<section class="surface surface--dark p-4" aria-label={panelLabels.sceneMapLabel}>
+				<div class="flex items-center justify-between gap-3 px-1">
+					<h2 class="meta text-[0.6rem] text-ivory/55">{panelLabels.sceneMap}</h2>
+					<span class="meta text-[0.58rem] text-gold-light/50">{scenes.length}</span>
+				</div>
+				<TourMiniMap
+					{scenes}
+					{activeSceneId}
+					onNavigate={navigateTo}
+					{lang}
+					hint={panelLabels.sceneMapHint}
+				/>
+			</section>
+
+			<section class="surface surface--dark p-3" aria-label={panelLabels.sceneList}>
 				<div class="px-2 pt-1 pb-3">
 					<h2 class="meta text-[0.6rem] text-ivory/55">{panelLabels.sceneList}</h2>
 					<p class="mt-1.5 text-xs leading-relaxed text-ivory/55">

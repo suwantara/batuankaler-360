@@ -104,17 +104,27 @@ test.describe('public website', () => {
 	test('switches scenes from the scene list', async ({ page }) => {
 		await page.goto('/id/tour');
 
-		const sceneList = page.getByRole('complementary', { name: 'Daftar scene' });
-		await expect(sceneList.getByRole('button', { name: /Madya Mandala/ })).toBeVisible({
+		const sceneList = page.getByRole('region', { name: 'Daftar scene' });
+		await expect(sceneList.getByRole('button', { name: 'Madya Mandala 02' })).toBeVisible({
 			timeout: 15_000
 		});
-		await sceneList.getByRole('button', { name: /Madya Mandala/ }).click();
+		await sceneList.getByRole('button', { name: 'Madya Mandala 02' }).click();
 
 		await expect(page.getByRole('heading', { name: 'Madya Mandala' })).toBeVisible();
-		await expect(sceneList.getByRole('button', { name: /Madya Mandala/ })).toHaveAttribute(
+		await expect(sceneList.getByRole('button', { name: 'Madya Mandala 02' })).toHaveAttribute(
 			'aria-pressed',
 			'true'
 		);
+	});
+
+	test('navigates between scenes through the scene map', async ({ page }) => {
+		await page.goto('/id/tour');
+
+		const sceneMap = page.getByRole('region', { name: 'Peta alur scene' });
+		await expect(sceneMap).toBeVisible({ timeout: 15_000 });
+		await sceneMap.getByRole('button', { name: 'Madya Mandala', exact: true }).first().click();
+
+		await expect(page.getByRole('heading', { name: 'Madya Mandala' })).toBeVisible();
 	});
 
 	test('navigates between scenes through a hotspot', async ({ page }) => {

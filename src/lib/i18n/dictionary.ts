@@ -216,6 +216,10 @@ const id = {
 				sceneList: 'Daftar scene',
 				sceneListHint: 'Pilih scene untuk berpindah panorama.',
 				activeScene: 'Scene aktif',
+				sceneMap: 'Peta alur',
+				sceneMapHint:
+					'Titik menunjukkan scene. Garis menunjukkan hubungan hotspot navigasi. Pilih titik untuk berpindah.',
+				sceneMapLabel: 'Peta alur scene',
 				info: 'Informasi hotspot',
 				infoEmpty: 'Pilih hotspot informasi pada panorama untuk menampilkan keterangan area.',
 				infoNotice: 'Konten informasi masih dalam kerangka dan menunggu verifikasi pengelola.',
@@ -543,6 +547,10 @@ const en: SiteDictionary = {
 				sceneList: 'Scene list',
 				sceneListHint: 'Choose a scene to move to another panorama.',
 				activeScene: 'Active scene',
+				sceneMap: 'Scene map',
+				sceneMapHint:
+					'Dots represent scenes. Lines represent navigation hotspots. Choose a dot to move between scenes.',
+				sceneMapLabel: 'Scene map',
 				info: 'Hotspot information',
 				infoEmpty: 'Choose an information hotspot on the panorama to display area details.',
 				infoNotice: 'Information content is still a framework awaiting management verification.',
