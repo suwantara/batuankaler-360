@@ -957,6 +957,12 @@ html[data-admin-theme='dark'] .admin-shell {
 	color-scheme: dark;
 }
 
+html[data-admin-theme='dark'] .admin-shell ::selection {
+	background-color: var(--color-gold);
+	color: #141829;
+	-webkit-text-fill-color: #141829;
+}
+
 html[data-admin-theme='dark'] .admin-shell .field-input {
 	border-color: color-mix(in srgb, var(--color-ivory) 18%, transparent);
 	background-color: #0c1425;

@@ -250,6 +250,25 @@ test.describe('admin dashboard', () => {
 		await page.getByRole('button', { name: 'Aktifkan mode gelap' }).click();
 		await expect(page.locator('html')).toHaveAttribute('data-admin-theme', 'dark');
 
+		const selectionStyle = await page.evaluate(() => {
+			const target = document.querySelector('main p');
+			if (!target) return null;
+
+			const range = document.createRange();
+			range.selectNodeContents(target);
+			const selection = window.getSelection();
+			selection?.removeAllRanges();
+			selection?.addRange(range);
+			const style = getComputedStyle(target, '::selection');
+
+			return { color: style.color, background: style.backgroundColor };
+		});
+
+		expect(selectionStyle).toEqual({
+			color: 'rgb(20, 24, 41)',
+			background: 'rgb(242, 222, 168)'
+		});
+
 		await page.reload();
 		await expect(page.locator('html')).toHaveAttribute('data-admin-theme', 'dark');
 		await expect(page.getByRole('button', { name: 'Aktifkan mode terang' })).toBeVisible();
