@@ -122,7 +122,7 @@
 			<h1 class="display-lg mt-4 text-heading">Upload panorama</h1>
 			<p class="body-copy mt-3 max-w-2xl">
 				Unggah panorama equirectangular beserta thumbnail dan preview opsional. File disimpan di
-				storage lokal server.
+				storage server yang dikonfigurasi.
 			</p>
 		</div>
 	</header>

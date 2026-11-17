@@ -26,6 +26,19 @@
 			return true;
 		}
 
+		if (href === resolve('admin/hotspots')) {
+			return (
+				page.url.pathname.startsWith('/admin/hotspots') ||
+				(page.url.pathname.startsWith('/admin/scenes/') && page.url.pathname.includes('/hotspots'))
+			);
+		}
+
+		if (href === resolve('admin/scenes')) {
+			return (
+				page.url.pathname.startsWith('/admin/scenes') && !page.url.pathname.includes('/hotspots')
+			);
+		}
+
 		return page.url.pathname === href || page.url.pathname.startsWith(`${href}/`);
 	}
 

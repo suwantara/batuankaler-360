@@ -22,8 +22,8 @@
 			<p class="eyebrow">Media</p>
 			<h1 class="display-lg mt-4 text-heading">Aset panorama</h1>
 			<p class="body-copy mt-3 max-w-2xl">
-				Upload panorama equirectangular dan kelola metadata aset. File disimpan di storage lokal
-				server.
+				Upload panorama equirectangular dan kelola metadata aset. File disimpan di storage server
+				yang dikonfigurasi.
 			</p>
 		</div>
 		<a href={resolve('admin/media/upload')} class="btn btn--primary btn--sm w-fit">
