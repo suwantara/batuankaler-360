@@ -17,9 +17,13 @@
 		{ label: 'Scene', href: resolve('admin/scenes'), icon: 'layers' },
 		{ label: 'Hotspot', href: resolve('admin/hotspots'), icon: 'map-pin' },
 		{ label: 'Halaman', href: resolve('admin/pages'), icon: 'file' },
-		{ label: 'Kunjungan', href: resolve('admin/content'), icon: 'compass' },
-		{ label: 'Pengaturan', href: resolve('admin/settings'), icon: 'settings' }
+		{ label: 'Kunjungan', href: resolve('admin/content'), icon: 'compass' }
 	];
+	const settingsItem: { label: string; href: string; icon: IconName } = {
+		label: 'Pengaturan akun',
+		href: resolve('admin/settings'),
+		icon: 'settings'
+	};
 
 	function isActive(href: string): boolean {
 		if (href === resolve('admin/pages') && page.url.pathname === resolve('admin/home')) {
@@ -42,7 +46,10 @@
 		return page.url.pathname === href || page.url.pathname.startsWith(`${href}/`);
 	}
 
-	const activeItem = $derived(navItems.find((item) => isActive(item.href)));
+	const activeItem = $derived(
+		navItems.find((item) => isActive(item.href)) ??
+			(isActive(settingsItem.href) ? settingsItem : undefined)
+	);
 	const email = $derived(data.user?.email ?? '-');
 	const initial = $derived((data.user?.email?.[0] ?? 'A').toUpperCase());
 </script>
@@ -80,7 +87,7 @@
 				{/each}
 			</nav>
 
-			<div class="hidden border-t border-ivory/10 p-4 lg:block">
+			<div class="border-t border-ivory/10 p-4">
 				<div class="flex items-center gap-3">
 					<span
 						class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold-light/25 bg-gold/10 font-display text-sm text-gold-light"
@@ -92,7 +99,15 @@
 						<p class="mt-1 truncate text-xs text-ivory/75">{email}</p>
 					</div>
 				</div>
-				<div class="mt-4 flex items-center justify-between gap-2">
+				<a
+					href={settingsItem.href}
+					aria-current={isActive(settingsItem.href) ? 'page' : undefined}
+					class="admin-nav-link mt-3"
+				>
+					<Icon name="settings" class="h-4 w-4" />
+					{settingsItem.label}
+				</a>
+				<div class="mt-3 flex items-center justify-between gap-2">
 					<a
 						href={resolve('id')}
 						class="inline-flex items-center gap-1.5 text-xs font-semibold text-gold-light transition-colors hover:text-ivory"
@@ -132,14 +147,6 @@
 							Lihat situs
 							<Icon name="external" class="h-3.5 w-3.5" />
 						</a>
-						<span class="hidden h-4 w-px bg-line/15 md:block" aria-hidden="true"></span>
-						<span class="hidden max-w-40 truncate text-xs text-muted md:block">{email}</span>
-						<form method="POST" action={resolve('admin/logout')} class="lg:hidden">
-							<button type="submit" class="btn btn--outline btn--sm">
-								<Icon name="logout" class="h-3.5 w-3.5" />
-								Keluar
-							</button>
-						</form>
 					</div>
 				</div>
 			</header>

@@ -3,6 +3,11 @@
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
+
+	const displayName = $derived(
+		(form?.profile && form.profile.ok ? form.profile.name : data.user?.name) ?? '-'
+	);
+	const displayEmail = $derived(data.user?.email ?? '-');
 </script>
 
 <div class="flex flex-col gap-6">
@@ -18,31 +23,52 @@
 		<section class="surface p-5 sm:p-6">
 			<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 				<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
-				<h2 class="title-sm text-heading">Sesi aktif</h2>
+				<div>
+					<h2 class="title-sm text-heading">Profil akun</h2>
+					<p class="field-help">Nama ini tampil di panel admin.</p>
+				</div>
 			</div>
 
 			<div class="mt-5 flex items-center gap-4">
 				<span
 					class="flex h-12 w-12 items-center justify-center rounded-full border border-gold-dark/20 bg-gold/20 font-display text-lg text-gold-dark"
 				>
-					{(data.user?.email?.[0] ?? 'A').toUpperCase()}
+					{(displayEmail[0] ?? 'A').toUpperCase()}
 				</span>
 				<div class="min-w-0">
-					<p class="truncate text-sm font-semibold text-heading">{data.user?.name ?? '-'}</p>
-					<p class="mt-1 truncate text-xs text-muted">{data.user?.email ?? '-'}</p>
+					<p class="truncate text-sm font-semibold text-heading">{displayName}</p>
+					<p class="mt-1 truncate text-xs text-muted">{displayEmail}</p>
 				</div>
 			</div>
 
-			<dl class="mt-6 grid gap-3 border-t border-charcoal/10 pt-5 text-sm sm:grid-cols-[8rem_1fr]">
-				<dt class="text-muted">Email</dt>
-				<dd class="font-medium text-heading">{data.user?.email ?? '-'}</dd>
-				<dt class="text-muted">Nama</dt>
-				<dd class="font-medium text-heading">{data.user?.name ?? '-'}</dd>
-			</dl>
+			<form method="POST" action="?/updateName" class="mt-6 border-t border-charcoal/10 pt-5">
+				<label class="block max-w-md">
+					<span class="field-label">Nama administrator</span>
+					<input
+						type="text"
+						name="name"
+						value={displayName}
+						required
+						minlength="2"
+						maxlength="100"
+						class="field-input"
+						autocomplete="name"
+					/>
+				</label>
 
-			<p class="mt-5 text-xs leading-relaxed text-muted">
-				Perubahan password dan pengelolaan akun akan ditambahkan pada fase berikutnya.
-			</p>
+				{#if form?.profile?.ok === false}
+					<p class="field-error mt-2" role="alert">{form.profile.error}</p>
+				{:else if form?.profile?.ok === true}
+					<p class="mt-2 text-xs leading-relaxed text-success" role="status">
+						{form.profile.message}
+					</p>
+				{/if}
+
+				<button type="submit" class="btn btn--primary btn--sm mt-4">
+					Simpan nama
+					<Icon name="check" class="h-3.5 w-3.5" />
+				</button>
+			</form>
 		</section>
 
 		<aside class="surface surface--dark h-fit p-6">
@@ -60,6 +86,73 @@
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
 			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
+			<div>
+				<h2 class="title-sm text-heading">Ganti password</h2>
+				<p class="field-help">Setelah password diubah, sesi lain akan dikeluarkan.</p>
+			</div>
+		</div>
+
+		<form
+			method="POST"
+			action="?/updatePassword"
+			class="mt-5 grid max-w-xl gap-4 border-t border-charcoal/10 pt-5"
+		>
+			<label class="block">
+				<span class="field-label">Password saat ini</span>
+				<input
+					type="password"
+					name="currentPassword"
+					required
+					class="field-input"
+					autocomplete="current-password"
+				/>
+			</label>
+			<div class="grid gap-4 sm:grid-cols-2">
+				<label class="block">
+					<span class="field-label">Password baru</span>
+					<input
+						type="password"
+						name="newPassword"
+						required
+						minlength="12"
+						class="field-input"
+						autocomplete="new-password"
+					/>
+				</label>
+				<label class="block">
+					<span class="field-label">Konfirmasi password baru</span>
+					<input
+						type="password"
+						name="confirmPassword"
+						required
+						minlength="12"
+						class="field-input"
+						autocomplete="new-password"
+					/>
+				</label>
+			</div>
+			<p class="field-help">Minimal 12 karakter. Gunakan password yang unik untuk panel admin.</p>
+
+			{#if form?.password?.ok === false}
+				<p class="field-error" role="alert">{form.password.error}</p>
+			{:else if form?.password?.ok === true}
+				<p class="text-xs leading-relaxed text-success" role="status">
+					{form.password.message}
+				</p>
+			{/if}
+
+			<div>
+				<button type="submit" class="btn btn--primary btn--sm">
+					Perbarui password
+					<Icon name="check" class="h-3.5 w-3.5" />
+				</button>
+			</div>
+		</form>
+	</section>
+
+	<section class="surface p-5 sm:p-6">
+		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
+			<span class="font-display text-lg leading-none text-gold-dark/55">03</span>
 			<div>
 				<h2 class="title-sm text-heading">Penyimpanan upload</h2>
 				<p class="field-help">Konfigurasi aktif untuk file panorama dan aset media.</p>
