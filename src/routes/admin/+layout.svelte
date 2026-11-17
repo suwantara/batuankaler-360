@@ -67,7 +67,9 @@
 	</div>
 {:else}
 	<div class="admin-shell min-h-dvh bg-sand/30 lg:grid lg:grid-cols-[17rem_1fr]">
-		<aside class="dark-surface flex flex-col lg:min-h-dvh">
+		<aside
+			class="dark-surface flex flex-col lg:sticky lg:top-0 lg:h-dvh lg:max-h-dvh lg:self-start lg:overflow-hidden"
+		>
 			<div class="border-b border-ivory/10 px-5 py-5">
 				<a href={resolve('admin/dashboard')}>
 					<BrandLockup tone="light" tagline />
@@ -75,7 +77,10 @@
 				</a>
 			</div>
 
-			<nav class="flex flex-wrap gap-1 px-3 py-4 lg:flex-1 lg:flex-col" aria-label="Navigasi admin">
+			<nav
+				class="flex flex-wrap gap-1 px-3 py-4 lg:min-h-0 lg:flex-1 lg:flex-col lg:overflow-y-auto"
+				aria-label="Navigasi admin"
+			>
 				<p class="meta hidden px-3 pb-2 text-[0.58rem] text-ivory/55 lg:block">Panel</p>
 				{#each navItems as item (item.href)}
 					<a
