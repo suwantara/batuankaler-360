@@ -1,0 +1,1905 @@
+<!doctype html>
+<html lang="id">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Dokumentasi Sistem & Panduan Pengguna — Pura Batuan Kaler 360</title>
+		<style>
+			:root {
+				--navy: #21294c;
+				--navy-deep: #141829;
+				--ink: #141829;
+				--body: #3d4250;
+				--muted: #6b6f7b;
+				--gold: #d2a84a;
+				--gold-light: #f2dea8;
+				--cream: #f9f2d7;
+				--paper: #fffdf7;
+				--sand: #f1ead5;
+				--line: #d9d1bc;
+				--danger: #a53d32;
+				--success: #2f6b4f;
+			}
+
+			@page {
+				size: A4;
+				margin: 18mm 16mm 19mm;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			html {
+				-webkit-print-color-adjust: exact;
+				print-color-adjust: exact;
+			}
+
+			body {
+				margin: 0;
+				background: var(--paper);
+				color: var(--body);
+				font-family:
+					'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+				font-size: 9.5pt;
+				line-height: 1.55;
+			}
+
+			h1,
+			h2,
+			h3,
+			h4 {
+				margin: 0;
+				color: var(--navy);
+				font-family: Georgia, 'Times New Roman', serif;
+				font-weight: 600;
+				line-height: 1.18;
+			}
+
+			h1 {
+				font-size: 24pt;
+				letter-spacing: -0.02em;
+			}
+
+			h2 {
+				margin-top: 1.6em;
+				padding-top: 0.55em;
+				border-top: 1px solid var(--line);
+				font-size: 14pt;
+			}
+
+			h3 {
+				margin-top: 1.3em;
+				font-size: 11pt;
+			}
+
+			h4 {
+				margin-top: 1em;
+				font-size: 9.5pt;
+				font-family: inherit;
+				font-weight: 700;
+				letter-spacing: 0.02em;
+				text-transform: uppercase;
+			}
+
+			p {
+				margin: 0.55em 0;
+				orphans: 3;
+				widows: 3;
+			}
+
+			ul,
+			ol {
+				margin: 0.55em 0 0.8em;
+				padding-left: 1.25em;
+			}
+
+			li {
+				margin: 0.2em 0;
+			}
+
+			a {
+				color: var(--navy);
+				text-decoration: none;
+			}
+
+			code {
+				padding: 0.08em 0.3em;
+				border-radius: 3px;
+				background: #efe9da;
+				color: #30364a;
+				font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+				font-size: 0.88em;
+			}
+
+			pre {
+				margin: 0.7em 0 1em;
+				padding: 10px 12px;
+				overflow-wrap: anywhere;
+				white-space: pre-wrap;
+				border: 1px solid var(--line);
+				border-radius: 4px;
+				background: #f6f1e5;
+				color: #30364a;
+				font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+				font-size: 8pt;
+				line-height: 1.45;
+			}
+
+			table {
+				width: 100%;
+				margin: 0.7em 0 1em;
+				border-collapse: collapse;
+				table-layout: fixed;
+				font-size: 8.4pt;
+			}
+
+			thead {
+				display: table-header-group;
+			}
+
+			th,
+			td {
+				padding: 6px 7px;
+				border: 1px solid var(--line);
+				text-align: left;
+				vertical-align: top;
+				overflow-wrap: break-word;
+			}
+
+			th {
+				background: #eee7d6;
+				color: var(--navy);
+				font-weight: 700;
+			}
+
+			tr:nth-child(even) td {
+				background: #fcf9f1;
+			}
+
+			.cover {
+				position: relative;
+				display: flex;
+				min-height: 252mm;
+				padding: 30mm 22mm 20mm;
+				overflow: hidden;
+				flex-direction: column;
+				justify-content: space-between;
+				background-color: var(--navy-deep);
+				color: var(--cream);
+			}
+
+			.cover::before {
+				position: absolute;
+				inset: 0;
+				content: '';
+				background-image:
+					linear-gradient(180deg, rgb(20 24 41 / 0.58), rgb(20 24 41 / 0.92)),
+					url('assets/cover.jpg');
+				background-size: cover;
+				background-position: center;
+				opacity: 0.92;
+			}
+
+			.cover > * {
+				position: relative;
+				z-index: 1;
+			}
+
+			.cover-kicker {
+				margin: 0;
+				color: var(--gold-light);
+				font-size: 8pt;
+				font-weight: 700;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+			}
+
+			.cover h1 {
+				max-width: 150mm;
+				margin-top: 12mm;
+				color: #fffdf7;
+				font-size: 36pt;
+				line-height: 1.05;
+			}
+
+			.cover-subtitle {
+				max-width: 130mm;
+				margin-top: 8mm;
+				color: rgb(249 242 215 / 0.8);
+				font-size: 12pt;
+				line-height: 1.5;
+			}
+
+			.cover-meta {
+				display: grid;
+				margin-top: 18mm;
+				padding-top: 7mm;
+				border-top: 1px solid rgb(249 242 215 / 0.25);
+				grid-template-columns: 1fr 1fr;
+				gap: 6mm;
+				font-size: 8.5pt;
+			}
+
+			.cover-meta span {
+				display: block;
+				margin-bottom: 1.5mm;
+				color: rgb(249 242 215 / 0.55);
+				font-size: 6.8pt;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+			}
+
+			.cover-footer {
+				display: flex;
+				margin-top: 16mm;
+				padding-top: 6mm;
+				border-top: 1px solid rgb(249 242 215 / 0.22);
+				justify-content: space-between;
+				color: rgb(249 242 215 / 0.58);
+				font-size: 7.5pt;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+			}
+
+			.page-break {
+				break-before: page;
+			}
+
+			.doc-header {
+				padding-bottom: 5mm;
+				border-bottom: 2px solid var(--gold);
+			}
+
+			.doc-header .eyebrow {
+				margin-bottom: 4mm;
+			}
+
+			.eyebrow {
+				color: #9b7830;
+				font-size: 7.2pt;
+				font-weight: 700;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+			}
+
+			.lead {
+				max-width: 150mm;
+				color: var(--body);
+				font-size: 10.5pt;
+				line-height: 1.6;
+			}
+
+			.meta-grid {
+				display: grid;
+				margin: 7mm 0 8mm;
+				grid-template-columns: 1fr 1fr;
+				gap: 5mm;
+			}
+
+			.meta-card {
+				padding: 4mm;
+				border: 1px solid var(--line);
+				border-radius: 4px;
+				background: #fcf9f1;
+			}
+
+			.meta-card b {
+				display: block;
+				margin-bottom: 1.5mm;
+				color: var(--navy);
+				font-size: 8pt;
+			}
+
+			.meta-card span {
+				color: var(--muted);
+				font-size: 8.2pt;
+			}
+
+			.toc {
+				column-count: 2;
+				column-gap: 10mm;
+			}
+
+			.toc ol {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				break-inside: avoid;
+			}
+
+			.toc li {
+				position: relative;
+				padding-right: 12mm;
+				margin: 0 0 3.2mm;
+				padding-bottom: 2mm;
+				border-bottom: 1px dotted var(--line);
+				break-inside: avoid;
+			}
+
+			.toc .n {
+				display: inline-block;
+				width: 8mm;
+				color: #9b7830;
+				font-family: Georgia, serif;
+				font-size: 9pt;
+			}
+
+			.toc .t {
+				color: var(--navy);
+				font-weight: 600;
+			}
+
+			.toc .p {
+				position: absolute;
+				top: 0;
+				right: 0;
+				color: #9b7830;
+				font-family: Georgia, serif;
+				font-size: 9pt;
+			}
+
+			.toc .d {
+				display: block;
+				margin-left: 8mm;
+				color: var(--muted);
+				font-size: 7.5pt;
+			}
+
+			.chapter {
+				break-before: page;
+			}
+
+			.chapter > h1 {
+				padding-bottom: 3mm;
+				border-bottom: 2px solid var(--gold);
+				font-size: 23pt;
+			}
+
+			.chapter-intro {
+				max-width: 150mm;
+				margin: 4mm 0 2mm;
+				color: var(--muted);
+				font-size: 10pt;
+			}
+
+			.callout {
+				margin: 4mm 0;
+				padding: 3.5mm 4mm;
+				border-left: 3px solid var(--gold);
+				background: #f7f0dd;
+				color: #4b4a42;
+				font-size: 8.6pt;
+			}
+
+			.callout strong {
+				color: var(--navy);
+			}
+
+			.callout--danger {
+				border-left-color: var(--danger);
+				background: #fbefed;
+			}
+
+			.callout--success {
+				border-left-color: var(--success);
+				background: #edf5ef;
+			}
+
+			figure {
+				margin: 4mm 0 5mm;
+				break-inside: avoid;
+			}
+
+			figure img {
+				display: block;
+				width: 100%;
+				max-width: 100%;
+				border: 1px solid var(--line);
+				border-radius: 3px;
+			}
+
+			figcaption {
+				margin-top: 2mm;
+				color: var(--muted);
+				font-size: 7.4pt;
+				line-height: 1.4;
+			}
+
+			.shot-mobile {
+				max-width: 65mm;
+			}
+
+			.two-col {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 5mm;
+				align-items: start;
+			}
+
+			.two-col figure {
+				margin-top: 0;
+			}
+
+			.kpi {
+				display: grid;
+				margin: 4mm 0;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 3mm;
+			}
+
+			.kpi div {
+				padding: 3.5mm;
+				border: 1px solid var(--line);
+				border-radius: 3px;
+				background: #fcf9f1;
+			}
+
+			.kpi b {
+				display: block;
+				color: var(--navy);
+				font-family: Georgia, serif;
+				font-size: 17pt;
+				line-height: 1;
+			}
+
+			.kpi span {
+				display: block;
+				margin-top: 1.5mm;
+				color: var(--muted);
+				font-size: 7pt;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+			}
+
+			.flow {
+				margin: 4mm 0;
+				padding: 4mm;
+				border: 1px solid var(--line);
+				border-radius: 3px;
+				background: #fcf9f1;
+				color: var(--navy);
+				font-size: 8.3pt;
+				line-height: 1.8;
+				text-align: center;
+			}
+
+			.flow b {
+				color: #9b7830;
+			}
+
+			.checklist {
+				margin: 3mm 0;
+				padding: 0;
+				list-style: none;
+			}
+
+			.checklist li {
+				position: relative;
+				margin: 0;
+				padding: 1.8mm 0 1.8mm 7mm;
+				border-bottom: 1px solid #ece5d5;
+			}
+
+			.checklist li::before {
+				position: absolute;
+				top: 2.1mm;
+				left: 0;
+				width: 3.2mm;
+				height: 3.2mm;
+				border: 1px solid #b9ad93;
+				content: '';
+			}
+
+			.small {
+				color: var(--muted);
+				font-size: 8pt;
+			}
+
+			.tag {
+				display: inline-block;
+				padding: 0.15em 0.45em;
+				border: 1px solid #d6c9aa;
+				border-radius: 99px;
+				color: #7c6122;
+				font-size: 7pt;
+				font-weight: 700;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+			}
+
+			.footer-note {
+				margin-top: 10mm;
+				padding-top: 3mm;
+				border-top: 1px solid var(--line);
+				color: var(--muted);
+				font-size: 7.4pt;
+			}
+		</style>
+	</head>
+	<body>
+		<section class="cover">
+			<div>
+				<p class="cover-kicker">Dokumentasi sistem &amp; serah terima</p>
+				<h1>Pura Batuan Kaler 360</h1>
+				<p class="cover-subtitle">
+					Dokumentasi teknis dan panduan penggunaan sistem virtual tour 360° kawasan Pura
+					Batuan Kaler.
+				</p>
+				<div class="cover-meta">
+					<div>
+						<span>Versi dokumen</span>
+						1.0 — November 2026
+					</div>
+					<div>
+						<span>Disiapkan untuk</span>
+						Pemerintah Desa Batuan Kaler &amp; Pengelola Pura
+					</div>
+					<div>
+						<span>Cakupan</span>
+						Panduan pengunjung, admin, teknis, deployment, backup, serah terima
+					</div>
+					<div>
+						<span>Sifat dokumen</span>
+						Dokumen operasional dan serah terima
+					</div>
+				</div>
+			</div>
+			<div class="cover-footer">
+				<span>Pura Batuan Kaler 360</span>
+				<span>Virtual tour · Dokumentasi · 2026</span>
+			</div>
+		</section>
+
+		<section class="page-break">
+			<div class="doc-header">
+				<p class="eyebrow">Informasi dokumen</p>
+				<h1 style="font-size: 22pt; margin-top: 4mm">Tentang dokumentasi ini</h1>
+				<p class="lead" style="margin-top: 5mm">
+					Dokumen ini menjelaskan cara menggunakan, mengelola, merawat, dan menyerahkan sistem
+					Pura Batuan Kaler 360. Isi dokumen disusun untuk dua kelompok pembaca: pengelola
+					konten di Desa dan operator teknis yang menjaga server, database, serta backup.
+				</p>
+			</div>
+
+			<div class="meta-grid">
+				<div class="meta-card">
+					<b>Nama sistem</b>
+					<span>Pura Batuan Kaler 360 — Virtual Tour Kawasan Pura</span>
+				</div>
+				<div class="meta-card">
+					<b>Jenis aplikasi</b>
+					<span>Situs publik + panel admin fullstack berbasis SvelteKit</span>
+				</div>
+				<div class="meta-card">
+					<b>Bahasa antarmuka</b>
+					<span>Indonesia (ID) dan Inggris (EN), dengan fallback EN → ID pada konten tertentu</span>
+				</div>
+				<div class="meta-card">
+					<b>Status dokumen</b>
+					<span>Versi 1.0, disusun untuk implementasi dan serah terima</span>
+				</div>
+				<div class="meta-card">
+					<b>Pengguna utama</b>
+					<span>Pengunjung publik dan satu administrator utama</span>
+				</div>
+				<div class="meta-card">
+					<b>Pengelola teknis</b>
+					<span>Operator VPS/hosting, database, domain, SSL, dan backup</span>
+				</div>
+			</div>
+
+			<h2>Riwayat versi</h2>
+			<table>
+				<thead>
+					<tr>
+						<th style="width: 16%">Versi</th>
+						<th style="width: 24%">Tanggal</th>
+						<th>Perubahan</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1.0</td>
+						<td>17 November 2026</td>
+						<td>
+							Dokumentasi awal lengkap: panduan pengunjung, admin, teknis, deployment,
+							backup, dan serah terima.
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="callout">
+				<strong>Catatan penting.</strong> Dokumen ini menjelaskan sistem yang berjalan pada
+				implementasi saat dokumen disusun. Jika fitur, alamat domain, atau konfigurasi server
+				berubah, perbarui bagian yang terkait dan naikkan nomor versi dokumen.
+			</div>
+
+			<div class="callout">
+				<strong>Cara membaca.</strong> Jika Anda administrator konten, mulailah dari bagian 3,
+				4, 5, 6, dan 7. Jika Anda operator teknis, mulailah dari bagian 12, 13, dan 14.
+			</div>
+		</section>
+
+		<section class="page-break">
+			<div class="doc-header">
+				<p class="eyebrow">Navigasi dokumen</p>
+				<h1 style="font-size: 22pt; margin-top: 4mm">Daftar isi</h1>
+			</div>
+			<div class="toc" style="margin-top: 8mm">
+				<ol>
+					<li>
+						<span class="n">01</span><span class="t">Ringkasan Sistem</span>
+						<span class="d">Tujuan, fitur, batasan, dan istilah utama</span><span class="p">04</span>
+					</li>
+					<li>
+						<span class="n">02</span><span class="t">Peran, Akses, dan Alur Kerja</span>
+						<span class="d">Pengunjung, admin desa, operator teknis</span><span class="p">06</span>
+					</li>
+					<li>
+						<span class="n">03</span><span class="t">Panduan Pengunjung</span>
+						<span class="d">Beranda, tour, area, sejarah, galeri, panduan</span><span class="p">07</span>
+					</li>
+					<li>
+						<span class="n">04</span><span class="t">Memulai Panel Admin</span>
+						<span class="d">Login, dashboard, navigasi, mode gelap</span><span class="p">13</span>
+					</li>
+					<li>
+						<span class="n">05</span><span class="t">Mengelola Media Panorama</span>
+						<span class="d">Upload, thumbnail, metadata, hapus aset</span><span class="p">16</span>
+					</li>
+					<li>
+						<span class="n">06</span><span class="t">Mengelola Scene</span>
+						<span class="d">Scene, pandangan awal, terjemahan, publikasi</span><span class="p">20</span>
+					</li>
+					<li>
+						<span class="n">07</span><span class="t">Mengelola Hotspot</span>
+						<span class="d">Navigasi, informasi, koordinat, aktivasi</span><span class="p">22</span>
+					</li>
+					<li>
+						<span class="n">08</span><span class="t">Mengelola Area</span>
+						<span class="d">Area publik, urutan, status, relasi scene</span><span class="p">24</span>
+					</li>
+					<li>
+						<span class="n">09</span><span class="t">Mengelola Galeri</span>
+						<span class="d">Foto, judul, keterangan, publikasi</span><span class="p">25</span>
+					</li>
+					<li>
+						<span class="n">10</span><span class="t">Halaman &amp; Konten Situs</span>
+						<span class="d">Beranda, halaman artikel, informasi kunjungan</span><span class="p">27</span>
+					</li>
+					<li>
+						<span class="n">11</span><span class="t">Pengaturan Akun &amp; Backup</span>
+						<span class="d">Nama, password, storage, unduh backup</span><span class="p">29</span>
+					</li>
+					<li>
+						<span class="n">12</span><span class="t">Arsitektur Teknis</span>
+						<span class="d">Stack, layer, database, environment, keamanan</span><span class="p">31</span>
+					</li>
+					<li>
+						<span class="n">13</span><span class="t">Deployment &amp; Operasional</span>
+						<span class="d">Docker, VPS, migrasi, backup, troubleshooting</span><span class="p">35</span>
+					</li>
+					<li>
+						<span class="n">14</span><span class="t">Serah Terima</span>
+						<span class="d">Aset, akun, pelatihan, dokumen, pendampingan</span><span class="p">37</span>
+					</li>
+					<li>
+						<span class="n">A</span><span class="t">Lampiran</span>
+						<span class="d">Batas upload, environment, route, checklist, glosarium</span><span class="p">39</span>
+					</li>
+				</ol>
+			</div>
+		</section>
+
+		<section class="chapter" id="ringkasan">
+			<p class="eyebrow">Bagian 01</p>
+			<h1>Ringkasan Sistem</h1>
+			<p class="chapter-intro">
+				Pura Batuan Kaler 360 adalah dokumentasi digital kawasan pura dalam bentuk virtual tour
+				360°. Sistem memiliki situs publik untuk pengunjung dan panel admin untuk pengelola.
+			</p>
+
+			<h2>1.1 Tujuan sistem</h2>
+			<ul>
+				<li>Memperkenalkan kawasan Pura Batuan Kaler melalui panorama 360°.</li>
+				<li>
+					Memungkinkan pengunjung berpindah antarlokasi melalui hotspot dan daftar scene.
+				</li>
+				<li>
+					Menyediakan informasi area, sejarah, galeri, dan panduan kunjungan yang dapat dikelola
+					tanpa mengubah kode.
+				</li>
+				<li>Menjaga konten tetap melalui alur draft, validasi, dan publikasi.</li>
+				<li>Mendukung bahasa Indonesia dan Inggris.</li>
+			</ul>
+
+			<h2>1.2 Dua antarmuka</h2>
+			<table>
+				<thead>
+					<tr>
+						<th style="width: 22%">Antarmuka</th>
+						<th style="width: 28%">Alamat</th>
+						<th>Fungsi</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Situs publik</td>
+						<td><code>/id</code> dan <code>/en</code></td>
+						<td>
+							Beranda, virtual tour, area, sejarah, galeri, panduan kunjungan, peta lokasi,
+							dan pemilihan bahasa.
+						</td>
+					</tr>
+					<tr>
+						<td>Panel admin</td>
+						<td><code>/admin/login</code></td>
+						<td>
+							Login, dashboard, media panorama, scene, hotspot, area, galeri, halaman,
+							informasi kunjungan, pengaturan akun, storage, dan backup.
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2>1.3 Fitur utama</h2>
+			<table>
+				<thead>
+					<tr>
+						<th style="width: 26%">Fitur</th>
+						<th>Keterangan</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Virtual tour multi-scene</td>
+						<td>Panorama 360° dengan kontrol drag, zoom, reset, dan fullscreen.</td>
+					</tr>
+					<tr>
+						<td>Hotspot navigasi</td>
+						<td>Berpindah dari satu scene ke scene tujuan.</td>
+					</tr>
+					<tr>
+						<td>Hotspot informasi</td>
+						<td>Membuka panel berisi judul dan deskripsi area/objek.</td>
+					</tr>
+					<tr>
+						<td>Daftar scene dan mini-map</td>
+						<td>Navigasi alternatif melalui daftar dan peta alur hubungan scene.</td>
+					</tr>
+					<tr>
+						<td>Area dan detail area</td>
+						<td>Daftar area serta scene yang dipublikasikan pada area tersebut.</td>
+					</tr>
+					<tr>
+						<td>Galeri</td>
+						<td>Foto dokumentasi yang diunggah dan dikelola dari admin.</td>
+					</tr>
+					<tr>
+						<td>Sejarah dan panduan</td>
+						<td>Halaman artikel yang dapat diedit melalui CMS.</td>
+					</tr>
+					<tr>
+						<td>Peta lokasi</td>
+						<td>Embed Google Maps dan tautan petunjuk arah pada beranda/panduan.</td>
+					</tr>
+					<tr>
+						<td>ID/EN</td>
+						<td>Konten terjemahan per locale dengan fallback pada konten tertentu.</td>
+					</tr>
+					<tr>
+						<td>Draft/published</td>
+						<td>Konten dapat disimpan sebagai draf sebelum tayang.</td>
+					</tr>
+					<tr>
+						<td>Backup</td>
+						<td>Unduh database dari admin dan backup penuh melalui skrip server.</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2>1.4 Batasan implementasi saat ini</h2>
+			<div class="callout callout--danger">
+				<strong>Penting untuk operator.</strong> Beberapa batasan berikut perlu diketahui sebelum
+				serah terima.
+			</div>
+			<ul>
+				<li>
+					Panorama saat ini dimuat sebagai gambar penuh (equirectangular WebP/JPG), belum
+					multiresolution tiles. Ukuran 8000×4000 dapat mencapai 6–13 MB per panorama.
+				</li>
+				<li>
+					Scene dan hotspot publik memerlukan terjemahan ID dan EN yang lengkap. Konten lain
+					seperti area, galeri, halaman, dan informasi kunjungan memakai fallback EN → ID.
+				</li>
+				<li>
+					Hotspot bertipe <em>external</em> dapat disimpan di admin, tetapi belum dirender oleh
+					viewer publik. Gunakan hotspot informasi atau navigasi untuk konten publik.
+				</li>
+				<li>Hanya ada satu peran administrator; belum ada multi-role atau audit log.</li>
+				<li>
+					Pencarian, komentar, analitik pengunjung, dan pemesanan tiket tidak termasuk lingkup
+					saat ini.
+				</li>
+			</ul>
+
+			<h2>1.5 Istilah utama</h2>
+			<table>
+				<thead>
+					<tr>
+						<th style="width: 28%">Istilah</th>
+						<th>Arti dalam sistem</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td>Scene</td><td>Satu titik panorama 360° yang dapat dibuka pengunjung.</td></tr>
+					<tr><td>Hotspot</td><td>Titik interaktif pada panorama untuk navigasi atau informasi.</td></tr>
+					<tr><td>Yaw</td><td>Arah horizontal pandangan, disimpan dalam radian.</td></tr>
+					<tr><td>Pitch</td><td>Arah vertikal pandangan, disimpan dalam radian.</td></tr>
+					<tr><td>FOV</td><td>Field of view; lebar pandangan kamera.</td></tr>
+					<tr><td>Equirectangular</td><td>Proyeksi panorama 360° dengan rasio 2:1.</td></tr>
+					<tr><td>Draft</td><td>Konten tersimpan tetapi tidak tampil di situs publik.</td></tr>
+					<tr><td>Published/Tayang</td><td>Konten dapat diakses pengunjung publik.</td></tr>
+					<tr><td>Fallback</td><td>Terjemahan Inggris kosong diganti versi Indonesia.</td></tr>
+					<tr><td>Aset panorama</td><td>Metadata file panorama, thumbnail, dan konfigurasi tampilan.</td></tr>
+				</tbody>
+			</table>
+		</section>
+
+		<section class="chapter" id="peran">
+			<p class="eyebrow">Bagian 02</p>
+			<h1>Peran, Akses, dan Alur Kerja</h1>
+			<p class="chapter-intro">
+				Pisahkan peran konten dan peran teknis. Pemisahan ini penting agar serah terima tidak
+				bergantung pada satu orang pengembang.
+			</p>
+
+			<h2>2.1 Peran pengguna</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 24%">Peran</th><th>Tanggung jawab</th></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Pengunjung</td>
+						<td>Membuka situs publik, melihat tour, area, sejarah, galeri, dan panduan.</td>
+					</tr>
+					<tr>
+						<td>Admin Desa</td>
+						<td>
+							Mengelola media, scene, hotspot, area, galeri, halaman, informasi kunjungan,
+							akun, dan backup database.
+						</td>
+					</tr>
+					<tr>
+						<td>Operator teknis</td>
+						<td>
+							Menjaga VPS/hosting, domain, DNS, SSL, database, volume upload, migrasi,
+							backup, restore, dan pembaruan keamanan.
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2>2.2 Akses publik dan admin</h2>
+			<ul>
+				<li>Situs publik: <code>https://domain-desa/id</code> dan <code>/en</code>.</li>
+				<li>Login admin: <code>https://domain-desa/admin/login</code>.</li>
+				<li>Semua route <code>/admin/**</code> diperiksa sesinya di server.</li>
+				<li>Registrasi publik dinonaktifkan; akun admin dibuat melalui provisioning.</li>
+				<li>Login dibatasi rate limit untuk mengurangi percobaan berulang.</li>
+			</ul>
+
+			<h2>2.3 Alur kerja konten yang disarankan</h2>
+			<div class="flow">
+				<b>01. Media</b> → upload panorama &amp; thumbnail<br />
+				<b>02. Scene</b> → hubungkan aset, atur pandangan awal, isi terjemahan<br />
+				<b>03. Hotspot</b> → tambahkan navigasi &amp; informasi<br />
+				<b>04. Area</b> → kelompokkan scene dan lengkapi deskripsi<br />
+				<b>05. Publikasi</b> → validasi lalu ubah status menjadi Tayang
+			</div>
+			<p>
+				Urutan ini juga ditampilkan sebagai bar “Alur konten” di bagian atas panel admin.
+				Mengikuti urutan tersebut mengurangi kesalahan referensi dan hotspot tanpa tujuan.
+			</p>
+
+			<h2>2.4 Prinsip publikasi</h2>
+			<ul>
+				<li>Jangan menayangkan scene sebelum aset panorama bertanda <code>processed</code>.</li>
+				<li>Lengkapi terjemahan ID dan EN untuk scene dan hotspot.</li>
+				<li>Pastikan target hotspot navigasi sudah tayang.</li>
+				<li>
+					Gunakan data yang sudah diverifikasi pengelola pura, dan simpan versi draf sebelum
+					perubahan besar.
+				</li>
+			</ul>
+		</section>
+
+		<section class="chapter" id="pengunjung">
+			<p class="eyebrow">Bagian 03</p>
+			<h1>Panduan Pengunjung</h1>
+			<p class="chapter-intro">
+				Bagian ini menjelaskan pengalaman situs publik. Dapat digunakan sebagai materi
+				pendampingan atau teks bantuan untuk pengunjung.
+			</p>
+
+			<h2>3.1 Beranda</h2>
+			<p>
+				Beranda menampilkan identitas Pura Batuan Kaler 360, hero image, ringkasan pengenalan,
+				informasi kunjungan, pratinjau virtual tour, sejarah singkat, area pilihan, galeri, dan
+				panduan. Gunakan tombol <strong>Jelajahi Virtual Tour</strong> untuk masuk ke tour.
+			</p>
+			<figure>
+				<img src="assets/public-home.jpg" alt="Beranda situs publik Pura Batuan Kaler 360" />
+				<figcaption>Contoh tampilan beranda publik.</figcaption>
+			</figure>
+
+			<h2>3.2 Virtual tour</h2>
+			<p>
+				Halaman tour menampilkan panorama 360° di sisi kiri dan panel informasi di sisi kanan.
+				Pengunjung dapat:
+			</p>
+			<ul>
+				<li>menggeser panorama dengan mouse atau sentuhan;</li>
+				<li>memperbesar/memperkecil dengan tombol zoom;</li>
+				<li>mengembalikan pandangan awal dengan tombol reset;</li>
+				<li>membuka mode layar penuh;</li>
+				<li>memilih scene dari daftar atau mini-map “Peta alur”;</li>
+				<li>membuka hotspot informasi untuk membaca keterangan.</li>
+			</ul>
+			<figure>
+				<img src="assets/public-tour.jpg" alt="Tampilan virtual tour dan mini-map" />
+				<figcaption>
+					Viewer panorama, panel scene aktif, mini-map hubungan scene, dan daftar scene.
+				</figcaption>
+			</figure>
+
+			<h3>Kontrol dan keyboard</h3>
+			<table>
+				<thead>
+					<tr><th style="width: 30%">Aksi</th><th>Cara</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Melihat sekeliling</td><td>Drag mouse atau geser dengan sentuhan.</td></tr>
+					<tr><td>Zoom</td><td>Tombol + / −, atau gesture zoom pada perangkat sentuh.</td></tr>
+					<tr><td>Reset pandangan</td><td>Tombol reset.</td></tr>
+					<tr><td>Fullscreen</td><td>Tombol layar penuh; tekan Escape untuk keluar.</td></tr>
+					<tr><td>Keyboard</td><td>Tombol panah untuk melihat; + / − untuk zoom.</td></tr>
+				</tbody>
+			</table>
+
+			<h3>Hotspot informasi</h3>
+			<p>
+				Hotspot informasi ditandai dengan ikon <strong>i</strong>. Klik/tap untuk membuka panel
+				informasi. Panel dapat ditutup dengan tombol tutup.
+			</p>
+
+			<h3>Mini-map dan daftar scene</h3>
+			<p>
+				Mini-map menampilkan titik scene dan garis hubungan navigasi. Warna emas menandai scene
+				aktif. Klik titik atau item legenda untuk berpindah scene. Daftar scene di bawahnya
+				menampilkan thumbnail dan judul.
+			</p>
+
+			<h2>3.3 Area</h2>
+			<p>
+				Halaman Area menampilkan daftar area yang sudah tayang. Setiap area memiliki halaman
+				detail berisi deskripsi dan scene yang dapat dibuka.
+			</p>
+			<figure>
+				<img src="assets/public-area.jpg" alt="Daftar area pada situs publik" />
+				<figcaption>Daftar area publik.</figcaption>
+			</figure>
+			<figure>
+				<img src="assets/public-area-detail.jpg" alt="Detail area dan scene terkait" />
+				<figcaption>Detail area dengan tautan ke scene panorama.</figcaption>
+			</figure>
+
+			<h2>3.4 Sejarah</h2>
+			<p>
+				Halaman Sejarah memuat artikel dan blok konten yang dikelola dari admin. Jika terjemahan
+				Inggris belum lengkap, versi Inggris dapat menampilkan sebagian konten Indonesia dengan
+				indikator fallback.
+			</p>
+			<figure>
+				<img src="assets/public-history.jpg" alt="Halaman sejarah Pura Batuan Kaler" />
+				<figcaption>Halaman sejarah dengan artikel yang sudah tayang.</figcaption>
+			</figure>
+
+			<h2>3.5 Galeri</h2>
+			<p>
+				Galeri menampilkan foto published dari admin. Klik foto untuk membuka file ukuran penuh
+				di tab baru. Jika belum ada foto final, halaman menampilkan placeholder.
+			</p>
+
+			<h2>3.6 Panduan kunjungan dan peta lokasi</h2>
+			<p>
+				Halaman Panduan memuat informasi praktis, artikel panduan, serta peta lokasi kawasan
+				pura. Gunakan tombol <strong>Buka di Google Maps</strong> atau
+				<strong>Petunjuk arah</strong> untuk navigasi.
+			</p>
+			<figure>
+				<img src="assets/public-guide.jpg" alt="Panduan kunjungan dan peta lokasi" />
+				<figcaption>Peta lokasi kawasan pura pada halaman panduan.</figcaption>
+			</figure>
+
+			<h2>3.7 Bahasa dan fallback</h2>
+			<p>
+				Tombol bahasa di header mengganti antara <strong>ID</strong> dan <strong>EN</strong>.
+				Untuk scene dan hotspot, kedua terjemahan wajib ada sebelum tampil. Untuk area, galeri,
+				dan halaman, terjemahan Inggris yang kosong akan memakai versi Indonesia dengan
+				indikator fallback.
+			</p>
+
+			<h2>3.8 Jika panorama tidak tampil</h2>
+			<ul>
+				<li>Pastikan browser modern dan WebGL aktif.</li>
+				<li>Coba muat ulang halaman.</li>
+				<li>Periksa koneksi; panorama berukuran besar membutuhkan waktu muat.</li>
+				<li>Jika tetap gagal, hubungi operator dengan menyebutkan scene dan waktu kejadian.</li>
+			</ul>
+		</section>
+
+		<section class="chapter" id="mulai-admin">
+			<p class="eyebrow">Bagian 04</p>
+			<h1>Memulai Panel Admin</h1>
+			<p class="chapter-intro">
+				Panel admin digunakan untuk mengelola seluruh konten. Hanya akun administrator yang
+				dibuat melalui provisioning yang dapat masuk.
+			</p>
+
+			<h2>4.1 Login</h2>
+			<ol>
+				<li>Buka <code>/admin/login</code> pada domain situs.</li>
+				<li>Masukkan email dan password administrator.</li>
+				<li>Klik <strong>Masuk</strong>.</li>
+				<li>Jika berhasil, Anda diarahkan ke dashboard.</li>
+			</ol>
+			<figure>
+				<img src="assets/admin-login.jpg" alt="Halaman login admin" />
+				<figcaption>Halaman login administrator.</figcaption>
+			</figure>
+			<div class="callout">
+				<strong>Keamanan.</strong> Jangan membagikan password melalui pesan biasa. Gunakan
+				password manager. Jika login gagal berulang kali, tunggu beberapa saat karena sistem
+				memiliki rate limit.
+			</div>
+
+			<h2>4.2 Dashboard</h2>
+			<p>Dashboard menampilkan:</p>
+			<ul>
+				<li>jumlah total scene;</li>
+				<li>jumlah scene tayang;</li>
+				<li>jumlah hotspot;</li>
+				<li>jumlah aset panorama;</li>
+				<li>daftar scene terbaru;</li>
+				<li>aksi cepat untuk menambah scene, upload panorama, dan membuka situs publik;</li>
+				<li>persentase status publikasi scene.</li>
+			</ul>
+			<figure>
+				<img src="assets/admin-dashboard.jpg" alt="Dashboard admin" />
+				<figcaption>Dashboard admin dengan ringkasan konten.</figcaption>
+			</figure>
+
+			<h2>4.3 Navigasi dan mode mobile</h2>
+			<p>
+				Urutan menu admin: Dashboard, Media, Scene, Hotspot, Galeri, Area, Halaman, Kunjungan,
+				dan Pengaturan akun di bagian bawah. Di desktop, sidebar tetap setinggi layar dan
+				menu dapat scroll sendiri. Di mobile, sidebar tersembunyi dan dibuka melalui tombol
+				menu di kiri atas.
+			</p>
+			<figure class="shot-mobile">
+				<img src="assets/admin-mobile-drawer.jpg" alt="Drawer navigasi admin mobile" />
+				<figcaption>Drawer navigasi pada tampilan mobile.</figcaption>
+			</figure>
+
+			<h2>4.4 Mode gelap dan logout</h2>
+			<p>
+				Tombol tema di kanan atas mengganti mode terang/gelap. Pilihan disimpan di browser.
+				Untuk keluar, gunakan tombol <strong>Keluar</strong> di bagian bawah sidebar.
+			</p>
+
+			<h2>4.5 Bar alur konten</h2>
+			<p>
+				Bar <strong>Alur konten</strong> di bagian atas halaman mengingatkan urutan Media →
+				Scene → Hotspot. Langkah aktif ditandai warna emas.
+			</p>
+		</section>
+
+		<section class="chapter" id="media">
+			<p class="eyebrow">Bagian 05</p>
+			<h1>Mengelola Media Panorama</h1>
+			<p class="chapter-intro">
+				Media panorama adalah sumber gambar untuk scene. Upload aset terlebih dahulu sebelum
+				membuat scene.
+			</p>
+
+			<h2>5.1 Persyaratan file</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 26%">Berkas</th><th>Ketentuan</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Panorama asli</td><td>JPG/PNG/WebP, proyeksi equirectangular, rasio 2:1, lebar minimal 2000 px, maksimal 50 MB.</td></tr>
+					<tr><td>Thumbnail</td><td>JPG/PNG/WebP, disarankan rasio 2:1 (mis. 480×240 atau 800×400), maksimal 5 MB.</td></tr>
+					<tr><td>Preview</td><td>Opsional, JPG/PNG/WebP, maksimal 10 MB.</td></tr>
+					<tr><td>Galeri</td><td>JPG/PNG/WebP, maksimal 10 MB; bukan panorama 2:1.</td></tr>
+				</tbody>
+			</table>
+
+			<h2>5.2 Upload panorama</h2>
+			<ol>
+				<li>Buka <strong>Media → Upload panorama</strong>.</li>
+				<li>Pilih file panorama asli.</li>
+				<li>Pilih thumbnail.</li>
+				<li>Pilih preview jika tersedia.</li>
+				<li>Pilih proyeksi (default: equirectangular).</li>
+				<li>Klik <strong>Upload panorama</strong> dan tunggu indikator progres.</li>
+			</ol>
+			<figure>
+				<img src="assets/admin-media-upload.jpg" alt="Form upload panorama" />
+				<figcaption>Form upload panorama, thumbnail, dan preview.</figcaption>
+			</figure>
+			<div class="callout">
+				<strong>Tips.</strong> Gunakan WebP untuk ukuran lebih kecil. Simpan file master asli
+				di luar server. Jangan mengandalkan file upload sebagai satu-satunya salinan.
+			</div>
+
+			<h2>5.3 Daftar dan detail aset</h2>
+			<p>
+				Halaman Media menampilkan daftar aset, status pemrosesan, thumbnail, detail, dan aksi
+				buat scene. Status <code>processed</code> diperlukan sebelum scene dapat dipublikasikan.
+			</p>
+			<figure>
+				<img src="assets/admin-media.jpg" alt="Daftar aset panorama" />
+				<figcaption>Daftar aset panorama di panel admin.</figcaption>
+			</figure>
+			<p>
+				Pada halaman <strong>Detail aset</strong>, Anda dapat melihat panorama, mengganti
+				thumbnail, dan membuat scene dengan aset tersebut. Thumbnail biasanya diambil dari
+				pandangan awal scene, tetapi dapat diganti manual.
+			</p>
+
+			<h2>5.4 Metadata manual</h2>
+			<p>
+				Form “Tambah metadata aset” adalah jalur lanjutan untuk aset yang sudah diproses di luar
+				aplikasi. Isi path asli, path thumbnail, proyeksi, status pemrosesan, lebar, dan tinggi.
+				Jangan gunakan form ini jika Anda tidak yakin dengan path file.
+			</p>
+
+			<h2>5.5 Menghapus aset</h2>
+			<p>
+				Aset yang masih dipakai scene atau halaman beranda tidak dapat dihapus. Pindahkan atau
+				hapus referensinya terlebih dahulu. Penghapusan akan menghapus file dari storage.
+			</p>
+
+			<h2>5.6 Troubleshooting upload</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 32%">Gejala</th><th>Penyebab dan tindakan</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>“Ukuran file melebihi batas”</td><td>Kompres file atau gunakan WebP; batas original 50 MB.</td></tr>
+					<tr><td>“Rasio harus 2:1”</td><td>File bukan panorama equirectangular; periksa hasil kamera/proses stitching.</td></tr>
+					<tr><td>Upload berhenti di reverse proxy</td><td>Naikkan <code>client_max_body_size</code> dan <code>BODY_SIZE_LIMIT</code>.</td></tr>
+					<tr><td>Thumbnail tidak tampil</td><td>Periksa path thumbnail, permission volume, atau konfigurasi S3.</td></tr>
+					<tr><td>Aset processed tetapi scene gagal publish</td><td>Periksa file asli/thumbnail di storage dan kelengkapan terjemahan.</td></tr>
+				</tbody>
+			</table>
+		</section>
+
+		<section class="chapter" id="scene">
+			<p class="eyebrow">Bagian 06</p>
+			<h1>Mengelola Scene</h1>
+			<p class="chapter-intro">
+				Scene adalah satu titik panorama yang dapat dibuka pengunjung. Scene menghubungkan aset
+				panorama, area, pandangan awal, terjemahan, dan hotspot.
+			</p>
+
+			<h2>6.1 Membuat scene</h2>
+			<ol>
+				<li>Buka <strong>Scene → Tambah scene</strong>.</li>
+				<li>Isi slug, status, area, aset panorama, dan urutan.</li>
+				<li>Atur pandangan awal: Yaw, Pitch, dan FOV.</li>
+				<li>Isi judul dan deskripsi Indonesia serta Inggris.</li>
+				<li>Klik <strong>Simpan scene</strong>.</li>
+			</ol>
+			<figure>
+				<img src="assets/admin-scene.jpg" alt="Form edit scene" />
+				<figcaption>Form scene dengan bagian informasi, pandangan awal, dan terjemahan.</figcaption>
+			</figure>
+
+			<h2>6.2 Penjelasan field</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 24%">Field</th><th>Fungsi</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Slug</td><td>Alamat unik scene, mis. <code>jaba-pura</code>; dipakai pada URL tour.</td></tr>
+					<tr><td>Status</td><td>Draf atau Tayang. Draf tidak tampil di publik.</td></tr>
+					<tr><td>Area</td><td>Area tempat scene dikelompokkan; opsional.</td></tr>
+					<tr><td>Aset panorama</td><td>Aset yang menjadi sumber gambar scene.</td></tr>
+					<tr><td>Urutan</td><td>Urutan tampil di daftar scene; angka kecil lebih dahulu.</td></tr>
+					<tr><td>Yaw/Pitch/FOV</td><td>Pandangan awal panorama dalam derajat di UI, disimpan sebagai radian.</td></tr>
+					<tr><td>Judul/Deskripsi ID/EN</td><td>Konten yang dibaca pengunjung pada bahasa terkait.</td></tr>
+				</tbody>
+			</table>
+
+			<h2>6.3 Mengatur pandangan awal dan thumbnail</h2>
+			<p>
+				Gunakan tombol pilih arah dari panorama untuk mengambil Yaw dan Pitch langsung dari
+				viewer. FOV mengatur lebar pandangan awal. Tombol
+				<strong>Ambil thumbnail dari titik awal</strong> membuat thumbnail scene dari pandangan
+				tersebut dan menyimpannya pada aset panorama.
+			</p>
+			<div class="callout">
+				<strong>Catatan.</strong> Mengganti thumbnail scene berarti mengganti thumbnail aset
+				panorama. Aset yang dipakai beberapa scene akan memakai thumbnail yang sama.
+			</div>
+
+			<h2>6.4 Publikasi scene</h2>
+			<p>Scene hanya dapat dipublikasikan jika:</p>
+			<ul>
+				<li>aset panorama tersedia dan berstatus <code>processed</code>;</li>
+				<li>file asli dan thumbnail ditemukan di storage;</li>
+				<li>terjemahan ID dan EN memiliki judul serta deskripsi;</li>
+				<li>semua hotspot memiliki label, judul, dan deskripsi pada kedua bahasa;</li>
+				<li>hotspot navigasi memiliki target scene yang valid dan bukan scene itu sendiri.</li>
+			</ul>
+			<p>
+				Gunakan tombol <strong>Publikasikan</strong> pada halaman edit scene. Untuk menarik
+				konten, gunakan <strong>Jadikan draft</strong>. Scene tayang memiliki tautan
+				<strong>Lihat di situs</strong>.
+			</p>
+
+			<h2>6.5 Menghapus scene</h2>
+			<p>
+				Scene yang masih menjadi target hotspot lain tidak dapat dihapus. Hapus atau ubah hotspot
+				yang menunjuk ke scene tersebut terlebih dahulu. Konfirmasi penghapusan memakai dialog
+				dan tidak dapat dibatalkan.
+			</p>
+
+			<h2>6.6 Praktik yang disarankan</h2>
+			<ul>
+				<li>Gunakan slug yang stabil dan deskriptif.</li>
+				<li>Atur urutan scene sesuai alur kunjungan.</li>
+				<li>Ambil thumbnail dari pandangan yang paling informatif.</li>
+				<li>Simpan draf sebelum perubahan besar dan uji di situs publik.</li>
+			</ul>
+		</section>
+
+		<section class="chapter" id="hotspot">
+			<p class="eyebrow">Bagian 07</p>
+			<h1>Mengelola Hotspot</h1>
+			<p class="chapter-intro">
+				Hotspot adalah titik interaktif pada panorama. Gunakan hotspot navigasi untuk berpindah
+				scene dan hotspot informasi untuk menjelaskan area atau objek.
+			</p>
+
+			<h2>7.1 Jenis hotspot</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 24%">Tipe</th><th>Fungsi</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Navigasi</td><td>Berpindah ke scene tujuan. Wajib memiliki target scene.</td></tr>
+					<tr><td>Informasi</td><td>Membuka panel judul dan deskripsi area/objek.</td></tr>
+					<tr><td>External</td><td>Disimpan di admin, tetapi belum dirender oleh viewer publik saat ini.</td></tr>
+				</tbody>
+			</table>
+
+			<h2>7.2 Menambah hotspot</h2>
+			<ol>
+				<li>Buka scene yang diinginkan, lalu klik <strong>Kelola hotspot</strong>.</li>
+				<li>Pada bagian <strong>Tambah hotspot</strong>, pilih tipe.</li>
+				<li>Isi scene tujuan untuk hotspot navigasi.</li>
+				<li>Atur urutan, Yaw, dan Pitch.</li>
+				<li>Gunakan <strong>Pilih dari panorama</strong> untuk mengambil koordinat langsung.</li>
+				<li>Isi label, judul, dan deskripsi untuk ID dan EN.</li>
+				<li>Pastikan hotspot aktif, lalu klik <strong>Tambah hotspot</strong>.</li>
+			</ol>
+			<figure>
+				<img src="assets/admin-hotspot.jpg" alt="Form dan daftar hotspot" />
+				<figcaption>Form hotspot dan daftar hotspot pada scene.</figcaption>
+			</figure>
+
+			<h2>7.3 Koordinat hotspot</h2>
+			<p>
+				Yaw adalah arah horizontal dan Pitch adalah arah vertikal. UI menampilkan derajat;
+				database menyimpan radian. Pitch dibatasi pada rentang yang aman. Gunakan pemilih
+				koordinat agar hotspot tepat berada pada objek yang dimaksud.
+			</p>
+
+			<h2>7.4 Mengubah dan menonaktifkan</h2>
+			<p>
+				Buka item hotspot pada daftar, ubah field, lalu klik <strong>Simpan hotspot</strong>.
+				Hotspot nonaktif tetap tersimpan tetapi tidak ditampilkan di tour. Gunakan ini untuk
+				menyiapkan hotspot sebelum waktunya.
+			</p>
+
+			<h2>7.5 Menghapus hotspot</h2>
+			<p>
+				Gunakan tombol <strong>Hapus hotspot</strong> dan konfirmasi. Hotspot yang dihapus tidak
+				dapat dikembalikan; pastikan tidak ada scene lain yang masih membutuhkannya.
+			</p>
+
+			<h2>7.6 Validasi publikasi</h2>
+			<ul>
+				<li>Hotspot navigasi wajib memiliki target scene.</li>
+				<li>Target tidak boleh scene itu sendiri.</li>
+				<li>
+					Target harus ada dan sudah tayang; label, judul, dan deskripsi wajib ada pada ID dan
+					EN.
+				</li>
+			</ul>
+		</section>
+
+		<section class="chapter" id="area">
+			<p class="eyebrow">Bagian 08</p>
+			<h1>Mengelola Area</h1>
+			<p class="chapter-intro">
+				Area mengelompokkan scene dan tampil sebagai halaman daftar serta detail di situs
+				publik.
+			</p>
+
+			<h2>8.1 Daftar dan editor area</h2>
+			<p>
+				Buka <strong>Area</strong> untuk melihat daftar. Setiap area memiliki slug, status,
+				urutan, judul, dan deskripsi ID/EN. Gunakan tombol <strong>Tambah area</strong> atau
+				<strong>Edit</strong>.
+			</p>
+			<figure>
+				<img src="assets/admin-area.jpg" alt="Editor area" />
+				<figcaption>Editor area dengan informasi dan terjemahan.</figcaption>
+			</figure>
+
+			<h2>8.2 Publikasi area</h2>
+			<p>
+				Area yang ditayangkan wajib memiliki judul dan deskripsi Indonesia. Terjemahan Inggris
+				opsional; jika kosong, pengunjung EN melihat versi Indonesia dengan indikator fallback.
+			</p>
+
+			<h2>8.3 Relasi dengan scene</h2>
+			<p>
+				Scene memilih area pada form scene. Halaman detail area menampilkan scene published yang
+				terhubung. Area yang masih digunakan scene tidak dapat dihapus; pindahkan scene ke area
+				lain terlebih dahulu.
+			</p>
+		</section>
+
+		<section class="chapter" id="galeri">
+			<p class="eyebrow">Bagian 09</p>
+			<h1>Mengelola Galeri</h1>
+			<p class="chapter-intro">
+				Galeri menampilkan foto dokumentasi kawasan yang terpisah dari aset panorama.
+			</p>
+
+			<h2>9.1 Menambah foto</h2>
+			<ol>
+				<li>Buka <strong>Galeri → Tambah foto</strong>.</li>
+				<li>Pilih file gambar JPG/PNG/WebP maksimal 10 MB.</li>
+				<li>Isi status, urutan, judul, dan keterangan ID/EN.</li>
+				<li>Klik <strong>Simpan foto</strong>.</li>
+			</ol>
+			<figure>
+				<img src="assets/admin-gallery.jpg" alt="Form tambah foto galeri" />
+				<figcaption>Form upload foto galeri.</figcaption>
+			</figure>
+
+			<h2>9.2 Publikasi dan tampilan publik</h2>
+			<p>
+				Foto hanya tampil di <code>/galeri</code> setelah status Tayang dan judul Indonesia
+				terisi. Foto dapat diklik untuk membuka ukuran penuh. Jika terjemahan Inggris kosong,
+				judul/keterangan Indonesia dipakai dengan indikator fallback.
+			</p>
+
+			<h2>9.3 Mengganti dan menghapus foto</h2>
+			<p>
+				Pada halaman edit, unggah file baru untuk mengganti foto. File lama akan dihapus setelah
+				perubahan berhasil. Tombol <strong>Hapus foto</strong> menghapus data dan file dari
+				storage secara permanen.
+			</p>
+
+			<h2>9.4 Praktik foto galeri</h2>
+			<ul>
+				<li>Gunakan foto yang sudah mendapat izin dokumentasi.</li>
+				<li>Kompres ke WebP/JPEG sebelum upload.</li>
+				<li>Tulis keterangan yang menjelaskan objek, bukan sekadar nama file.</li>
+				<li>Atur urutan agar alur galeri masuk akal.</li>
+			</ul>
+		</section>
+
+		<section class="chapter" id="halaman">
+			<p class="eyebrow">Bagian 10</p>
+			<h1>Halaman &amp; Konten Situs</h1>
+			<p class="chapter-intro">
+				Konten halaman dikelola dari menu Halaman dan Kunjungan. Gunakan status Draf untuk
+				menyiapkan konten sebelum tayang.
+			</p>
+
+			<h2>10.1 Daftar halaman</h2>
+			<p>
+				Menu <strong>Halaman</strong> menampilkan Beranda, Sejarah, Panduan, Area, dan Galeri.
+				Setiap item memiliki status dan tombol edit.
+			</p>
+			<figure>
+				<img src="assets/admin-pages.jpg" alt="Daftar halaman admin" />
+				<figcaption>Daftar halaman yang dapat diedit.</figcaption>
+			</figure>
+
+			<h2>10.2 Editor Beranda</h2>
+			<p>
+				Editor Beranda mengelola teks hero, pengenalan, virtual tour, sejarah, area, galeri,
+				panduan, serta gambar hero dan pratinjau tour. Pilih bahasa yang sedang diedit, isi
+				field, lalu simpan. Status Draf tidak mengubah beranda publik.
+			</p>
+			<figure>
+				<img src="assets/admin-home.jpg" alt="Editor beranda" />
+				<figcaption>Editor konten beranda.</figcaption>
+			</figure>
+
+			<h2>10.3 Editor halaman artikel</h2>
+			<p>
+				Halaman Sejarah dan Panduan menggunakan editor artikel: judul, deskripsi, catatan
+				verifikasi, dan blok konten. Blok dapat berupa bagian, kutipan, atau sumber. Susun blok
+				sesuai urutan baca.
+			</p>
+
+			<h2>10.4 Informasi kunjungan</h2>
+			<p>
+				Menu <strong>Kunjungan</strong> mengelola informasi praktis: pengelola, URL pengelola,
+				URL peta, status, lokasi, jam kunjungan, akses, pakaian, ketentuan foto, etika, kontak,
+				dan catatan verifikasi. Informasi ini tampil di beranda dan halaman Panduan setelah
+				status Tayang.
+			</p>
+			<div class="callout">
+				<strong>Fallback.</strong> Jika teks Inggris kosong, pengunjung versi Inggris melihat
+				teks Indonesia dengan indikator fallback. Field kosong tidak ditampilkan.
+			</div>
+
+			<h2>10.5 Aturan publikasi</h2>
+			<ul>
+				<li>Draf tidak tampil di situs publik.</li>
+				<li>Konten yang ditayangkan harus sudah diverifikasi pengelola.</li>
+				<li>Periksa tampilan ID dan EN setelah menyimpan.</li>
+				<li>Gunakan catatan verifikasi untuk menjelaskan status konten.</li>
+			</ul>
+		</section>
+
+		<section class="chapter" id="pengaturan">
+			<p class="eyebrow">Bagian 11</p>
+			<h1>Pengaturan Akun &amp; Backup</h1>
+			<p class="chapter-intro">
+				Halaman Pengaturan akun berada di bagian bawah sidebar. Di sini admin dapat mengubah
+				nama, password, memeriksa storage, dan mengunduh backup database.
+			</p>
+
+			<h2>11.1 Profil dan password</h2>
+			<p>
+				Isi nama administrator lalu klik <strong>Simpan nama</strong>. Untuk mengganti password,
+				masukkan password saat ini, password baru minimal 12 karakter, dan konfirmasi. Setelah
+				password diubah, sesi lain dikeluarkan.
+			</p>
+			<figure>
+				<img src="assets/admin-settings.jpg" alt="Halaman pengaturan akun" />
+				<figcaption>Profil, password, storage, dan backup pada halaman pengaturan.</figcaption>
+			</figure>
+
+			<h2>11.2 Penyimpanan upload</h2>
+			<p>
+				Kartu penyimpanan menampilkan driver aktif (lokal atau S3-compatible), status
+				kelengkapan, bucket, dan URL publik. Tombol <strong>Uji koneksi penyimpanan</strong>
+				membuat objek kecil, memeriksa keberadaan, lalu menghapusnya. Jika status belum lengkap,
+				periksa environment dan redeploy.
+			</p>
+
+			<h2>11.3 Backup database</h2>
+			<p>
+				Tombol <strong>Unduh backup database</strong> menghasilkan file <code>.dump</code> dari
+				PostgreSQL. File ini hanya berisi database. Untuk backup database + file upload,
+				gunakan skrip <code>docker/backup.sh</code> di server.
+			</p>
+			<figure>
+				<img src="assets/admin-backup.jpg" alt="Bagian backup database" />
+				<figcaption>Tombol unduh backup database pada pengaturan.</figcaption>
+			</figure>
+			<div class="callout callout--danger">
+				<strong>Jangan simpan backup hanya di server yang sama.</strong> Salin file backup ke
+				storage di luar VPS dan uji restore secara berkala.
+			</div>
+		</section>
+
+		<section class="chapter" id="teknis">
+			<p class="eyebrow">Bagian 12</p>
+			<h1>Arsitektur Teknis</h1>
+			<p class="chapter-intro">
+				Bagian ini untuk operator teknis. Admin konten tidak perlu memahami seluruh isi bagian
+				ini, tetapi perlu tahu siapa yang harus dihubungi jika terjadi masalah server.
+			</p>
+
+			<h2>12.1 Arsitektur ringkas</h2>
+			<div class="flow">
+				Browser pengunjung / admin<br />
+				↓ HTTPS<br />
+				Reverse proxy (Caddy / Nginx / Traefik)<br />
+				↓ port internal 3000<br />
+				SvelteKit Node.js (adapter-node)<br />
+				↓ Drizzle ORM<br />
+				PostgreSQL<br /><br />
+				File upload → volume lokal <code>/app/uploads</code> atau S3/R2
+			</div>
+
+			<h2>12.2 Stack aktual</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 28%">Komponen</th><th>Versi / peran</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>SvelteKit</td><td>3.x, SSR dan form actions, adapter-node.</td></tr>
+					<tr><td>Svelte</td><td>5.x, runes mode.</td></tr>
+					<tr><td>TypeScript</td><td>6.x, strict.</td></tr>
+					<tr><td>Vite</td><td>8.x.</td></tr>
+					<tr><td>Tailwind CSS</td><td>4.x, CSS-first, token di layout.css.</td></tr>
+					<tr><td>PostgreSQL</td><td>Database utama.</td></tr>
+					<tr><td>Drizzle ORM</td><td>Schema, query, dan migrasi.</td></tr>
+					<tr><td>Better Auth</td><td>Login, sesi, password, cookie.</td></tr>
+					<tr><td>Marzipano</td><td>Viewer panorama 360° di browser.</td></tr>
+					<tr><td>Zod</td><td>Validasi input server.</td></tr>
+					<tr><td>Docker</td><td>Build dan runtime produksi.</td></tr>
+					<tr><td>Playwright + Vitest</td><td>E2E dan unit/browser test.</td></tr>
+				</tbody>
+			</table>
+
+			<h2>12.3 Layer aplikasi</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 26%">Layer</th><th>Lokasi dan tanggung jawab</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Route/HTTP</td><td><code>src/routes/**</code> — membaca input, memanggil service, membentuk response.</td></tr>
+					<tr><td>Service</td><td><code>src/lib/server/services/**</code> — aturan domain, transaksi, validasi publikasi.</td></tr>
+					<tr><td>Data access</td><td><code>src/lib/server/db/**</code> — schema Drizzle dan koneksi.</td></tr>
+					<tr><td>Storage</td><td><code>src/lib/server/storage/**</code> — upload, path, S3/local, hapus file.</td></tr>
+					<tr><td>Auth</td><td><code>src/lib/server/auth.ts</code>, <code>src/hooks.server.ts</code>.</td></tr>
+					<tr><td>Schema validasi</td><td><code>src/lib/schemas/**</code> — Zod dan tipe turunan.</td></tr>
+					<tr><td>Komponen</td><td><code>src/lib/components/**</code> — UI publik, admin, tour.</td></tr>
+				</tbody>
+			</table>
+
+			<h2>12.4 Environment variable</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 30%">Variable</th><th>Wajib</th><th>Keterangan</th></tr>
+				</thead>
+				<tbody>
+					<tr><td><code>DATABASE_URL</code></td><td>Ya</td><td>Connection string PostgreSQL.</td></tr>
+					<tr><td><code>ORIGIN</code></td><td>Ya</td><td>URL publik, mis. <code>https://domain-desa.id</code>.</td></tr>
+					<tr><td><code>BETTER_AUTH_SECRET</code></td><td>Ya</td><td>Secret sesi, minimal 32 karakter acak.</td></tr>
+					<tr><td><code>UPLOAD_DIR</code></td><td>Ya*</td><td>Path volume upload lokal, mis. <code>/app/uploads</code>.</td></tr>
+					<tr><td><code>STORAGE_DRIVER</code></td><td>Tidak</td><td><code>local</code> atau <code>s3</code>.</td></tr>
+					<tr><td><code>S3_*</code></td><td>Jika S3</td><td>Endpoint, region, bucket, key, secret, public URL, path style.</td></tr>
+					<tr><td><code>BODY_SIZE_LIMIT</code></td><td>Disarankan</td><td><code>80M</code> untuk upload panorama.</td></tr>
+					<tr><td><code>RUN_MIGRATIONS</code></td><td>Tidak</td><td>Dokumentasi lama; entrypoint saat ini selalu menjalankan migrasi.</td></tr>
+					<tr><td><code>SEED_ON_START</code></td><td>Tidak</td><td><code>false</code> untuk produksi bersih.</td></tr>
+					<tr><td><code>CREATE_ADMIN_ON_START</code></td><td>Tidak</td><td><code>true</code> hanya saat provisioning admin pertama.</td></tr>
+					<tr><td><code>ADMIN_EMAIL</code>, <code>ADMIN_PASSWORD</code></td><td>Provisioning</td><td>Hapus/rotate setelah admin dibuat.</td></tr>
+					<tr><td><code>PROTOCOL_HEADER</code>, <code>HOST_HEADER</code></td><td>Reverse proxy</td><td>Mis. <code>x-forwarded-proto</code>, <code>x-forwarded-host</code>.</td></tr>
+				</tbody>
+			</table>
+
+			<h2>12.5 Entitas database</h2>
+			<p>
+				Database memiliki tabel domain dan tabel autentikasi Better Auth. Tabel domain utama:
+			</p>
+			<ul>
+				<li><code>panorama_asset</code> — metadata aset panorama.</li>
+				<li><code>area</code>, <code>area_translation</code> — area dan terjemahannya.</li>
+				<li><code>scene</code>, <code>scene_translation</code> — scene dan terjemahannya.</li>
+				<li><code>hotspot</code>, <code>hotspot_translation</code> — hotspot dan terjemahannya.</li>
+				<li><code>gallery_item</code>, <code>gallery_item_translation</code> — galeri.</li>
+				<li><code>site_content</code>, <code>site_content_translation</code> — informasi kunjungan.</li>
+				<li><code>site_page</code>, <code>site_page_translation</code>, <code>site_page_block</code>, <code>site_page_block_translation</code> — halaman CMS.</li>
+			</ul>
+			<p>
+				Tabel autentikasi: <code>user</code>, <code>session</code>, <code>account</code>, dan
+				<code>verification</code>. Semua ID domain memakai UUID. Relasi penting: scene →
+				panorama/area, hotspot → scene/target scene, dan semua terjemahan memakai locale ID/EN.
+			</p>
+
+			<h2>12.6 Route utama</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 32%">Route</th><th>Fungsi</th></tr>
+				</thead>
+				<tbody>
+					<tr><td><code>/id</code>, <code>/en</code></td><td>Beranda publik.</td></tr>
+					<tr><td><code>/[lang]/tour</code></td><td>Tour multi-scene.</td></tr>
+					<tr><td><code>/[lang]/tour/[scene]</code></td><td>Deep link ke scene.</td></tr>
+					<tr><td><code>/[lang]/area</code>, <code>/[lang]/area/[slug]</code></td><td>Daftar dan detail area.</td></tr>
+					<tr><td><code>/[lang]/sejarah</code></td><td>Artikel sejarah.</td></tr>
+					<tr><td><code>/[lang]/galeri</code></td><td>Galeri publik.</td></tr>
+					<tr><td><code>/[lang]/panduan</code></td><td>Panduan + peta lokasi.</td></tr>
+					<tr><td><code>/admin/login</code></td><td>Login admin.</td></tr>
+					<tr><td><code>/admin/dashboard</code></td><td>Ringkasan admin.</td></tr>
+					<tr><td><code>/admin/media</code>, <code>/admin/media/upload</code></td><td>Media panorama.</td></tr>
+					<tr><td><code>/admin/scenes/**</code></td><td>Scene dan hotspot.</td></tr>
+					<tr><td><code>/admin/areas</code></td><td>Area.</td></tr>
+					<tr><td><code>/admin/gallery</code></td><td>Galeri.</td></tr>
+					<tr><td><code>/admin/pages</code>, <code>/admin/home</code></td><td>Halaman dan beranda.</td></tr>
+					<tr><td><code>/admin/content</code></td><td>Informasi kunjungan.</td></tr>
+					<tr><td><code>/admin/settings</code></td><td>Akun, storage, backup.</td></tr>
+					<tr><td><code>/uploads/**</code></td><td>Penyajian file upload lokal.</td></tr>
+				</tbody>
+			</table>
+
+			<h2>12.7 Keamanan</h2>
+			<ul>
+				<li>Semua route <code>/admin/**</code> diperiksa sesi di server melalui hooks.</li>
+				<li>Registrasi publik dinonaktifkan.</li>
+				<li>Login memakai rate limit; password minimal 12 karakter.</li>
+				<li>Password di-hash oleh Better Auth; sesi disimpan di database.</li>
+				<li>Input divalidasi dengan Zod di server.</li>
+				<li>Upload divalidasi tipe, ekstensi, ukuran, dan dimensi.</li>
+				<li>Header keamanan: nosniff, X-Frame-Options DENY, referrer policy, COOP, HSTS saat HTTPS.</li>
+				<li>Jangan menaruh secret di bundle client atau repository.</li>
+			</ul>
+
+			<h2>12.8 Storage</h2>
+			<p>
+				Driver <code>local</code> menyimpan file di <code>UPLOAD_DIR</code> dan menyajikannya
+				melalui <code>/uploads/**</code> dengan cache immutable. Driver <code>s3</code> memakai
+				bucket S3-compatible; URL publik dan CORS bucket harus benar agar viewer dapat memuat
+				panorama.
+			</p>
+		</section>
+
+		<section class="chapter" id="deployment">
+			<p class="eyebrow">Bagian 13</p>
+			<h1>Deployment &amp; Operasional</h1>
+			<p class="chapter-intro">
+				Aplikasi disediakan sebagai image Docker berbasis Node 24 dan PostgreSQL. Migrasi
+				dijalankan otomatis saat container start.
+			</p>
+
+			<h2>13.1 Kebutuhan server</h2>
+			<ul>
+				<li>VPS public IPv4, 2 vCPU, minimal 4 GB RAM, 60 GB SSD.</li>
+				<li>Docker + Docker Compose, atau platform yang mendukung Docker.</li>
+				<li>PostgreSQL 18 (satu server atau managed database).</li>
+				<li>Domain yang mengarah ke IP server.</li>
+				<li>Port 80/443 untuk HTTPS.</li>
+				<li>Volume persisten untuk <code>/app/uploads</code>.</li>
+			</ul>
+
+			<h2>13.2 Environment produksi</h2>
+			<pre>DATABASE_URL=postgres://user:password@db:5432/batuankaler_360
+ORIGIN=https://domain-desa.id
+BETTER_AUTH_SECRET=&lt;hasil openssl rand -base64 48&gt;
+UPLOAD_DIR=/app/uploads
+STORAGE_DRIVER=local
+BODY_SIZE_LIMIT=80M
+SEED_ON_START=false
+CREATE_ADMIN_ON_START=true
+ADMIN_EMAIL=admin@domain-desa.id
+ADMIN_PASSWORD=&lt;password kuat minimal 12 karakter&gt;
+ADMIN_NAME=Administrator Desa</pre>
+			<p>
+				Setelah admin pertama dibuat, ubah <code>CREATE_ADMIN_ON_START=false</code> dan hapus
+				<code>ADMIN_PASSWORD</code> dari environment. Ganti seluruh secret dari nilai
+				development.
+			</p>
+
+			<h2>13.3 Build dan start</h2>
+			<pre>docker compose up -d --build
+docker compose logs -f app</pre>
+			<p>
+				Container menjalankan migrasi database sebelum aplikasi start. Jika database belum
+				siap, entrypoint mencoba ulang beberapa kali. Setelah berhasil, log menampilkan
+				<code>Database migrations applied.</code> dan <code>Listening on ...:3000</code>.
+			</p>
+
+			<h2>13.4 Reverse proxy dan upload</h2>
+			<p>
+				Reverse proxy harus meneruskan <code>Host</code>, <code>X-Forwarded-Proto</code>, dan
+				<code>X-Forwarded-For</code>. Set <code>client_max_body_size 80m</code> pada Nginx.
+				Tanpa konfigurasi ini, upload panorama besar dapat gagal di proxy meskipun aplikasi
+				sudah mengizinkan.
+			</p>
+
+			<h2>13.5 Backup dan restore</h2>
+			<pre># backup database + uploads
+docker compose exec app sh /app/docker/backup.sh
+
+# restore
+docker compose exec app sh /app/docker/restore.sh \
+  /app/uploads/backups/database-&lt;timestamp&gt;.dump \
+  /app/uploads/backups/uploads-&lt;timestamp&gt;.tar.gz</pre>
+			<p>
+				Jalankan backup harian melalui cron, lalu salin hasilnya ke storage offsite. Uji restore
+				ke database terpisah minimal dua kali setahun.
+			</p>
+
+			<h2>13.6 Pemeliharaan rutin</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 20%">Frekuensi</th><th>Pekerjaan</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Harian</td><td>Cek uptime, cek backup, cek kapasitas disk.</td></tr>
+					<tr><td>Mingguan</td><td>Periksa log error dan ukuran upload/backup.</td></tr>
+					<tr><td>Bulanan</td><td>Cek masa berlaku SSL/domain, update ringan, cek akun admin.</td></tr>
+					<tr><td>3 bulan</td><td>Update dependency keamanan dan uji fitur utama.</td></tr>
+					<tr><td>6 bulan</td><td>Uji restore backup dan review kapasitas server.</td></tr>
+				</tbody>
+			</table>
+
+			<h2>13.7 Troubleshooting cepat</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 34%">Gejala</th><th>Penyebab / tindakan</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>500 setelah deploy, log “relation ... does not exist”</td><td>Migrasi belum berjalan. Pastikan image terbaru dan entrypoint menjalankan <code>docker/migrate.mjs</code>.</td></tr>
+					<tr><td>Upload 413/putus</td><td>Naikkan body limit proxy dan <code>BODY_SIZE_LIMIT</code>; periksa ukuran/rasio file.</td></tr>
+					<tr><td>Login 429</td><td>Rate limit. Tunggu satu menit sebelum mencoba lagi.</td></tr>
+					<tr><td>Login berhasil tetapi kembali ke login</td><td><code>ORIGIN</code> tidak sesuai domain/HTTPS; periksa cookie dan header proxy.</td></tr>
+					<tr><td>Panorama kosong</td><td>Periksa file, path, CORS S3, WebGL, dan koneksi.</td></tr>
+					<tr><td>File upload 404</td><td>Volume tidak ter-mount, permission, atau URL S3 salah.</td></tr>
+					<tr><td>Backup gagal</td><td><code>pg_dump</code> tidak tersedia atau database tidak bisa diakses.</td></tr>
+					<tr><td>Sesi admin hilang setelah ganti domain</td><td>Normal; login ulang setelah <code>ORIGIN</code> diperbarui.</td></tr>
+				</tbody>
+			</table>
+		</section>
+
+		<section class="chapter" id="serah-terima">
+			<p class="eyebrow">Bagian 14</p>
+			<h1>Serah Terima</h1>
+			<p class="chapter-intro">
+				Serah terima bukan hanya memindahkan server. Pastikan desa memiliki akun, dokumen,
+				akses, dan kemampuan operasional yang cukup.
+			</p>
+
+			<h2>14.1 Aset yang diserahkan</h2>
+			<ul class="checklist">
+				<li>Source code dan repository GitHub.</li>
+				<li>Domain dan akses DNS.</li>
+				<li>VPS/hosting, database, dan volume upload.</li>
+				<li>File upload panorama dan galeri.</li>
+				<li>Backup database dan aset, serta lokasi offsite.</li>
+				<li>Akun admin aplikasi untuk desa.</li>
+				<li>Akun backup, object storage, dan monitoring.</li>
+				<li>Dokumentasi teknis dan panduan pengguna ini.</li>
+				<li>Kontak darurat operator/vendor.</li>
+			</ul>
+
+			<h2>14.2 Akun dan kepemilikan</h2>
+			<ul>
+				<li>Gunakan email dan akun atas nama Desa, bukan akun pribadi.</li>
+				<li>Aktifkan MFA pada email, hosting, domain, dan GitHub.</li>
+				<li>Simpan kredensial di password manager desa.</li>
+				<li>Hapus akses pribadi pengembang setelah serah terima.</li>
+				<li>Rotasi <code>BETTER_AUTH_SECRET</code> dan password admin.</li>
+			</ul>
+
+			<h2>14.3 Pelatihan minimum</h2>
+			<ol>
+				<li>Login, logout, dan mengganti password.</li>
+				<li>Upload panorama dan membuat scene.</li>
+				<li>Menambah hotspot navigasi dan informasi.</li>
+				<li>Mengelola area dan galeri.</li>
+				<li>Mengedit halaman serta informasi kunjungan.</li>
+				<li>Membaca status publikasi dan melakukan unpublish.</li>
+				<li>Mengunduh backup database.</li>
+				<li>Menghubungi operator jika terjadi masalah.</li>
+			</ol>
+
+			<h2>14.4 Berita acara</h2>
+			<p>Berita acara sebaiknya memuat:</p>
+			<ul>
+				<li>tanggal dan tempat serah terima;</li>
+				<li>daftar aset, akun, domain, dan server;</li>
+				<li>status aplikasi dan hasil smoke test;</li>
+				<li>masa pendampingan dan cakupannya;</li>
+				<li>batas tanggung jawab para pihak;</li>
+				<li>kontak penanggung jawab;</li>
+				<li>lampiran dokumentasi dan checklist backup.</li>
+			</ul>
+
+			<h2>14.5 Pendampingan pasca-serah-terima</h2>
+			<p>
+				Disarankan ada pendampingan 1–3 bulan untuk membantu admin desa membiasakan alur
+				kerja. Setelah itu, tetapkan kontrak pemeliharaan ringan untuk update keamanan,
+				monitoring, dan uji restore.
+			</p>
+		</section>
+
+		<section class="chapter" id="lampiran">
+			<p class="eyebrow">Lampiran</p>
+			<h1>Lampiran &amp; Checklist</h1>
+
+			<h2>A. Batas upload</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 30%">Jenis</th><th>Batas</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Panorama asli</td><td>50 MB, JPG/PNG/WebP, 2:1, lebar minimal 2000 px.</td></tr>
+					<tr><td>Thumbnail panorama</td><td>5 MB.</td></tr>
+					<tr><td>Preview panorama</td><td>10 MB.</td></tr>
+					<tr><td>Foto galeri</td><td>10 MB.</td></tr>
+					<tr><td>Body request aplikasi</td><td><code>80M</code> secara default.</td></tr>
+				</tbody>
+			</table>
+
+			<h2>B. Environment variable cepat</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 34%">Nama</th><th>Contoh / catatan</th></tr>
+				</thead>
+				<tbody>
+					<tr><td><code>DATABASE_URL</code></td><td><code>postgres://user:pass@db:5432/batuankaler_360</code></td></tr>
+					<tr><td><code>ORIGIN</code></td><td><code>https://domain-desa.id</code></td></tr>
+					<tr><td><code>BETTER_AUTH_SECRET</code></td><td>Random 32+ karakter.</td></tr>
+					<tr><td><code>UPLOAD_DIR</code></td><td><code>/app/uploads</code></td></tr>
+					<tr><td><code>STORAGE_DRIVER</code></td><td><code>local</code> atau <code>s3</code></td></tr>
+					<tr><td><code>BODY_SIZE_LIMIT</code></td><td><code>80M</code></td></tr>
+					<tr><td><code>SEED_ON_START</code></td><td><code>false</code> untuk produksi</td></tr>
+					<tr><td><code>CREATE_ADMIN_ON_START</code></td><td><code>true</code> hanya saat provisioning</td></tr>
+				</tbody>
+			</table>
+
+			<h2>C. Checklist go-live</h2>
+			<ul class="checklist">
+				<li>Domain mengarah ke server dan HTTPS aktif.</li>
+				<li><code>ORIGIN</code> sama persis dengan URL publik.</li>
+				<li><code>BETTER_AUTH_SECRET</code> baru dan kuat.</li>
+				<li>Database baru, migrasi berhasil, dan admin desa dibuat.</li>
+				<li>Volume <code>/app/uploads</code> persisten.</li>
+				<li>Upload panorama uji berhasil dan tampil di tour.</li>
+				<li>Scene dan hotspot uji dapat dipublikasikan.</li>
+				<li>Area, galeri, sejarah, dan panduan dapat dibuka.</li>
+				<li>Backup database berhasil diunduh.</li>
+				<li>Backup penuh dan restore diuji.</li>
+				<li>Monitoring uptime dan peringatan disk aktif.</li>
+				<li>Akun pribadi pengembang dihapus.</li>
+				<li>Dokumentasi dan pelatihan sudah diserahkan.</li>
+			</ul>
+
+			<h2>D. Glosarium</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 28%">Istilah</th><th>Penjelasan</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Admin</td><td>Pengguna yang mengelola konten melalui panel.</td></tr>
+					<tr><td>Aset</td><td>File dan metadata panorama atau galeri.</td></tr>
+					<tr><td>Draft</td><td>Status konten yang belum tampil publik.</td></tr>
+					<tr><td>Fallback</td><td>Penggunaan teks Indonesia saat teks Inggris kosong.</td></tr>
+					<tr><td>Hotspot</td><td>Titik interaktif pada panorama.</td></tr>
+					<tr><td>Locale</td><td>Kode bahasa: <code>id</code> atau <code>en</code>.</td></tr>
+					<tr><td>Migrasi</td><td>Perubahan struktur database yang dijalankan otomatis saat deploy.</td></tr>
+					<tr><td>Published</td><td>Status konten yang tayang di situs publik.</td></tr>
+					<tr><td>Scene</td><td>Satu titik panorama dalam tour.</td></tr>
+					<tr><td>Slug</td><td>Identifier URL yang unik.</td></tr>
+					<tr><td>Thumbnail</td><td>Gambar kecil untuk daftar scene/aset.</td></tr>
+					<tr><td>Yaw/Pitch</td><td>Arah pandangan horizontal/vertikal.</td></tr>
+				</tbody>
+			</table>
+
+			<h2>E. Kontak dan dukungan</h2>
+			<table>
+				<thead>
+					<tr><th style="width: 30%">Peran</th><th>Kontak</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Admin konten Desa</td><td>________________________</td></tr>
+					<tr><td>Operator teknis</td><td>________________________</td></tr>
+					<tr><td>Pengelola Pura</td><td>________________________</td></tr>
+					<tr><td>Darurat server</td><td>________________________</td></tr>
+				</tbody>
+			</table>
+		</section>
+	</body>
+</html>
