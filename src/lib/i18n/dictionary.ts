@@ -289,7 +289,11 @@ const id = {
 			updated: 'Terakhir diperbarui',
 			empty: 'Daftar area sedang disiapkan oleh pengelola.',
 			fallback:
-				'Terjemahan Inggris belum lengkap. Sebagian daftar ditampilkan dalam Bahasa Indonesia.'
+				'Terjemahan Inggris belum lengkap. Sebagian daftar ditampilkan dalam Bahasa Indonesia.',
+			detailScenesTitle: 'Scene di area ini',
+			detailScenesDescription: 'Pilih scene untuk membuka panorama 360 derajat pada area ini.',
+			detailEmpty: 'Belum ada scene yang dipublikasikan untuk area ini.',
+			backToAreas: 'Kembali ke daftar area'
 		},
 		galeri: {
 			eyebrow: 'Galeri',
@@ -610,7 +614,11 @@ const en: SiteDictionary = {
 				'Area names, descriptions, and boundaries are awaiting validation. Do not use this page as an official guide until the final content is published.',
 			updated: 'Last updated',
 			empty: 'The area list is being prepared by the management.',
-			fallback: 'The English translation is incomplete. Part of the list is shown in Indonesian.'
+			fallback: 'The English translation is incomplete. Part of the list is shown in Indonesian.',
+			detailScenesTitle: 'Scenes in this area',
+			detailScenesDescription: 'Choose a scene to open the 360-degree panorama for this area.',
+			detailEmpty: 'No published scenes are available for this area yet.',
+			backToAreas: 'Back to the area list'
 		},
 		galeri: {
 			eyebrow: 'Gallery',

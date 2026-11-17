@@ -68,6 +68,20 @@ test.describe('public website', () => {
 		);
 	});
 
+	test('lists published areas and opens an area detail', async ({ page }) => {
+		await page.goto('/id/area');
+		await expect(page.getByRole('heading', { level: 1 })).toContainText('Mengenal area');
+
+		const areaLink = page.getByRole('link', { name: /Jaba Pura/ }).first();
+		await expect(areaLink).toHaveAttribute('href', /\/id\/area\/jaba-pura/);
+		await areaLink.click();
+
+		await expect(page).toHaveURL(/\/id\/area\/jaba-pura$/);
+		await expect(page.getByRole('heading', { level: 1, name: 'Jaba Pura' })).toBeVisible();
+		await expect(page.getByText('Scene di area ini')).toBeVisible();
+		await expect(page.getByRole('link', { name: /Jelajahi Virtual Tour/ }).first()).toBeVisible();
+	});
+
 	test('renders the panorama viewer controls', async ({ page }) => {
 		await page.goto('/id/tour');
 		await expect(page.getByRole('heading', { level: 1 })).toContainText('Jelajahi kawasan');
@@ -196,6 +210,10 @@ test.describe('admin dashboard', () => {
 		await page.goto('/admin/media');
 		await expect(page.getByRole('heading', { name: 'Aset panorama' })).toBeVisible();
 		await expect(page.getByText('scene-jaba.jpg').first()).toBeVisible();
+
+		await page.goto('/admin/areas');
+		await expect(page.getByRole('heading', { name: 'Area', exact: true })).toBeVisible();
+		await expect(page.getByText('Jaba Pura').first()).toBeVisible();
 	});
 
 	test('shows a friendly error page for unknown admin routes', async ({ page }) => {
@@ -437,5 +455,35 @@ test.describe('admin dashboard', () => {
 
 		await expect(page).toHaveURL(/\/admin\/scenes$/);
 		await expect(page.getByText(slug)).toHaveCount(0);
+	});
+
+	test('creates, edits, and deletes an area', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+
+		const slug = `e2e-area-${Date.now()}`;
+		const title = `E2E Area ${Date.now()}`;
+
+		await loginAsAdmin(page);
+		await page.goto('/admin/areas/new');
+
+		await page.getByLabel('Slug').fill(slug);
+		await page.getByLabel('Judul area', { exact: true }).fill(title);
+		await page.getByLabel('Deskripsi', { exact: true }).fill('Area untuk pengujian otomatis.');
+		await page.getByRole('button', { name: 'Buat area' }).click();
+
+		await expect(page).toHaveURL(/\/admin\/areas\/[0-9a-f-]+/);
+		await expect(page.getByRole('status')).toContainText('Area berhasil disimpan.');
+
+		await page.getByLabel('Judul area', { exact: true }).fill(`${title} Diperbarui`);
+		await page.getByRole('button', { name: 'Simpan area' }).click();
+		await expect(page.getByRole('status')).toContainText('Area berhasil disimpan.');
+
+		await page.getByRole('button', { name: 'Hapus area' }).click();
+		const areaDialog = page.getByRole('dialog', { name: 'Hapus area ini?' });
+		await expect(areaDialog).toBeVisible();
+		await areaDialog.getByRole('button', { name: 'Hapus', exact: true }).click();
+
+		await expect(page).toHaveURL(/\/admin\/areas$/);
+		await expect(page.getByText(`${title} Diperbarui`)).toHaveCount(0);
 	});
 });
