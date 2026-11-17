@@ -78,6 +78,19 @@ const id = {
 			manager: 'Pengelola'
 		}
 	},
+	locationMap: {
+		eyebrow: 'Lokasi',
+		title: 'Temukan kawasan pura.',
+		description:
+			'Kawasan pura berada di Dusun Canggi, Desa Batuan Kaler. Gunakan peta untuk merencanakan perjalanan dan mengenali jalur menuju lokasi.',
+		addressLabel: 'Alamat',
+		address:
+			'Pura Puseh Ganggangan Canggi, Dusun Canggi, Desa Batuan Kaler, Kecamatan Sukawati, Kabupaten Gianyar, Bali 80582',
+		mapTitle: 'Peta lokasi Pura Batuan Kaler',
+		openMap: 'Buka di Google Maps',
+		directions: 'Petunjuk arah',
+		note: 'Peta menampilkan titik kawasan pura. Gunakan tombol petunjuk arah untuk navigasi dari lokasi Anda.'
+	},
 	footer: {
 		description:
 			'Dokumentasi digital kawasan Pura Batuan Kaler dalam bentuk virtual tour 360 derajat. Disusun untuk mendukung orientasi pengunjung dengan tetap menghormati nilai dan aturan tempat.',
@@ -387,6 +400,19 @@ const en: SiteDictionary = {
 			contact: 'Contact',
 			manager: 'Managed by'
 		}
+	},
+	locationMap: {
+		eyebrow: 'Location',
+		title: 'Find the temple grounds.',
+		description:
+			'The temple grounds are located in Dusun Canggi, Batuan Kaler Village. Use the map to plan your journey and recognise the route to the site.',
+		addressLabel: 'Address',
+		address:
+			'Pura Puseh Ganggangan Canggi, Dusun Canggi, Batuan Kaler Village, Sukawati District, Gianyar Regency, Bali 80582',
+		mapTitle: 'Location map of Pura Batuan Kaler',
+		openMap: 'Open in Google Maps',
+		directions: 'Get directions',
+		note: 'The map shows the point of the temple grounds. Use the directions button for navigation from your location.'
 	},
 	footer: {
 		description:

@@ -52,6 +52,22 @@ test.describe('public website', () => {
 		await expect(page.getByRole('heading', { level: 1 })).toContainText('Pura Batuan Kaler');
 	});
 
+	test('renders the temple location map', async ({ page }) => {
+		await page.goto('/id/panduan');
+
+		const map = page.locator('iframe[title="Peta lokasi Pura Batuan Kaler"]');
+		await expect(map).toBeVisible();
+		await expect(map).toHaveAttribute('src', /google\.com\/maps\?/);
+		await expect(page.getByRole('link', { name: 'Buka di Google Maps' })).toHaveAttribute(
+			'href',
+			/google\.com\/maps\/search/
+		);
+		await expect(page.getByRole('link', { name: 'Petunjuk arah' })).toHaveAttribute(
+			'href',
+			/google\.com\/maps\/dir/
+		);
+	});
+
 	test('renders the panorama viewer controls', async ({ page }) => {
 		await page.goto('/id/tour');
 		await expect(page.getByRole('heading', { level: 1 })).toContainText('Jelajahi kawasan');

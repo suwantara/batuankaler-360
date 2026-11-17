@@ -2,6 +2,7 @@
 	import AreaCard from '#lib/components/public/AreaCard.svelte';
 	import GalleryCard from '#lib/components/public/GalleryCard.svelte';
 	import GuideCard from '#lib/components/public/GuideCard.svelte';
+	import LocationMap from '#lib/components/public/LocationMap.svelte';
 	import VisitInformation from '#lib/components/public/VisitInformation.svelte';
 	import ArrowLink from '#lib/components/ui/ArrowLink.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
@@ -316,3 +317,5 @@
 		</div>
 	</div>
 </section>
+
+<LocationMap content={content.locationMap} lang={data.lang} />

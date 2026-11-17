@@ -1,5 +1,6 @@
 <script lang="ts">
 	import GuideCard from '#lib/components/public/GuideCard.svelte';
+	import LocationMap from '#lib/components/public/LocationMap.svelte';
 	import PageIntro from '#lib/components/public/PageIntro.svelte';
 	import SitePageArticle from '#lib/components/public/SitePageArticle.svelte';
 	import VisitInformation from '#lib/components/public/VisitInformation.svelte';
@@ -29,6 +30,8 @@
 {#if data.visitInfo}
 	<VisitInformation content={content.visitInfo} data={data.visitInfo} lang={data.lang} compact />
 {/if}
+
+<LocationMap content={content.locationMap} lang={data.lang} />
 
 {#if page}
 	<SitePageArticle {page} labels={pageContent} lang={data.lang} />
