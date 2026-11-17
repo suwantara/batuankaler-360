@@ -1,5 +1,6 @@
 <script lang="ts">
 	import GalleryCard from '#lib/components/public/GalleryCard.svelte';
+	import GalleryPhotoCard from '#lib/components/public/GalleryPhotoCard.svelte';
 	import PageIntro from '#lib/components/public/PageIntro.svelte';
 	import SitePageGallery from '#lib/components/public/SitePageGallery.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
@@ -10,6 +11,8 @@
 	const content = $derived(dictionary[data.lang]);
 	const pageContent = $derived(content.pages.galeri);
 	const page = $derived(data.page);
+	const gallery = $derived(data.gallery);
+	const hasFallback = $derived(gallery.some((item) => item.fallbackUsed));
 </script>
 
 <svelte:head>
@@ -23,7 +26,23 @@
 	description={page?.description || pageContent.description}
 />
 
-{#if page}
+{#if gallery.length > 0}
+	<section class="section section--paper">
+		<div class="container-page">
+			{#if hasFallback}
+				<div class="alert alert--info mb-8">{pageContent.fallback}</div>
+			{/if}
+
+			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{#each gallery as item, index (item.id)}
+					<div class={index === 1 ? 'lg:mt-10' : ''}>
+						<GalleryPhotoCard {item} {index} />
+					</div>
+				{/each}
+			</div>
+		</div>
+	</section>
+{:else if page}
 	<SitePageGallery {page} labels={pageContent} lang={data.lang} />
 {:else}
 	<section class="section section--paper">

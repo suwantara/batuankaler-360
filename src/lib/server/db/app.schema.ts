@@ -153,6 +153,43 @@ export const hotspotTranslation = pgTable(
 	})
 );
 
+export const galleryItem = pgTable(
+	'gallery_item',
+	{
+		id: uuid('id').primaryKey().defaultRandom(),
+		imagePath: text('image_path').notNull(),
+		width: integer('width').notNull(),
+		height: integer('height').notNull(),
+		status: contentStatus('status').notNull().default('draft'),
+		sortOrder: integer('sort_order').notNull().default(0),
+		createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+		updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull()
+	},
+	(table) => ({
+		statusIdx: index('gallery_item_status_idx').on(table.status),
+		sortOrderIdx: index('gallery_item_sort_order_idx').on(table.sortOrder)
+	})
+);
+
+export const galleryItemTranslation = pgTable(
+	'gallery_item_translation',
+	{
+		id: uuid('id').primaryKey().defaultRandom(),
+		itemId: uuid('item_id')
+			.notNull()
+			.references(() => galleryItem.id, { onDelete: 'cascade' }),
+		locale: contentLocale('locale').notNull(),
+		title: varchar('title', { length: 200 }).notNull().default(''),
+		caption: text('caption').notNull().default('')
+	},
+	(table) => ({
+		itemLocaleUnique: uniqueIndex('gallery_item_translation_item_locale_unique').on(
+			table.itemId,
+			table.locale
+		)
+	})
+);
+
 export const siteContent = pgTable('site_content', {
 	id: uuid('id').primaryKey().defaultRandom(),
 	slug: varchar('slug', { length: 80 }).notNull().unique(),
@@ -313,6 +350,17 @@ export const hotspotTranslationRelations = relations(hotspotTranslation, ({ one 
 	hotspot: one(hotspot, {
 		fields: [hotspotTranslation.hotspotId],
 		references: [hotspot.id]
+	})
+}));
+
+export const galleryItemRelations = relations(galleryItem, ({ many }) => ({
+	translations: many(galleryItemTranslation)
+}));
+
+export const galleryItemTranslationRelations = relations(galleryItemTranslation, ({ one }) => ({
+	item: one(galleryItem, {
+		fields: [galleryItemTranslation.itemId],
+		references: [galleryItem.id]
 	})
 }));
 

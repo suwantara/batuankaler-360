@@ -20,9 +20,10 @@ export {
 	resolveUploadedFile
 };
 
-export type UploadKind = 'original' | 'thumbnail' | 'preview';
+export type UploadKind = 'original' | 'thumbnail' | 'preview' | 'gallery';
 
 const PANORAMA_SUBDIR = 'panoramas';
+const GALLERY_SUBDIR = 'gallery';
 const ALLOWED_TYPES = new Set(['jpg', 'png', 'webp']);
 
 function maxBytesFor(kind: UploadKind): number {
@@ -33,7 +34,17 @@ function maxBytesFor(kind: UploadKind): number {
 			return UPLOAD_LIMITS.thumbnail;
 		case 'preview':
 			return UPLOAD_LIMITS.preview;
+		case 'gallery':
+			return UPLOAD_LIMITS.gallery;
 	}
+}
+
+function subdirFor(kind: UploadKind): string {
+	return kind === 'gallery' ? GALLERY_SUBDIR : PANORAMA_SUBDIR;
+}
+
+function filenameSuffix(kind: UploadKind): string {
+	return kind === 'gallery' ? 'image' : kind;
 }
 
 function sizeLabel(kind: UploadKind): string {
@@ -116,8 +127,8 @@ export async function savePanoramaImage(
 		}
 	}
 
-	const filename = `${safeBaseName(baseName)}-${kind}.${detectedType}`;
-	const key = `${PANORAMA_SUBDIR}/${filename}`;
+	const filename = `${safeBaseName(baseName)}-${filenameSuffix(kind)}.${detectedType}`;
+	const key = `${subdirFor(kind)}/${filename}`;
 
 	try {
 		const stored = await putObject({
@@ -143,6 +154,10 @@ export async function savePanoramaImage(
 
 export async function deletePanoramaFile(publicFilePath: string): Promise<void> {
 	await deleteObject(publicFilePath);
+}
+
+export function saveGalleryImage(file: File, baseName: string): Promise<SavedImage> {
+	return savePanoramaImage(file, 'gallery', baseName);
 }
 
 export async function uploadedFileExists(publicFilePath: string): Promise<boolean> {

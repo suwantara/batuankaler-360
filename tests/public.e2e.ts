@@ -486,4 +486,40 @@ test.describe('admin dashboard', () => {
 		await expect(page).toHaveURL(/\/admin\/areas$/);
 		await expect(page.getByText(`${title} Diperbarui`)).toHaveCount(0);
 	});
+
+	test('uploads, publishes, and deletes a gallery photo', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+
+		const title = `E2E Gallery ${Date.now()}`;
+
+		await loginAsAdmin(page);
+		await page.goto('/admin/gallery/new');
+
+		await page
+			.locator('input[name="image"]')
+			.setInputFiles('static/images/panoramas/scene-jaba-thumb.jpg');
+		await page.getByLabel('Status').selectOption('published');
+		await page.getByLabel('Judul foto', { exact: true }).fill(title);
+		await page.getByLabel('Keterangan', { exact: true }).fill('Foto untuk pengujian otomatis.');
+		await page.getByLabel('Judul foto (EN)').fill(title);
+		await page.getByLabel('Keterangan (EN)').fill('Gallery photo created by the test.');
+		await page.getByRole('button', { name: 'Simpan foto' }).click();
+
+		await expect(page).toHaveURL(/\/admin\/gallery\/[0-9a-f-]+/);
+		await expect(page.getByRole('status')).toContainText('Foto galeri berhasil disimpan.');
+
+		await page.goto('/id/galeri');
+		await expect(page.getByText(title).first()).toBeVisible();
+		await expect(page.getByRole('img', { name: title })).toBeVisible();
+
+		await page.goto('/admin/gallery');
+		await page.getByRole('link', { name: 'Edit' }).first().click();
+		await page.getByRole('button', { name: 'Hapus foto' }).click();
+		const galleryDialog = page.getByRole('dialog', { name: 'Hapus foto ini?' });
+		await expect(galleryDialog).toBeVisible();
+		await galleryDialog.getByRole('button', { name: 'Hapus', exact: true }).click();
+
+		await expect(page).toHaveURL(/\/admin\/gallery$/);
+		await expect(page.getByText(title)).toHaveCount(0);
+	});
 });
