@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount, tick } from 'svelte';
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 	import ContentWorkflow from '#lib/components/admin/ContentWorkflow.svelte';
@@ -9,6 +10,50 @@
 	import type { LayoutProps } from './$types';
 
 	let { data, children }: LayoutProps = $props();
+
+	let mobileNavOpen = $state(false);
+	let menuButton: HTMLButtonElement | undefined = $state();
+	let closeButton: HTMLButtonElement | undefined = $state();
+
+	function openMobileNav(): void {
+		mobileNavOpen = true;
+		void tick().then(() => closeButton?.focus());
+	}
+
+	function closeMobileNav(): void {
+		mobileNavOpen = false;
+		menuButton?.focus();
+	}
+
+	function handleKeydown(event: KeyboardEvent): void {
+		if (event.key === 'Escape' && mobileNavOpen) {
+			event.preventDefault();
+			closeMobileNav();
+		}
+	}
+
+	$effect(() => {
+		document.body.style.overflow = mobileNavOpen ? 'hidden' : '';
+
+		return () => {
+			document.body.style.overflow = '';
+		};
+	});
+
+	$effect(() => {
+		if (page.url.pathname) mobileNavOpen = false;
+	});
+
+	onMount(() => {
+		const desktop = window.matchMedia('(min-width: 64rem)');
+		const handleChange = () => {
+			if (desktop.matches) mobileNavOpen = false;
+		};
+
+		desktop.addEventListener('change', handleChange);
+
+		return () => desktop.removeEventListener('change', handleChange);
+	});
 
 	const isLogin = $derived(page.url.pathname === '/admin/login');
 	const navItems: Array<{ label: string; href: string; icon: IconName }> = [
@@ -61,32 +106,55 @@
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
+<svelte:window onkeydown={handleKeydown} />
+
 {#if isLogin}
 	<div class="admin-shell">
 		{@render children()}
 	</div>
 {:else}
 	<div class="admin-shell min-h-dvh bg-sand/30 lg:grid lg:grid-cols-[17rem_1fr]">
+		{#if mobileNavOpen}
+			<button
+				type="button"
+				class="fixed inset-0 z-40 bg-ink/60 backdrop-blur-sm lg:hidden"
+				aria-label="Tutup menu navigasi"
+				onclick={closeMobileNav}
+			></button>
+		{/if}
+
 		<aside
-			class="dark-surface flex flex-col lg:sticky lg:top-0 lg:h-dvh lg:max-h-dvh lg:self-start lg:overflow-hidden"
+			id="admin-sidebar"
+			class="dark-surface fixed inset-y-0 left-0 z-50 flex w-[17rem] max-w-[85vw] flex-col overflow-hidden shadow-2xl {mobileNavOpen
+				? 'max-lg:visible max-lg:translate-x-0'
+				: 'max-lg:invisible max-lg:-translate-x-full'} max-lg:transition-transform max-lg:duration-300 max-lg:ease-out lg:sticky lg:top-0 lg:z-auto lg:h-dvh lg:max-h-dvh lg:w-auto lg:max-w-none lg:translate-x-0 lg:self-start lg:shadow-none"
 		>
-			<div class="border-b border-ivory/10 px-5 py-5">
+			<div class="flex items-center justify-between gap-3 border-b border-ivory/10 px-5 py-5">
 				<a href={resolve('admin/dashboard')}>
 					<BrandLockup tone="light" tagline />
 					<span class="sr-only">Dashboard admin</span>
 				</a>
+				<button
+					bind:this={closeButton}
+					type="button"
+					onclick={closeMobileNav}
+					class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-ivory/15 text-ivory/65 transition-colors hover:border-gold-light/60 hover:text-ivory lg:hidden"
+					aria-label="Tutup menu"
+				>
+					<Icon name="close" class="h-4 w-4" />
+				</button>
 			</div>
 
 			<nav
-				class="flex flex-wrap gap-1 px-3 py-4 lg:min-h-0 lg:flex-1 lg:flex-col lg:overflow-y-auto"
+				class="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain px-3 py-4"
 				aria-label="Navigasi admin"
 			>
-				<p class="meta hidden px-3 pb-2 text-[0.58rem] text-ivory/55 lg:block">Panel</p>
+				<p class="meta px-3 pb-2 text-[0.58rem] text-ivory/55">Panel</p>
 				{#each navItems as item (item.href)}
 					<a
 						href={item.href}
 						aria-current={isActive(item.href) ? 'page' : undefined}
-						class="admin-nav-link shrink-0 whitespace-nowrap lg:shrink"
+						class="admin-nav-link shrink-0 whitespace-nowrap"
 					>
 						<Icon name={item.icon} class="h-4 w-4 shrink-0" />
 						{item.label}
@@ -138,11 +206,24 @@
 		<div class="min-w-0">
 			<header class="sticky top-0 z-30 border-b border-charcoal/10 bg-paper/90 backdrop-blur-md">
 				<div class="flex items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-10">
-					<div>
-						<p class="meta text-[0.55rem] text-muted">Panel pengelolaan</p>
-						<p class="mt-1 font-display text-lg leading-none text-heading">
-							{activeItem?.label ?? 'Dashboard'}
-						</p>
+					<div class="flex min-w-0 items-center gap-3">
+						<button
+							bind:this={menuButton}
+							type="button"
+							onclick={openMobileNav}
+							class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-charcoal/15 text-heading transition-colors hover:border-gold-dark hover:text-gold-dark lg:hidden"
+							aria-label="Buka menu"
+							aria-expanded={mobileNavOpen}
+							aria-controls="admin-sidebar"
+						>
+							<Icon name="menu" class="h-5 w-5" />
+						</button>
+						<div class="min-w-0">
+							<p class="meta text-[0.55rem] text-muted">Panel pengelolaan</p>
+							<p class="mt-1 font-display text-lg leading-none text-heading">
+								{activeItem?.label ?? 'Dashboard'}
+							</p>
+						</div>
 					</div>
 
 					<div class="flex items-center gap-2 sm:gap-3">

@@ -274,6 +274,27 @@ test.describe('admin dashboard', () => {
 		await expect(page.getByRole('button', { name: 'Aktifkan mode terang' })).toBeVisible();
 	});
 
+	test('opens and closes the admin sidebar on mobile', async ({ page }) => {
+		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
+
+		await page.setViewportSize({ width: 390, height: 844 });
+		await loginAsAdmin(page);
+
+		const menuButton = page.getByRole('button', { name: 'Buka menu' });
+		const sidebar = page.locator('#admin-sidebar');
+
+		await expect(menuButton).toBeVisible();
+		await expect(sidebar).toBeHidden();
+
+		await menuButton.click();
+		await expect(sidebar).toBeVisible();
+		await expect(sidebar.getByRole('link', { name: 'Dashboard', exact: true })).toBeVisible();
+
+		await sidebar.getByRole('link', { name: 'Scene', exact: true }).click();
+		await expect(page).toHaveURL(/\/admin\/scenes/);
+		await expect(sidebar).toBeHidden();
+	});
+
 	test('keeps page editor input while editing', async ({ page }) => {
 		test.skip(!adminEmail || !adminPassword, 'Admin credentials are not configured.');
 
