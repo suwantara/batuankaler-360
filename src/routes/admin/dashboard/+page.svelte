@@ -23,7 +23,7 @@
 </script>
 
 <svelte:head>
-	<title>Dashboard Admin — Pura Batuan Kaler 360</title>
+	<title>Dashboard Admin - Pura Batuan Kaler 360</title>
 </svelte:head>
 
 <div class="flex flex-col gap-8">
@@ -49,7 +49,7 @@
 			<div class="surface p-5">
 				<div class="flex items-start justify-between gap-4">
 					<p class="meta text-[0.58rem] text-muted">{stat.label}</p>
-					<Icon name={stat.icon} class="h-4 w-4 text-gold-dark/55" />
+					<Icon name={stat.icon} class="h-4 w-4 text-gold-dark/70" />
 				</div>
 				<p class="mt-6 font-display text-5xl leading-none text-heading">{stat.value}</p>
 				<div class="mt-5 h-px w-full bg-charcoal/10">
@@ -99,7 +99,7 @@
 									<span
 										class="flex h-full w-full items-center justify-center text-[0.55rem] tracking-wider text-charcoal/35 uppercase"
 									>
-										—
+										-
 									</span>
 								{/if}
 							</div>

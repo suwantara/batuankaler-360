@@ -107,7 +107,7 @@
 </script>
 
 <svelte:head>
-	<title>Upload Panorama — Admin Pura Batuan Kaler 360</title>
+	<title>Upload Panorama | Admin Pura Batuan Kaler 360</title>
 </svelte:head>
 
 <div class="flex flex-col gap-6">
@@ -115,7 +115,7 @@
 		<nav class="flex items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
 			<a href={resolve('admin/media')} class="transition-colors hover:text-heading">Media</a>
 			<Icon name="chevron-right" class="h-3 w-3" />
-			<span class="text-heading/60">Upload</span>
+			<span class="text-heading/75">Upload</span>
 		</nav>
 		<div>
 			<p class="eyebrow">Media baru</p>
@@ -144,7 +144,7 @@
 			onsubmit={handleSubmit}
 		>
 			<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-				<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
+				<span class="font-display text-lg leading-none text-gold-dark">01</span>
 				<h2 class="title-sm text-heading">Berkas panorama</h2>
 			</div>
 

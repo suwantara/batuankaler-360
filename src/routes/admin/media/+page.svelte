@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>Media Panorama — Admin Pura Batuan Kaler 360</title>
+	<title>Media Panorama | Admin Pura Batuan Kaler 360</title>
 </svelte:head>
 
 <div class="flex flex-col gap-6">
@@ -45,7 +45,7 @@
 	<div class="grid gap-6 xl:grid-cols-[1.35fr_0.65fr]">
 		<section class="surface p-5 sm:p-6">
 			<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-				<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
+				<span class="font-display text-lg leading-none text-gold-dark">01</span>
 				<h2 class="title-sm text-heading">Tambah metadata aset</h2>
 			</div>
 

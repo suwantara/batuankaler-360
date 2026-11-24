@@ -41,6 +41,14 @@ Implementasi menggunakan komposisi **60-30-10**:
 
 Token Tailwind didefinisikan di `src/routes/layout.css`.
 
+## SEO
+
+- `/robots.txt` disajikan dinamis, mengizinkan halaman publik, menutup `/admin`, dan merujuk ke `/sitemap.xml`.
+- `/sitemap.xml` disajikan dinamis dan memuat halaman publik, scene yang sudah published, serta area yang sudah published dalam dua locale.
+- Canonical, `hreflang` (`id`, `en`, `x-default`), Open Graph, Twitter Card, dan JSON-LD dirender oleh `src/lib/components/public/SeoHead.svelte`.
+- `ORIGIN` wajib diisi dengan origin publik. Nilai ini dipakai untuk canonical, sitemap, dan metadata sosial.
+- Respons `/admin/**` mengirim `X-Robots-Tag: noindex, nofollow` di samping meta `robots` di layout admin.
+
 ## Menjalankan Proyek
 
 Prasyarat: Node.js, pnpm, dan PostgreSQL yang berjalan.

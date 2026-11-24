@@ -49,7 +49,7 @@
 
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
+			<span class="font-display text-lg leading-none text-gold-dark">01</span>
 			<div>
 				<h2 class="title-sm text-heading">Informasi area</h2>
 				<p class="field-help">Slug dipakai pada alamat halaman publik area.</p>
@@ -101,7 +101,7 @@
 
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
+			<span class="font-display text-lg leading-none text-gold-dark">02</span>
 			<div>
 				<h2 class="title-sm text-heading">Terjemahan</h2>
 				<p class="field-help">Bahasa Indonesia wajib untuk area yang ditayangkan.</p>

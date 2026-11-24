@@ -27,7 +27,7 @@
 </script>
 
 <svelte:head>
-	<title>{title} — Admin Pura Batuan Kaler 360</title>
+	<title>{title} | Admin Pura Batuan Kaler 360</title>
 </svelte:head>
 
 <div class="flex flex-col gap-6">
@@ -35,7 +35,7 @@
 		<nav class="flex flex-wrap items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
 			<a href={resolve('admin/pages')} class="transition-colors hover:text-heading">Halaman</a>
 			<Icon name="chevron-right" class="h-3 w-3" />
-			<span class="text-heading/60">{data.definition.label}</span>
+			<span class="text-heading/75">{data.definition.label}</span>
 		</nav>
 
 		<div class="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">

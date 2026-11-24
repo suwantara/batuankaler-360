@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>Masuk Admin — Pura Batuan Kaler 360</title>
+	<title>Masuk Admin | Pura Batuan Kaler 360</title>
 </svelte:head>
 
 <div class="relative grid min-h-dvh bg-paper lg:grid-cols-[1.04fr_0.96fr]">
@@ -30,7 +30,7 @@
 			class="absolute inset-0 bg-gradient-to-b from-navy-deep/80 via-navy-deep/60 to-navy-deep"
 		></div>
 
-		<a href={resolve('id')} class="relative z-10 w-fit">
+		<a href={resolve('id')} class="relative z-10 inline-flex min-h-11 w-fit items-center">
 			<BrandLockup tone="light" tagline />
 			<span class="sr-only">Kembali ke situs</span>
 		</a>
@@ -49,9 +49,9 @@
 		</div>
 	</section>
 
-	<section class="flex items-center justify-center px-5 py-12 sm:px-10 lg:px-12">
+	<main class="flex items-center justify-center px-5 py-12 sm:px-10 lg:px-12">
 		<div class="w-full max-w-md">
-			<a href={resolve('id')} class="w-fit lg:hidden">
+			<a href={resolve('id')} class="inline-flex min-h-11 w-fit items-center lg:hidden">
 				<BrandLockup tagline />
 				<span class="sr-only">Kembali ke situs</span>
 			</a>
@@ -114,7 +114,7 @@
 			<div class="mt-8 border-t border-charcoal/10 pt-5">
 				<a
 					href={resolve('id')}
-					class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] text-heading uppercase transition-colors hover:text-gold-dark"
+					class="inline-flex min-h-11 items-center gap-2 text-xs font-semibold tracking-[0.1em] text-heading uppercase transition-colors hover:text-gold-dark"
 				>
 					<Icon name="arrow-left" class="h-3.5 w-3.5" />
 					Kembali ke situs publik
@@ -126,5 +126,5 @@
 				{/if}
 			</div>
 		</div>
-	</section>
+	</main>
 </div>

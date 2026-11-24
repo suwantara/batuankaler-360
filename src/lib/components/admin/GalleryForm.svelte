@@ -97,7 +97,7 @@
 
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
+			<span class="font-display text-lg leading-none text-gold-dark">01</span>
 			<div>
 				<h2 class="title-sm text-heading">Foto galeri</h2>
 				<p class="field-help">File disimpan di storage server yang dikonfigurasi.</p>
@@ -175,7 +175,7 @@
 
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
+			<span class="font-display text-lg leading-none text-gold-dark">02</span>
 			<div>
 				<h2 class="title-sm text-heading">Judul &amp; keterangan</h2>
 				<p class="field-help">Bahasa Indonesia wajib untuk foto yang ditayangkan.</p>

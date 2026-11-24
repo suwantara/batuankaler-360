@@ -102,7 +102,7 @@
 </script>
 
 <svelte:head>
-	<title>Admin — Pura Batuan Kaler 360</title>
+	<title>Admin | Pura Batuan Kaler 360</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
@@ -117,7 +117,7 @@
 		{#if mobileNavOpen}
 			<button
 				type="button"
-				class="fixed inset-0 z-40 bg-ink/60 backdrop-blur-sm lg:hidden"
+				class="fixed inset-0 z-40 bg-ink/60 lg:hidden"
 				aria-label="Tutup menu navigasi"
 				onclick={closeMobileNav}
 			></button>
@@ -204,7 +204,7 @@
 		</aside>
 
 		<div class="min-w-0">
-			<header class="sticky top-0 z-30 border-b border-charcoal/10 bg-paper/90 backdrop-blur-md">
+			<header class="sticky top-0 z-30 border-b border-charcoal/10 bg-paper">
 				<div class="flex items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-10">
 					<div class="flex min-w-0 items-center gap-3">
 						<button
@@ -240,7 +240,7 @@
 			</header>
 
 			<div
-				class="sticky top-[3.75rem] z-20 border-b border-charcoal/10 bg-paper/95 px-4 py-2 backdrop-blur-md sm:px-6 lg:px-10"
+				class="sticky top-[3.75rem] z-20 border-b border-charcoal/10 bg-paper px-4 py-2 sm:px-6 lg:px-10"
 			>
 				<div class="mx-auto max-w-6xl">
 					<ContentWorkflow />

@@ -2,7 +2,7 @@ import type { Locale } from './locales';
 
 const id = {
 	meta: {
-		title: 'Pura Batuan Kaler 360 — Virtual Tour Kawasan Pura',
+		title: 'Pura Batuan Kaler 360 | Virtual Tour Kawasan Pura',
 		description:
 			'Jelajahi kawasan Pura Batuan Kaler melalui panorama 360 derajat, informasi area, sejarah, dan panduan kunjungan.'
 	},
@@ -334,7 +334,7 @@ export type SiteDictionary = typeof id;
 
 const en: SiteDictionary = {
 	meta: {
-		title: 'Pura Batuan Kaler 360 — Virtual Tour of the Temple Grounds',
+		title: 'Pura Batuan Kaler 360 | Virtual Tour of the Temple Grounds',
 		description:
 			'Explore the grounds of Pura Batuan Kaler through 360-degree panoramas, area information, history, and visit guidance.'
 	},

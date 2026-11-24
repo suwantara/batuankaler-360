@@ -2,11 +2,13 @@
 	import GuideCard from '#lib/components/public/GuideCard.svelte';
 	import LocationMap from '#lib/components/public/LocationMap.svelte';
 	import PageIntro from '#lib/components/public/PageIntro.svelte';
+	import SeoHead from '#lib/components/public/SeoHead.svelte';
 	import SitePageArticle from '#lib/components/public/SitePageArticle.svelte';
 	import VisitInformation from '#lib/components/public/VisitInformation.svelte';
 	import ArrowLink from '#lib/components/ui/ArrowLink.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
 	import { localeHref } from '#lib/i18n/index.ts';
+	import { SITE_NAME } from '#lib/seo.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -16,10 +18,18 @@
 	const page = $derived(data.page);
 </script>
 
-<svelte:head>
-	<title>{page?.title || pageContent.title} — {content.meta.title}</title>
-	<meta name="description" content={page?.description || pageContent.description} />
-</svelte:head>
+<SeoHead
+	lang={data.lang}
+	origin={data.origin}
+	title={`${page?.title || pageContent.title} | ${SITE_NAME}`}
+	description={page?.description || pageContent.description}
+	path="/panduan"
+	type="article"
+	breadcrumbs={[
+		{ name: content.nav[0]?.label ?? 'Beranda', path: '/' },
+		{ name: content.nav[5]?.label ?? 'Panduan', path: '/panduan' }
+	]}
+/>
 
 <PageIntro
 	eyebrow={page?.eyebrow || pageContent.eyebrow}

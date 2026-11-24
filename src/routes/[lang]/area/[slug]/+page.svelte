@@ -1,8 +1,10 @@
 <script lang="ts">
 	import PageIntro from '#lib/components/public/PageIntro.svelte';
+	import SeoHead from '#lib/components/public/SeoHead.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
 	import { localeHref } from '#lib/i18n/index.ts';
+	import { SITE_NAME } from '#lib/seo.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -12,10 +14,20 @@
 	const area = $derived(data.area);
 </script>
 
-<svelte:head>
-	<title>{area.title} — {content.meta.title}</title>
-	<meta name="description" content={area.description} />
-</svelte:head>
+<SeoHead
+	lang={data.lang}
+	origin={data.origin}
+	title={`${area.title} | ${SITE_NAME}`}
+	description={area.description}
+	path={`/area/${area.slug}`}
+	image={area.scenes[0]?.thumbnail}
+	type="article"
+	breadcrumbs={[
+		{ name: content.nav[0]?.label ?? 'Beranda', path: '/' },
+		{ name: content.nav[3]?.label ?? 'Area', path: '/area' },
+		{ name: area.title, path: `/area/${area.slug}` }
+	]}
+/>
 
 <PageIntro eyebrow={pageContent.eyebrow} title={area.title} description={area.description} />
 

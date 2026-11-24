@@ -119,7 +119,7 @@
 
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
+			<span class="font-display text-lg leading-none text-gold-dark">01</span>
 			<h3 class="title-sm text-heading">Posisi &amp; tujuan</h3>
 		</div>
 
@@ -135,7 +135,7 @@
 			<label class="block">
 				<span class="field-label">Scene tujuan</span>
 				<select name="targetSceneId" class="field-input" bind:value={form.targetSceneId}>
-					<option value="">— Tidak ada —</option>
+					<option value="">(Tidak ada)</option>
 					{#each scenes as scene (scene.id)}
 						<option value={scene.id}>{sceneLabel(scene)}</option>
 					{/each}
@@ -244,7 +244,7 @@
 
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
+			<span class="font-display text-lg leading-none text-gold-dark">02</span>
 			<h3 class="title-sm text-heading">Konten hotspot</h3>
 		</div>
 

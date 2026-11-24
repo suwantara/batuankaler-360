@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-	<title>Scene — Admin Pura Batuan Kaler 360</title>
+	<title>Scene | Admin Pura Batuan Kaler 360</title>
 </svelte:head>
 
 <div class="flex flex-col gap-6">

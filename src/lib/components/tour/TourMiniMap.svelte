@@ -131,9 +131,9 @@
 			aria-pressed={isActive}
 			aria-label={title(node.scene)}
 			title={title(node.scene)}
-			class="absolute flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border font-display text-[0.65rem] transition-colors {isActive
+			class="absolute flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border font-display text-[0.65rem] transition-colors {isActive
 				? 'border-gold bg-gold text-ink'
-				: 'border-ivory/25 bg-navy-deep text-ivory/65 hover:border-gold-light/60 hover:text-ivory'}"
+				: 'border-ivory/40 bg-navy-deep text-ivory/65 hover:border-gold-light/60 hover:text-ivory'}"
 			style={`left:${node.x}%;top:${node.y}%`}
 		>
 			{number(node.index)}
@@ -150,8 +150,8 @@
 				type="button"
 				onclick={() => onNavigate(node.scene.id)}
 				aria-pressed={node.scene.id === activeSceneId}
-				class="flex w-full items-center gap-2 py-1 text-left text-xs transition-colors {node.scene
-					.id === activeSceneId
+				class="flex min-h-11 w-full items-center gap-2 py-2 text-left text-xs transition-colors {node
+					.scene.id === activeSceneId
 					? 'text-gold-light'
 					: 'text-ivory/55 hover:text-ivory'}"
 			>

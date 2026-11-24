@@ -51,7 +51,7 @@
 					{#each sections as section (section.id)}
 						<a
 							href={`#${section.anchor}`}
-							class="text-sm leading-snug text-body transition-colors hover:text-gold-dark"
+							class="inline-flex min-h-11 items-center text-sm leading-snug text-body transition-colors hover:text-gold-dark"
 						>
 							{section.heading}
 						</a>

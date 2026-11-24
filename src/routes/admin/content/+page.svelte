@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-	<title>Informasi Kunjungan — Admin Pura Batuan Kaler 360</title>
+	<title>Informasi Kunjungan | Admin Pura Batuan Kaler 360</title>
 </svelte:head>
 
 <div class="flex flex-col gap-6">

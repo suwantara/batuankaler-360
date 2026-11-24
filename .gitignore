@@ -39,6 +39,7 @@ test-results
 
 # Local performance-testing artifacts (not part of the web app)
 /performance-testing/
+/performance-testing.zip
 
 # Documentation is kept locally, not tracked in the repository
 /docs/

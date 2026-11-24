@@ -81,9 +81,9 @@
 
 <svelte:window onkeydown={handleWindowKeydown} />
 
-<header class="sticky top-0 z-50 border-b border-charcoal/10 bg-paper/90 backdrop-blur-xl">
-	<div class="container-page flex h-[4.75rem] items-center justify-between gap-6">
-		<a href={href('')} class="shrink-0">
+<header class="sticky top-0 z-50 border-b border-charcoal/10 bg-paper">
+	<div class="container-page flex h-[4.75rem] items-center justify-between gap-3 sm:gap-6">
+		<a href={href('')} class="inline-flex min-h-11 shrink-0 items-center">
 			<BrandLockup />
 		</a>
 
@@ -102,8 +102,8 @@
 		<div class="flex items-center gap-2 sm:gap-3">
 			<a
 				href={switchHref}
-				class="inline-flex items-center gap-1.5 rounded-xs px-1 py-2 text-[0.6875rem] font-semibold tracking-[0.16em] text-navy/75 uppercase transition-colors hover:text-gold-dark"
-				aria-label={`${targetLocale.toUpperCase()} — ${content.common.language}`}
+				class="hidden min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-xs px-2 py-2 text-[0.6875rem] font-semibold tracking-[0.16em] text-navy/75 uppercase transition-colors hover:text-gold-dark sm:inline-flex"
+				aria-label={`${targetLocale.toUpperCase()}, ${content.common.language}`}
 				title={content.common.language}
 			>
 				<Icon name="globe" class="h-4 w-4" />
@@ -144,7 +144,7 @@
 		<div
 			class="container-page flex h-[4.75rem] shrink-0 items-center justify-between border-b border-ivory/10"
 		>
-			<a href={href('')} onclick={() => closeMenu()}>
+			<a href={href('')} onclick={() => closeMenu()} class="inline-flex min-h-11 items-center">
 				<BrandLockup tone="light" />
 			</a>
 			<button
@@ -162,29 +162,22 @@
 			class="container-page flex flex-1 flex-col justify-center py-10"
 			aria-label={content.common.navigation}
 		>
-			{#each content.nav as item, index (item.path)}
+			{#each content.nav as item (item.path)}
 				<a
 					href={href(item.path)}
 					onclick={() => closeMenu()}
 					aria-current={isActive(item.path) ? 'page' : undefined}
-					class="group flex items-center justify-between border-b border-ivory/10 py-4 first:border-t sm:py-5"
+					class="group flex min-h-14 items-center border-b border-ivory/10 py-4 first:border-t sm:py-5"
 				>
-					<span class="flex items-baseline gap-4 sm:gap-6">
-						<span class="meta text-gold-light/60">0{index + 1}</span>
-						<span
-							class="font-display text-3xl leading-none tracking-tight transition-colors group-hover:text-gold-light sm:text-4xl {isActive(
-								item.path
-							)
-								? 'text-gold-light'
-								: 'text-ivory'}"
-						>
-							{item.label}
-						</span>
+					<span
+						class="font-display text-3xl leading-none tracking-tight transition-colors group-hover:text-gold-light sm:text-4xl {isActive(
+							item.path
+						)
+							? 'text-gold-light'
+							: 'text-ivory'}"
+					>
+						{item.label}
 					</span>
-					<Icon
-						name="arrow-up-right"
-						class="h-5 w-5 text-ivory/30 transition-colors group-hover:text-gold-light"
-					/>
 				</a>
 			{/each}
 		</nav>
@@ -194,7 +187,7 @@
 				<a
 					href={switchHref}
 					onclick={() => closeMenu()}
-					class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.14em] text-ivory/60 uppercase transition-colors hover:text-gold-light"
+					class="inline-flex min-h-11 items-center gap-2 text-xs font-semibold tracking-[0.14em] text-ivory/60 uppercase transition-colors hover:text-gold-light"
 				>
 					<Icon name="globe" class="h-4 w-4" />
 					{targetLocale === 'en' ? 'English' : 'Bahasa Indonesia'}

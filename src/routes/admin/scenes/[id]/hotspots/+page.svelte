@@ -56,7 +56,7 @@
 </script>
 
 <svelte:head>
-	<title>Hotspot {sceneTitle(data.scene)} — Admin Pura Batuan Kaler 360</title>
+	<title>Hotspot {sceneTitle(data.scene)} | Admin Pura Batuan Kaler 360</title>
 </svelte:head>
 
 <div class="flex flex-col gap-6">
@@ -69,7 +69,7 @@
 				class="transition-colors hover:text-heading">{sceneTitle(data.scene)}</a
 			>
 			<Icon name="chevron-right" class="h-3 w-3" />
-			<span class="text-heading/60">Hotspot</span>
+			<span class="text-heading/75">Hotspot</span>
 		</nav>
 
 		<div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">

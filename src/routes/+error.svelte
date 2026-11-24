@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>{labels.eyebrow} {page.status} — Pura Batuan Kaler 360</title>
+	<title>{labels.eyebrow} {page.status} | Pura Batuan Kaler 360</title>
 	<meta name="robots" content="noindex" />
 </svelte:head>
 

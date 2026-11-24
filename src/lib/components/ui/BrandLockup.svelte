@@ -9,7 +9,7 @@
 
 	const nameClass = $derived(tone === 'light' ? 'text-ivory' : 'text-heading');
 	const accentClass = $derived(tone === 'light' ? 'text-gold-light' : 'text-gold-dark');
-	const taglineClass = $derived(tone === 'light' ? 'text-ivory/60' : 'text-heading/55');
+	const taglineClass = $derived(tone === 'light' ? 'text-ivory/60' : 'text-heading/75');
 </script>
 
 <span class="flex items-center gap-3 {className}">

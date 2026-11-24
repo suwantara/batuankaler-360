@@ -20,11 +20,11 @@
 		tone === 'dark'
 			? {
 					row: 'border-ivory/12 hover:bg-ivory/[0.03]',
-					number: 'text-gold-light/50',
+					number: 'text-gold-light/60',
 					title: 'text-ivory group-hover:text-gold-light',
 					body: 'text-ivory/55',
 					arrow:
-						'border-ivory/20 text-ivory/50 group-hover:border-gold-light/60 group-hover:text-gold-light'
+						'border-ivory/20 text-ivory/55 group-hover:border-gold-light/60 group-hover:text-gold-light'
 				}
 			: {
 					row: 'border-charcoal/12 hover:bg-navy/[0.025]',
@@ -32,7 +32,7 @@
 					title: 'text-navy group-hover:text-gold-dark',
 					body: 'text-body',
 					arrow:
-						'border-navy/15 text-navy/45 group-hover:border-gold-dark/50 group-hover:text-gold-dark'
+						'border-navy/15 text-navy/70 group-hover:border-gold-dark/50 group-hover:text-gold-dark'
 				}
 	);
 </script>

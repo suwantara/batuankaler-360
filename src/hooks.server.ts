@@ -6,6 +6,10 @@ import { svelteKitHandler } from 'better-auth/svelte-kit';
 
 const SESSION_COOKIES = ['better-auth.session_token', '__Secure-better-auth.session_token'];
 
+function documentLanguage(path: string): 'id' | 'en' {
+	return path === '/en' || path.startsWith('/en/') ? 'en' : 'id';
+}
+
 function applySecurityHeaders(response: Response, url: URL): Response {
 	const headers = response.headers;
 
@@ -17,6 +21,10 @@ function applySecurityHeaders(response: Response, url: URL): Response {
 
 	if (url.protocol === 'https:') {
 		headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+	}
+
+	if (url.pathname === '/admin' || url.pathname.startsWith('/admin/')) {
+		headers.set('X-Robots-Tag', 'noindex, nofollow');
 	}
 
 	return response;
@@ -47,7 +55,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	return applySecurityHeaders(
-		await svelteKitHandler({ event, resolve, auth, building }),
+		await svelteKitHandler({
+			event,
+			resolve: (event) =>
+				resolve(event, {
+					transformPageChunk: ({ html }) =>
+						html.replace('%sveltekit.html.lang%', documentLanguage(path))
+				}),
+			auth,
+			building
+		}),
 		event.url
 	);
 };

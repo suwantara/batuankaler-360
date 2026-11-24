@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-	<title>Tambah Scene — Admin Pura Batuan Kaler 360</title>
+	<title>Tambah Scene | Admin Pura Batuan Kaler 360</title>
 </svelte:head>
 
 <div class="flex flex-col gap-6">
@@ -18,7 +18,7 @@
 		<nav class="flex items-center gap-2 text-xs text-muted" aria-label="Breadcrumb">
 			<a href={resolve('admin/scenes')} class="transition-colors hover:text-heading">Scene</a>
 			<Icon name="chevron-right" class="h-3 w-3" />
-			<span class="text-heading/60">Tambah</span>
+			<span class="text-heading/75">Tambah</span>
 		</nav>
 		<div>
 			<p class="eyebrow">Scene baru</p>

@@ -15,7 +15,7 @@
 </script>
 
 <svelte:head>
-	<title>Edit Area — Admin Pura Batuan Kaler 360</title>
+	<title>Edit Area | Admin Pura Batuan Kaler 360</title>
 </svelte:head>
 
 <div class="flex flex-col gap-6">

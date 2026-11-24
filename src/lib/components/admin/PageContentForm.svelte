@@ -135,7 +135,7 @@
 
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
+			<span class="font-display text-lg leading-none text-gold-dark">01</span>
 			<h2 class="title-sm text-heading">Publikasi &amp; metadata</h2>
 		</div>
 
@@ -228,7 +228,7 @@
 
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
+			<span class="font-display text-lg leading-none text-gold-dark">02</span>
 			<div>
 				<h2 class="title-sm text-heading">{sectionTitle}</h2>
 				<p class="field-help">{sectionDescription}</p>

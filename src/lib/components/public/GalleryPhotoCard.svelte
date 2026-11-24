@@ -24,7 +24,7 @@
 			class="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.03]"
 		/>
 		<span
-			class="absolute top-4 left-4 flex h-9 w-9 items-center justify-center border border-ivory/35 bg-ink/35 font-display text-sm text-ivory backdrop-blur-sm"
+			class="absolute top-4 left-4 flex h-9 w-9 items-center justify-center border border-ivory/35 bg-navy-deep font-display text-sm text-ivory"
 		>
 			{String(index + 1).padStart(2, '0')}
 		</span>

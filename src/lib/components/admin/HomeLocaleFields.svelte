@@ -21,7 +21,7 @@
 			class="group flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden"
 		>
 			<div class="flex items-baseline gap-3">
-				<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
+				<span class="font-display text-lg leading-none text-gold-dark">01</span>
 				<h3 class="title-sm text-heading">Hero</h3>
 			</div>
 			<Icon
@@ -98,7 +98,7 @@
 			class="group flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden"
 		>
 			<div class="flex items-baseline gap-3">
-				<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
+				<span class="font-display text-lg leading-none text-gold-dark">02</span>
 				<h3 class="title-sm text-heading">Pengenalan</h3>
 			</div>
 			<Icon
@@ -134,12 +134,12 @@
 						<div class="rounded-md border border-heading/10 bg-ivory p-3">
 							<VisitField
 								name={`${locale}-intro-point-${index}-title`}
-								label={`Poin ${index + 1} — judul (${tag})`}
+								label={`Poin ${index + 1}: judul (${tag})`}
 								bind:value={point.title}
 							/>
 							<VisitField
 								name={`${locale}-intro-point-${index}-body`}
-								label={`Poin ${index + 1} — isi (${tag})`}
+								label={`Poin ${index + 1}: isi (${tag})`}
 								bind:value={point.body}
 								multiline
 								rows={3}
@@ -156,7 +156,7 @@
 			class="group flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden"
 		>
 			<div class="flex items-baseline gap-3">
-				<span class="font-display text-lg leading-none text-gold-dark/55">03</span>
+				<span class="font-display text-lg leading-none text-gold-dark">03</span>
 				<h3 class="title-sm text-heading">Virtual tour</h3>
 			</div>
 			<Icon
@@ -197,7 +197,7 @@
 			class="group flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden"
 		>
 			<div class="flex items-baseline gap-3">
-				<span class="font-display text-lg leading-none text-gold-dark/55">04</span>
+				<span class="font-display text-lg leading-none text-gold-dark">04</span>
 				<h3 class="title-sm text-heading">Sejarah singkat</h3>
 			</div>
 			<Icon
@@ -243,7 +243,7 @@
 			class="group flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden"
 		>
 			<div class="flex items-baseline gap-3">
-				<span class="font-display text-lg leading-none text-gold-dark/55">05</span>
+				<span class="font-display text-lg leading-none text-gold-dark">05</span>
 				<h3 class="title-sm text-heading">Area</h3>
 			</div>
 			<Icon
@@ -301,7 +301,7 @@
 			class="group flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden"
 		>
 			<div class="flex items-baseline gap-3">
-				<span class="font-display text-lg leading-none text-gold-dark/55">06</span>
+				<span class="font-display text-lg leading-none text-gold-dark">06</span>
 				<h3 class="title-sm text-heading">Galeri</h3>
 			</div>
 			<Icon
@@ -342,12 +342,12 @@
 						<div class="rounded-md border border-heading/10 bg-ivory p-3">
 							<VisitField
 								name={`${locale}-gallery-${index}-title`}
-								label={`Item ${index + 1} — judul (${tag})`}
+								label={`Item ${index + 1}: judul (${tag})`}
 								bind:value={item.title}
 							/>
 							<VisitField
 								name={`${locale}-gallery-${index}-caption`}
-								label={`Item ${index + 1} — keterangan (${tag})`}
+								label={`Item ${index + 1}: keterangan (${tag})`}
 								bind:value={item.caption}
 								multiline
 								rows={2}
@@ -364,7 +364,7 @@
 			class="group flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden"
 		>
 			<div class="flex items-baseline gap-3">
-				<span class="font-display text-lg leading-none text-gold-dark/55">07</span>
+				<span class="font-display text-lg leading-none text-gold-dark">07</span>
 				<h3 class="title-sm text-heading">Panduan</h3>
 			</div>
 			<Icon
@@ -400,12 +400,12 @@
 						<div class="rounded-md border border-heading/10 bg-ivory p-3">
 							<VisitField
 								name={`${locale}-guide-${index}-title`}
-								label={`Poin ${index + 1} — judul (${tag})`}
+								label={`Poin ${index + 1}: judul (${tag})`}
 								bind:value={item.title}
 							/>
 							<VisitField
 								name={`${locale}-guide-${index}-body`}
-								label={`Poin ${index + 1} — isi (${tag})`}
+								label={`Poin ${index + 1}: isi (${tag})`}
 								bind:value={item.body}
 								multiline
 								rows={3}

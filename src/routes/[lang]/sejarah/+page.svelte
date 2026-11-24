@@ -1,8 +1,10 @@
 <script lang="ts">
 	import PageIntro from '#lib/components/public/PageIntro.svelte';
+	import SeoHead from '#lib/components/public/SeoHead.svelte';
 	import SitePageArticle from '#lib/components/public/SitePageArticle.svelte';
 	import Ornament from '#lib/components/ui/Ornament.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
+	import { SITE_NAME } from '#lib/seo.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -12,10 +14,18 @@
 	const page = $derived(data.page);
 </script>
 
-<svelte:head>
-	<title>{page?.title || pageContent.title} — {content.meta.title}</title>
-	<meta name="description" content={page?.description || pageContent.description} />
-</svelte:head>
+<SeoHead
+	lang={data.lang}
+	origin={data.origin}
+	title={`${page?.title || pageContent.title} | ${SITE_NAME}`}
+	description={page?.description || pageContent.description}
+	path="/sejarah"
+	type="article"
+	breadcrumbs={[
+		{ name: content.nav[0]?.label ?? 'Beranda', path: '/' },
+		{ name: content.nav[2]?.label ?? 'Sejarah', path: '/sejarah' }
+	]}
+/>
 
 <PageIntro
 	eyebrow={page?.eyebrow || pageContent.eyebrow}

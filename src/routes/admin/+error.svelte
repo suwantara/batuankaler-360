@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-	<title>Kesalahan {page.status} — Admin Pura Batuan Kaler 360</title>
+	<title>Kesalahan {page.status} | Admin Pura Batuan Kaler 360</title>
 	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 

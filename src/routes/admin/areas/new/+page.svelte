@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-	<title>Tambah Area — Admin Pura Batuan Kaler 360</title>
+	<title>Tambah Area | Admin Pura Batuan Kaler 360</title>
 </svelte:head>
 
 <div class="flex flex-col gap-6">

@@ -2,9 +2,11 @@
 	import AreaCard from '#lib/components/public/AreaCard.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
 	import PageIntro from '#lib/components/public/PageIntro.svelte';
+	import SeoHead from '#lib/components/public/SeoHead.svelte';
 	import SitePageIndex from '#lib/components/public/SitePageIndex.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
 	import { localeHref } from '#lib/i18n/index.ts';
+	import { SITE_NAME } from '#lib/seo.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -15,10 +17,17 @@
 	const hasFallback = $derived(data.areas.some((area) => area.fallbackUsed));
 </script>
 
-<svelte:head>
-	<title>{page?.title || pageContent.title} — {content.meta.title}</title>
-	<meta name="description" content={page?.description || pageContent.description} />
-</svelte:head>
+<SeoHead
+	lang={data.lang}
+	origin={data.origin}
+	title={`${page?.title || pageContent.title} | ${SITE_NAME}`}
+	description={page?.description || pageContent.description}
+	path="/area"
+	breadcrumbs={[
+		{ name: content.nav[0]?.label ?? 'Beranda', path: '/' },
+		{ name: content.nav[3]?.label ?? 'Area', path: '/area' }
+	]}
+/>
 
 <PageIntro
 	eyebrow={page?.eyebrow || pageContent.eyebrow}

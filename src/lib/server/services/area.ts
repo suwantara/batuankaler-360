@@ -253,6 +253,16 @@ export async function getPublishedAreas(locale: Locale): Promise<AreaListItem[]>
 		.filter((item) => item.title !== '');
 }
 
+export async function listPublishedAreaSitemapEntries(): Promise<
+	Array<{ slug: string; updatedAt: Date }>
+> {
+	return db
+		.select({ slug: area.slug, updatedAt: area.updatedAt })
+		.from(area)
+		.where(eq(area.status, 'published'))
+		.orderBy(asc(area.sortOrder), asc(area.slug));
+}
+
 function sceneTranslationFor(
 	locale: Locale,
 	translations: Array<{ locale: Locale; title: string; description: string }>

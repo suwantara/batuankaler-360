@@ -126,3 +126,13 @@ export async function getPublishedSceneBySlug(slug: string): Promise<TourScene |
 	const scenes = await getPublishedTourScenes();
 	return scenes.find((item) => item.slug === slug);
 }
+
+export async function listPublishedSceneSitemapEntries(): Promise<
+	Array<{ slug: string; updatedAt: Date }>
+> {
+	return db
+		.select({ slug: scene.slug, updatedAt: scene.updatedAt })
+		.from(scene)
+		.where(eq(scene.status, 'published'))
+		.orderBy(asc(scene.sortOrder), asc(scene.slug));
+}

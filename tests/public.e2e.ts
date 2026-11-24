@@ -51,6 +51,54 @@ test.describe('public website', () => {
 		expect(headers['permissions-policy']).toContain('camera=()');
 	});
 
+	test('serves SEO discovery files and bilingual metadata', async ({ page, request }) => {
+		const robots = await request.get('/robots.txt');
+		expect(robots.status()).toBe(200);
+		expect(robots.headers()['content-type']).toContain('text/plain');
+		const robotsText = await robots.text();
+		expect(robotsText).toContain('Sitemap: http://127.0.0.1:4173/sitemap.xml');
+		expect(robotsText).toContain('Disallow: /admin');
+
+		const sitemap = await request.get('/sitemap.xml');
+		expect(sitemap.status()).toBe(200);
+		expect(sitemap.headers()['content-type']).toContain('application/xml');
+		const sitemapText = await sitemap.text();
+		expect(sitemapText).toContain('<loc>http://127.0.0.1:4173/id/tour/jaba-pura</loc>');
+		expect(sitemapText).toContain('<loc>http://127.0.0.1:4173/en/tour/jaba-pura</loc>');
+		expect(sitemapText).toContain('<lastmod>');
+		expect(sitemapText).toContain('hreflang="x-default"');
+
+		await page.goto('/en/tour/jaba-pura');
+		await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+		await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+			'href',
+			'http://127.0.0.1:4173/en/tour/jaba-pura'
+		);
+		await expect(page.locator('link[rel="alternate"][hreflang="id"]')).toHaveAttribute(
+			'href',
+			'http://127.0.0.1:4173/id/tour/jaba-pura'
+		);
+		await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveAttribute(
+			'href',
+			'http://127.0.0.1:4173/en/tour/jaba-pura'
+		);
+		await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+			'content',
+			/^http:\/\/127\.0\.0\.1:4173\/.+\.(jpg|jpeg|png|webp|avif)$/
+		);
+
+		const jsonLd = await page.locator('script[type="application/ld+json"]').textContent();
+		expect(jsonLd).toContain('"@type":"WebPage"');
+		expect(jsonLd).toContain('"@type":"BreadcrumbList"');
+	});
+
+	test('marks admin routes as noindex', async ({ request }) => {
+		const response = await request.get('/admin/login');
+
+		expect(response.status()).toBe(200);
+		expect(response.headers()['x-robots-tag']).toBe('noindex, nofollow');
+	});
+
 	test('switches language from the header', async ({ page }) => {
 		await page.goto('/id');
 		await page.getByRole('link', { name: 'Ganti bahasa' }).click();

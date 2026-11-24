@@ -88,7 +88,7 @@
 
 	<section class="surface p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">00</span>
+			<span class="font-display text-lg leading-none text-gold-dark">00</span>
 			<h2 class="title-sm text-heading">Publikasi</h2>
 		</div>
 
@@ -158,7 +158,7 @@
 						<option value="">Ilustrasi default</option>
 						{#each assets as asset (asset.id)}
 							<option value={asset.id}>
-								{fileName(asset.originalPath)} · {asset.width}×{asset.height ?? '—'}
+								{fileName(asset.originalPath)} · {asset.width}×{asset.height ?? '-'}
 							</option>
 						{/each}
 					</select>
@@ -179,7 +179,7 @@
 						<option value="">Gambar default</option>
 						{#each assets as asset (asset.id)}
 							<option value={asset.id}>
-								{fileName(asset.originalPath)} · {asset.width}×{asset.height ?? '—'}
+								{fileName(asset.originalPath)} · {asset.width}×{asset.height ?? '-'}
 							</option>
 						{/each}
 					</select>

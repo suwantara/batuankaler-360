@@ -19,10 +19,7 @@
 </script>
 
 <footer class="dark-surface relative overflow-hidden">
-	<div
-		class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"
-		aria-hidden="true"
-	></div>
+	<div class="absolute inset-x-0 top-0 h-px bg-gold/30" aria-hidden="true"></div>
 
 	<section class="container-page grid gap-10 py-16 lg:grid-cols-[1fr_auto] lg:items-end lg:py-20">
 		<div class="max-w-2xl">
@@ -34,14 +31,13 @@
 		</div>
 		<a href={href('/tour')} class="btn btn--gold w-fit">
 			{content.actions.exploreTour}
-			<Icon name="arrow-up-right" class="h-4 w-4" />
 		</a>
 	</section>
 
 	<div class="border-t border-ivory/10">
 		<div class="container-page grid gap-12 py-14 lg:grid-cols-[1.4fr_0.8fr_1fr]">
 			<div>
-				<a href={href('')}>
+				<a href={href('')} class="inline-flex min-h-11 items-center">
 					<BrandLockup tone="light" tagline />
 				</a>
 				<p class="mt-7 max-w-md text-sm leading-relaxed text-ivory/55">
@@ -58,7 +54,7 @@
 					{#each content.nav as item (item.path)}
 						<a
 							href={href(item.path)}
-							class="group inline-flex w-fit items-center gap-2 py-1.5 text-sm text-ivory/60 transition-colors hover:text-ivory"
+							class="group inline-flex min-h-11 w-fit min-w-11 items-center gap-2 py-1.5 text-sm text-ivory/60 transition-colors hover:text-ivory"
 						>
 							<span
 								class="h-px w-0 bg-gold-light transition-all duration-200 group-hover:w-3"
@@ -76,7 +72,7 @@
 				<p class="mt-4 text-sm leading-relaxed text-ivory/55">{content.home.guide.body}</p>
 				<a
 					href={switchHref}
-					class="mt-6 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.14em] text-gold-light uppercase transition-colors hover:text-ivory"
+					class="mt-6 inline-flex min-h-11 items-center gap-2 text-xs font-semibold tracking-[0.14em] text-gold-light uppercase transition-colors hover:text-ivory"
 				>
 					<Icon name="globe" class="h-4 w-4" />
 					{targetLocale === 'en' ? 'English' : 'Bahasa Indonesia'}

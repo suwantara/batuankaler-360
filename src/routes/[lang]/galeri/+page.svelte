@@ -2,8 +2,10 @@
 	import GalleryCard from '#lib/components/public/GalleryCard.svelte';
 	import GalleryPhotoCard from '#lib/components/public/GalleryPhotoCard.svelte';
 	import PageIntro from '#lib/components/public/PageIntro.svelte';
+	import SeoHead from '#lib/components/public/SeoHead.svelte';
 	import SitePageGallery from '#lib/components/public/SitePageGallery.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
+	import { SITE_NAME } from '#lib/seo.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -15,10 +17,18 @@
 	const hasFallback = $derived(gallery.some((item) => item.fallbackUsed));
 </script>
 
-<svelte:head>
-	<title>{page?.title || pageContent.title} — {content.meta.title}</title>
-	<meta name="description" content={page?.description || pageContent.description} />
-</svelte:head>
+<SeoHead
+	lang={data.lang}
+	origin={data.origin}
+	title={`${page?.title || pageContent.title} | ${SITE_NAME}`}
+	description={page?.description || pageContent.description}
+	path="/galeri"
+	image={gallery[0]?.imagePath}
+	breadcrumbs={[
+		{ name: content.nav[0]?.label ?? 'Beranda', path: '/' },
+		{ name: content.nav[4]?.label ?? 'Galeri', path: '/galeri' }
+	]}
+/>
 
 <PageIntro
 	eyebrow={page?.eyebrow || pageContent.eyebrow}

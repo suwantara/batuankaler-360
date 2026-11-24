@@ -211,7 +211,7 @@
 
 	<section id="scene-info" class="surface scroll-mt-40 p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">01</span>
+			<span class="font-display text-lg leading-none text-gold-dark">01</span>
 			<h2 class="title-sm text-heading">Informasi scene</h2>
 		</div>
 
@@ -242,7 +242,7 @@
 			<label class="block">
 				<span class="field-label">Area</span>
 				<select name="areaId" class="field-input" bind:value={form.areaId}>
-					<option value="">— Tidak ada —</option>
+					<option value="">(Tidak ada)</option>
 					{#each areas as area (area.id)}
 						<option value={area.id}>{areaLabel(area)}</option>
 					{/each}
@@ -253,7 +253,7 @@
 			<label class="block">
 				<span class="field-label">Aset panorama</span>
 				<select name="panoramaAssetId" class="field-input" bind:value={form.panoramaAssetId}>
-					<option value="">— Belum dipilih —</option>
+					<option value="">(Belum dipilih)</option>
 					{#each assets as asset (asset.id)}
 						<option value={asset.id}>{assetLabel(asset)}</option>
 					{/each}
@@ -278,7 +278,7 @@
 
 	<section id="scene-view" class="surface scroll-mt-40 p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">02</span>
+			<span class="font-display text-lg leading-none text-gold-dark">02</span>
 			<h2 class="title-sm text-heading">Pandangan awal</h2>
 		</div>
 		<p class="field-help mt-3">Nilai dalam derajat. Konversi ke radian dilakukan saat disimpan.</p>
@@ -425,7 +425,7 @@
 
 	<section id="scene-translations" class="surface scroll-mt-40 p-5 sm:p-6">
 		<div class="flex items-baseline gap-3 border-b border-charcoal/10 pb-4">
-			<span class="font-display text-lg leading-none text-gold-dark/55">03</span>
+			<span class="font-display text-lg leading-none text-gold-dark">03</span>
 			<h2 class="title-sm text-heading">Terjemahan</h2>
 		</div>
 

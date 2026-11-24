@@ -128,7 +128,7 @@
 			<section class="surface surface--dark p-4" aria-label={panelLabels.sceneMapLabel}>
 				<div class="flex items-center justify-between gap-3 px-1">
 					<h2 class="meta text-[0.6rem] text-ivory/55">{panelLabels.sceneMap}</h2>
-					<span class="meta text-[0.58rem] text-gold-light/50">{scenes.length}</span>
+					<span class="meta text-[0.58rem] text-gold-light/65">{scenes.length}</span>
 				</div>
 				<TourMiniMap
 					{scenes}

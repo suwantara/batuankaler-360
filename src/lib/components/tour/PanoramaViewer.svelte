@@ -487,7 +487,7 @@
 		class="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-start justify-between p-4"
 	>
 		<span
-			class="inline-flex items-center gap-1.5 rounded-full border border-ivory/20 bg-charcoal/35 px-2.5 py-1 text-[0.6rem] font-semibold tracking-[0.18em] text-ivory/70 uppercase backdrop-blur"
+			class="inline-flex items-center gap-1.5 rounded-full border border-ivory/30 bg-navy-deep px-2.5 py-1 text-[0.6rem] font-semibold tracking-[0.18em] text-ivory/80 uppercase"
 		>
 			<span class="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true"></span>
 			360°

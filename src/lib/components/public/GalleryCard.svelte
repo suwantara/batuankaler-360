@@ -9,7 +9,7 @@
 	const variant = $derived(index % 3);
 	const plateClass = $derived(
 		variant === 1
-			? 'border-charcoal/12 bg-sand text-navy/55'
+			? 'border-charcoal/12 bg-sand text-navy'
 			: variant === 2
 				? 'border-ivory/15 bg-navy-deep text-gold/55'
 				: 'border-ivory/15 bg-navy text-gold-light/55'
@@ -21,12 +21,12 @@
 	<div class="relative aspect-[4/5] overflow-hidden border {plateClass}">
 		<div class="absolute inset-3 border {innerClass}"></div>
 
-		<span class="absolute top-5 left-5 font-display text-lg leading-none opacity-70">
+		<span class="absolute top-5 left-5 font-display text-lg leading-none">
 			{String(index + 1).padStart(2, '0')}
 		</span>
 
 		{#if pending}
-			<span class="meta absolute top-5 right-5 text-[0.58rem] opacity-65">{pending}</span>
+			<span class="meta absolute top-5 right-5 text-[0.58rem]">{pending}</span>
 		{/if}
 
 		<svg

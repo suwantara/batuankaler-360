@@ -3,6 +3,7 @@
 	import GalleryCard from '#lib/components/public/GalleryCard.svelte';
 	import GuideCard from '#lib/components/public/GuideCard.svelte';
 	import LocationMap from '#lib/components/public/LocationMap.svelte';
+	import SeoHead from '#lib/components/public/SeoHead.svelte';
 	import VisitInformation from '#lib/components/public/VisitInformation.svelte';
 	import ArrowLink from '#lib/components/ui/ArrowLink.svelte';
 	import Icon from '#lib/components/ui/Icon.svelte';
@@ -23,22 +24,26 @@
 	}
 </script>
 
-<svelte:head>
-	<title>{data.homeSeo?.title ?? content.meta.title}</title>
-	<meta name="description" content={data.homeSeo?.description ?? content.meta.description} />
-</svelte:head>
+<SeoHead
+	lang={data.lang}
+	origin={data.origin}
+	title={data.homeSeo?.title ?? content.meta.title}
+	description={data.homeSeo?.description ?? content.meta.description}
+	path="/"
+	image={data.homeMedia.heroImagePath}
+	breadcrumbs={[{ name: content.nav[0]?.label ?? 'Beranda', path: '/' }]}
+/>
 
 <!-- Hero -->
 <section class="dark-surface relative isolate overflow-hidden bg-navy-deep">
 	<img
 		src={data.homeMedia.heroBackgroundPath}
 		alt=""
+		fetchpriority="high"
+		decoding="async"
 		class="absolute inset-0 h-full w-full object-cover opacity-70"
 	/>
 	<div class="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy/25"></div>
-	<div
-		class="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_20%,rgba(242,222,168,0.16),transparent_55%)]"
-	></div>
 
 	<div
 		class="container-page relative grid min-h-[34rem] gap-12 py-16 sm:py-20 lg:min-h-[44rem] lg:grid-cols-[1.06fr_0.74fr] lg:items-center lg:py-24"
@@ -67,7 +72,9 @@
 				</a>
 			</div>
 
-			<dl class="mt-14 grid max-w-xl grid-cols-3 gap-4 border-t border-ivory/15 pt-5">
+			<dl
+				class="mt-14 grid max-w-xl grid-cols-1 gap-3 border-t border-ivory/15 pt-5 sm:grid-cols-3 sm:gap-4"
+			>
 				{#each hero.meta as item (item.label)}
 					<div>
 						<dt class="meta text-[0.6rem] text-ivory/55">{item.label}</dt>
@@ -90,8 +97,7 @@
 					class="absolute inset-0 bg-gradient-to-t from-navy-deep/90 via-transparent to-navy-deep/10"
 				></div>
 				<div class="absolute inset-x-0 bottom-0 p-6">
-					<span class="badge badge--gold">360°</span>
-					<p class="mt-3 text-xs tracking-[0.16em] text-ivory/70 uppercase">{hero.viewLabel}</p>
+					<p class="text-xs tracking-[0.16em] text-ivory/70 uppercase">{hero.viewLabel}</p>
 				</div>
 			</div>
 			<p class="mt-5 text-right text-[0.6rem] tracking-[0.18em] text-ivory/55 uppercase">
@@ -190,7 +196,7 @@
 				></div>
 
 				<span
-					class="absolute top-1/2 left-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/40 bg-ivory/10 text-ivory backdrop-blur-md transition group-hover:border-gold-light group-hover:bg-gold group-hover:text-ink"
+					class="absolute top-1/2 left-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-ivory/40 bg-navy-deep/85 text-ivory transition group-hover:border-gold-light group-hover:bg-gold group-hover:text-ink"
 				>
 					<Icon name="play" class="ml-0.5 h-5 w-5" />
 				</span>
