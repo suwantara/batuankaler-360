@@ -424,7 +424,7 @@
 			? 'h-full min-h-0'
 			: compact
 				? 'h-[22rem] min-h-[280px]'
-				: 'h-[58vh] min-h-[420px] sm:h-[66vh] xl:h-[70vh]'} {pickMode ? 'cursor-crosshair' : ''}"
+				: 'h-[58vh] min-h-[420px] sm:h-[66vh] xl:h-[76vh]'} {pickMode ? 'cursor-crosshair' : ''}"
 	></div>
 
 	{#if loading}

@@ -24,10 +24,26 @@ export function createHotspotElement({ label, type, onClick }: HotspotElementOpt
 	text.textContent = label;
 
 	button.append(icon, text);
+
+	let pulseTimer = 0;
+
 	button.addEventListener('click', (event) => {
 		event.preventDefault();
 		event.stopPropagation();
-		onClick();
+
+		if (!button.classList.contains('hotspot--active')) {
+			button.classList.add('hotspot--active');
+			window.clearTimeout(pulseTimer);
+			pulseTimer = window.setTimeout(() => button.classList.remove('hotspot--active'), 650);
+		}
+
+		// Navigasi antar scene diberi jeda singkat agar animasi klik terlihat
+		// sebelum crossfade panorama berjalan.
+		if (type === 'navigation') {
+			window.setTimeout(onClick, 340);
+		} else {
+			onClick();
+		}
 	});
 
 	root.append(button);

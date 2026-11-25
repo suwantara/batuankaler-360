@@ -28,9 +28,11 @@
 		360
 	</div>
 
-	<div class="container-page relative">
+	<div class="container-tour relative">
 		<TourExperience {lang} {scenes} {initialSceneId} />
+	</div>
 
+	<div class="container-page relative">
 		<div class="mt-10 grid border-y border-ivory/10 sm:grid-cols-3">
 			{#each pageContent.tips as tip, index (tip.title)}
 				<div

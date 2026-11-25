@@ -194,6 +194,14 @@
 		padding-inline: clamp(1.25rem, 4vw, 2.5rem);
 	}
 
+	/* Virtual tour: wider than container-page so the viewer fills desktop screens. */
+	.container-tour {
+		width: 100%;
+		max-width: 1920px;
+		margin-inline: auto;
+		padding-inline: clamp(1rem, 2vw, 2rem);
+	}
+
 	.section {
 		padding-block: clamp(4.5rem, 9vw, 8rem);
 	}
@@ -877,6 +885,44 @@
 		border-color: var(--color-gold-light);
 		background-color: var(--color-navy-deep);
 		color: var(--color-gold-light);
+	}
+
+	/* Klik hotspot: pop pada tombol + ripple ring, lalu crossfade scene. */
+	.hotspot--active {
+		animation: hotspot-pulse 420ms var(--ease-editorial);
+	}
+
+	.hotspot--active::after {
+		position: absolute;
+		inset: -6px;
+		border: 2px solid var(--color-gold-light);
+		border-radius: inherit;
+		content: '';
+		animation: hotspot-ripple 620ms ease-out forwards;
+		pointer-events: none;
+	}
+
+	@keyframes hotspot-pulse {
+		0%,
+		100% {
+			transform: translate(-50%, -50%) scale(1);
+		}
+
+		45% {
+			transform: translate(-50%, -50%) scale(1.16);
+		}
+	}
+
+	@keyframes hotspot-ripple {
+		0% {
+			opacity: 0.85;
+			transform: scale(1);
+		}
+
+		100% {
+			opacity: 0;
+			transform: scale(1.7);
+		}
 	}
 
 	.coordinate-pick-marker {
