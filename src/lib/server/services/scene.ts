@@ -1,7 +1,7 @@
 import { and, asc, count, eq, ne } from 'drizzle-orm';
 import { db } from '#lib/server/db/index.ts';
 import { area, hotspot, panoramaAsset, scene, sceneTranslation } from '#lib/server/db/schema.ts';
-import { ConflictError, NotFoundError, ValidationError } from '#lib/server/errors.ts';
+import { AppError, ConflictError, NotFoundError, ValidationError } from '#lib/server/errors.ts';
 import { uploadedFileExists } from '#lib/server/storage/index.ts';
 import { locales, type Locale } from '#lib/i18n/locales.ts';
 
@@ -288,6 +288,64 @@ export async function setSceneStatus(id: string, status: 'draft' | 'published') 
 	}
 
 	return updated;
+}
+
+export interface ScenePublishFailure {
+	id: string;
+	title: string;
+	errors: string[];
+}
+
+export interface SceneBulkPublishResult {
+	published: number;
+	alreadyPublished: number;
+	failed: ScenePublishFailure[];
+}
+
+export async function publishScenes(ids: string[]): Promise<SceneBulkPublishResult> {
+	const result: SceneBulkPublishResult = { published: 0, alreadyPublished: 0, failed: [] };
+
+	for (const id of [...new Set(ids)]) {
+		const existing = await getSceneForAdmin(id);
+
+		if (!existing) {
+			result.failed.push({ id, title: id, errors: ['Scene tidak ditemukan.'] });
+			continue;
+		}
+
+		const title =
+			existing.translations.find((item) => item.locale === 'id')?.title.trim() || existing.slug;
+
+		if (existing.status === 'published') {
+			result.alreadyPublished += 1;
+			continue;
+		}
+
+		try {
+			const errors = await validateSceneForPublish(id);
+
+			if (errors.length > 0) {
+				result.failed.push({ id, title, errors });
+				continue;
+			}
+
+			await db
+				.update(scene)
+				.set({ status: 'published', updatedAt: new Date() })
+				.where(eq(scene.id, id));
+
+			result.published += 1;
+		} catch (cause) {
+			if (cause instanceof AppError) {
+				result.failed.push({ id, title, errors: [cause.message] });
+				continue;
+			}
+
+			throw cause;
+		}
+	}
+
+	return result;
 }
 
 export async function deleteScene(id: string) {

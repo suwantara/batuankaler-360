@@ -67,6 +67,12 @@ export const emptySceneFormValues: SceneFormValues = {
 
 export const sceneStatusSchema = z.enum(['draft', 'published']);
 
+export const sceneBulkPublishSchema = z.object({
+	sceneIds: z.array(z.uuid()).min(1, 'Pilih minimal satu scene.')
+});
+
+export type SceneBulkPublishInput = z.infer<typeof sceneBulkPublishSchema>;
+
 export const hotspotFormSchema = z
 	.object({
 		sceneId: z.uuid(),
