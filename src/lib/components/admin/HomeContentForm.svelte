@@ -114,7 +114,7 @@
 						aria-pressed={activeLocale === 'id'}
 						class="rounded-full border px-4 py-2 text-xs font-semibold tracking-[0.08em] uppercase transition-colors {activeLocale ===
 						'id'
-							? 'border-navy bg-navy text-ivory'
+							? 'border-heading bg-heading text-paper'
 							: 'border-line/20 text-heading hover:border-gold-dark hover:text-gold-dark'}"
 					>
 						Bahasa Indonesia
@@ -125,7 +125,7 @@
 						aria-pressed={activeLocale === 'en'}
 						class="rounded-full border px-4 py-2 text-xs font-semibold tracking-[0.08em] uppercase transition-colors {activeLocale ===
 						'en'
-							? 'border-navy bg-navy text-ivory'
+							? 'border-heading bg-heading text-paper'
 							: 'border-line/20 text-heading hover:border-gold-dark hover:text-gold-dark'}"
 					>
 						English

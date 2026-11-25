@@ -997,6 +997,11 @@ html[data-admin-theme='dark'] .admin-shell .field-input::placeholder {
 	color: color-mix(in srgb, var(--color-ivory) 60%, transparent);
 }
 
+html[data-admin-theme='dark'] .admin-shell .bg-ivory {
+	border-color: color-mix(in srgb, var(--color-ivory) 16%, transparent);
+	background-color: var(--color-stone);
+}
+
 html[data-admin-theme='dark'] .admin-shell input[type='file'].field-input::file-selector-button {
 	background-color: color-mix(in srgb, var(--color-ivory) 10%, transparent);
 	color: var(--color-ivory);
