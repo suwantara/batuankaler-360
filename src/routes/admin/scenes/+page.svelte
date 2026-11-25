@@ -6,10 +6,15 @@
 	let { data, form }: PageProps = $props();
 
 	let selectedIds = $state<string[]>([]);
+	let confirmDialog: HTMLDialogElement | undefined = $state();
+	let formElement: HTMLFormElement | undefined = $state();
 
 	const draftScenes = $derived(data.scenes.filter((scene) => scene.status === 'draft'));
+	const selectedDraftIds = $derived(
+		selectedIds.filter((id) => draftScenes.some((scene) => scene.id === id))
+	);
 	const allDraftsSelected = $derived(
-		draftScenes.length > 0 && selectedIds.length === draftScenes.length
+		draftScenes.length > 0 && selectedDraftIds.length === draftScenes.length
 	);
 	const bulkResult = $derived(form && 'bulkResult' in form ? form.bulkResult : null);
 	const bulkMessage = $derived(form && 'bulkMessage' in form ? form.bulkMessage : null);
@@ -27,12 +32,29 @@
 				: [];
 	}
 
-	$effect(() => {
-		const allowed = new Set(draftScenes.map((scene) => scene.id));
-		const next = selectedIds.filter((id) => allowed.has(id));
+	function openPublishDialog(): void {
+		if (selectedDraftIds.length === 0 || !confirmDialog || confirmDialog.open) return;
 
-		if (next.length !== selectedIds.length) {
-			selectedIds = next;
+		confirmDialog.showModal();
+	}
+
+	function handlePublishClick(event: MouseEvent): void {
+		event.preventDefault();
+		openPublishDialog();
+	}
+
+	function closePublishDialog(): void {
+		confirmDialog?.close();
+	}
+
+	function confirmPublish(): void {
+		confirmDialog?.close();
+		formElement?.requestSubmit();
+	}
+
+	$effect(() => {
+		if (bulkResult) {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
 	});
 </script>
@@ -53,6 +75,12 @@
 			<Icon name="plus" class="h-3.5 w-3.5" />
 		</a>
 	</header>
+
+	{#if data.publishedCount > 0}
+		<div class="alert alert--success" role="status">
+			{data.publishedCount} scene berhasil dipublikasikan.
+		</div>
+	{/if}
 
 	{#if bulkResult}
 		<div
@@ -96,27 +124,37 @@
 				</a>
 			</div>
 		{:else}
-			<form method="POST" action="?/bulkPublish">
+			<form bind:this={formElement} method="POST" action="?/bulkPublish">
 				<div
 					class="flex flex-col gap-3 border-b border-charcoal/10 bg-sand/30 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5"
 				>
-					<label class="flex items-center gap-2 text-xs font-medium text-heading">
-						<input
-							type="checkbox"
-							checked={allDraftsSelected}
-							onchange={toggleAll}
-							disabled={draftScenes.length === 0}
-							class="h-4 w-4 rounded border-charcoal/30 text-gold-dark focus:ring-gold-dark"
-						/>
-						Pilih semua draf
-					</label>
-					<div class="flex flex-wrap items-center gap-3">
-						<span class="text-xs text-muted">{selectedIds.length} scene dipilih</span>
-						<button type="submit" class="btn btn--gold btn--sm" disabled={selectedIds.length === 0}>
-							Publikasikan terpilih
-							<Icon name="check" class="h-3.5 w-3.5" />
-						</button>
-					</div>
+					{#if draftScenes.length > 0}
+						<label class="flex items-center gap-2 text-xs font-medium text-heading">
+							<input
+								type="checkbox"
+								checked={allDraftsSelected}
+								onchange={toggleAll}
+								class="h-4 w-4 rounded border-charcoal/30 text-gold-dark focus:ring-gold-dark"
+							/>
+							Pilih semua draf
+						</label>
+						<div class="flex flex-wrap items-center gap-3">
+							<span class="text-xs text-muted" aria-live="polite">
+								{selectedDraftIds.length} scene dipilih
+							</span>
+							<button
+								type="submit"
+								class="btn btn--gold btn--sm"
+								disabled={selectedDraftIds.length === 0}
+								onclick={handlePublishClick}
+							>
+								Publikasikan terpilih
+								<Icon name="check" class="h-3.5 w-3.5" />
+							</button>
+						</div>
+					{:else}
+						<p class="text-xs text-muted">Semua scene sudah tayang.</p>
+					{/if}
 				</div>
 
 				<div class="divide-y divide-charcoal/10">
@@ -197,3 +235,37 @@
 		{/if}
 	</div>
 </div>
+
+<dialog
+	bind:this={confirmDialog}
+	class="m-auto w-[min(28rem,calc(100vw-2rem))] rounded-lg border border-charcoal/10 bg-paper p-0 text-heading shadow-lift backdrop:bg-ink/60"
+	aria-labelledby="bulk-publish-title"
+	aria-describedby="bulk-publish-description"
+>
+	<div class="p-5 sm:p-6">
+		<div class="flex items-start gap-3">
+			<span
+				class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold/15 text-gold-dark"
+				aria-hidden="true"
+			>
+				<Icon name="check" class="h-5 w-5" />
+			</span>
+			<div class="min-w-0">
+				<h2 id="bulk-publish-title" class="title-sm text-heading">Publikasikan scene terpilih?</h2>
+				<p id="bulk-publish-description" class="mt-2 text-sm leading-relaxed text-muted">
+					{selectedDraftIds.length} scene akan ditayangkan di situs publik. Pastikan judul, deskripsi,
+					dan hotspot sudah siap.
+				</p>
+			</div>
+		</div>
+		<div class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+			<button type="button" class="btn btn--outline btn--sm" onclick={closePublishDialog}>
+				Batal
+			</button>
+			<button type="button" class="btn btn--gold btn--sm" onclick={confirmPublish}>
+				Ya, publikasikan
+				<Icon name="check" class="h-3.5 w-3.5" />
+			</button>
+		</div>
+	</div>
+</dialog>

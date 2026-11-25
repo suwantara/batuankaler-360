@@ -1,10 +1,15 @@
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { sceneBulkPublishSchema } from '#lib/schemas/scene.ts';
 import { listScenesForAdmin, publishScenes } from '#lib/server/services/scene.ts';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
-	return { scenes: await listScenesForAdmin() };
+export const load: PageServerLoad = async ({ url }) => {
+	const published = Number(url.searchParams.get('published') ?? 0);
+
+	return {
+		scenes: await listScenesForAdmin(),
+		publishedCount: Number.isInteger(published) && published > 0 ? published : 0
+	};
 };
 
 export const actions: Actions = {
@@ -20,6 +25,12 @@ export const actions: Actions = {
 			});
 		}
 
-		return { bulkResult: await publishScenes(parsed.data.sceneIds) };
+		const result = await publishScenes(parsed.data.sceneIds);
+
+		if (result.failed.length === 0) {
+			redirect(303, `/admin/scenes?published=${result.published}`);
+		}
+
+		return { bulkResult: result };
 	}
 };

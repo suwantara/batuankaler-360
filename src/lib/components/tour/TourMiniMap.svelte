@@ -143,21 +143,23 @@
 
 <p class="mt-3 text-xs leading-relaxed text-ivory/55">{hint}</p>
 
-<ol class="mt-3 grid gap-1">
-	{#each nodes as node (node.scene.id)}
-		<li>
-			<button
-				type="button"
-				onclick={() => onNavigate(node.scene.id)}
-				aria-pressed={node.scene.id === activeSceneId}
-				class="flex min-h-11 w-full items-center gap-2 py-2 text-left text-xs transition-colors {node
-					.scene.id === activeSceneId
-					? 'text-gold-light'
-					: 'text-ivory/55 hover:text-ivory'}"
-			>
-				<span class="font-display text-[0.65rem]">{number(node.index)}</span>
-				<span class="truncate">{title(node.scene)}</span>
-			</button>
-		</li>
-	{/each}
-</ol>
+<div class="mt-3 max-h-40 overflow-y-auto overscroll-contain">
+	<ol class="grid gap-1">
+		{#each nodes as node (node.scene.id)}
+			<li>
+				<button
+					type="button"
+					onclick={() => onNavigate(node.scene.id)}
+					aria-pressed={node.scene.id === activeSceneId}
+					class="flex min-h-11 w-full items-center gap-2 py-2 text-left text-xs transition-colors {node
+						.scene.id === activeSceneId
+						? 'text-gold-light'
+						: 'text-ivory/55 hover:text-ivory'}"
+				>
+					<span class="font-display text-[0.65rem]">{number(node.index)}</span>
+					<span class="truncate">{title(node.scene)}</span>
+				</button>
+			</li>
+		{/each}
+	</ol>
+</div>
