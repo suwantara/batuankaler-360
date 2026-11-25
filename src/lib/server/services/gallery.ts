@@ -259,6 +259,57 @@ export async function deleteGalleryItem(id: string): Promise<void> {
 	}
 }
 
+export interface GalleryPublishFailure {
+	id: string;
+	title: string;
+	errors: string[];
+}
+
+export interface GalleryBulkPublishResult {
+	published: number;
+	alreadyPublished: number;
+	failed: GalleryPublishFailure[];
+}
+
+export async function publishGalleryItems(ids: string[]): Promise<GalleryBulkPublishResult> {
+	const result: GalleryBulkPublishResult = { published: 0, alreadyPublished: 0, failed: [] };
+
+	for (const id of [...new Set(ids)]) {
+		const existing = await findGalleryItem(id);
+
+		if (!existing) {
+			result.failed.push({ id, title: id, errors: ['Foto tidak ditemukan.'] });
+			continue;
+		}
+
+		const view = toAdminView(existing);
+		const title = view.translations.id.title.trim() || 'Foto tanpa judul';
+
+		if (view.status === 'published') {
+			result.alreadyPublished += 1;
+			continue;
+		}
+
+		if (!title || title === 'Foto tanpa judul') {
+			result.failed.push({
+				id,
+				title,
+				errors: ['Foto tanpa judul tidak dapat ditayangkan. Isi judul Indonesia terlebih dahulu.']
+			});
+			continue;
+		}
+
+		await db
+			.update(galleryItem)
+			.set({ status: 'published', updatedAt: new Date() })
+			.where(eq(galleryItem.id, id));
+
+		result.published += 1;
+	}
+
+	return result;
+}
+
 export async function getPublishedGalleryItems(locale: Locale): Promise<GalleryItemView[]> {
 	const rows = await db.query.galleryItem.findMany({
 		where: eq(galleryItem.status, 'published'),

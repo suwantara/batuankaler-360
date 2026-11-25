@@ -4,6 +4,7 @@
 	import PageIntro from '#lib/components/public/PageIntro.svelte';
 	import SeoHead from '#lib/components/public/SeoHead.svelte';
 	import SitePageGallery from '#lib/components/public/SitePageGallery.svelte';
+	import Icon from '#lib/components/ui/Icon.svelte';
 	import { dictionary } from '#lib/i18n/dictionary.ts';
 	import { SITE_NAME } from '#lib/seo.ts';
 	import type { PageProps } from './$types';
@@ -15,7 +16,39 @@
 	const page = $derived(data.page);
 	const gallery = $derived(data.gallery);
 	const hasFallback = $derived(gallery.some((item) => item.fallbackUsed));
+
+	let lightboxIndex = $state<number | null>(null);
+	let lightboxDialog: HTMLDialogElement | undefined = $state();
+
+	function openLightbox(index: number): void {
+		if (!gallery[index]) return;
+
+		lightboxIndex = index;
+		lightboxDialog?.showModal();
+	}
+
+	function closeLightbox(): void {
+		lightboxDialog?.close();
+	}
+
+	function stepLightbox(delta: number): void {
+		if (lightboxIndex === null || gallery.length === 0) return;
+
+		lightboxIndex = (lightboxIndex + delta + gallery.length) % gallery.length;
+	}
+
+	function handleLightboxKeydown(event: KeyboardEvent): void {
+		if (lightboxIndex === null) return;
+
+		if (event.key === 'ArrowLeft') {
+			stepLightbox(-1);
+		} else if (event.key === 'ArrowRight') {
+			stepLightbox(1);
+		}
+	}
 </script>
+
+<svelte:window onkeydown={handleLightboxKeydown} />
 
 <SeoHead
 	lang={data.lang}
@@ -43,10 +76,10 @@
 				<div class="alert alert--info mb-8">{pageContent.fallback}</div>
 			{/if}
 
-			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			<div class="columns-1 gap-6 sm:columns-2 lg:columns-3">
 				{#each gallery as item, index (item.id)}
-					<div class={index === 1 ? 'lg:mt-10' : ''}>
-						<GalleryPhotoCard {item} {index} />
+					<div class="mb-6 break-inside-avoid">
+						<GalleryPhotoCard {item} {index} onopen={openLightbox} />
 					</div>
 				{/each}
 			</div>
@@ -79,3 +112,63 @@
 		</div>
 	</section>
 {/if}
+
+<dialog
+	bind:this={lightboxDialog}
+	onclose={() => (lightboxIndex = null)}
+	onclick={(event) => {
+		if (event.target === lightboxDialog) closeLightbox();
+	}}
+	class="m-auto max-h-[94dvh] max-w-[94dvw] bg-transparent p-0 backdrop:bg-ink/85"
+	aria-label="Pratinjau foto galeri"
+>
+	{#if lightboxIndex !== null}
+		{@const item = gallery[lightboxIndex]}
+		<figure class="flex max-h-[94dvh] flex-col items-center gap-4 p-4 sm:p-6">
+			<img
+				src={item.imagePath}
+				alt={item.title}
+				class="max-h-[74dvh] w-auto max-w-full rounded border border-ivory/20 object-contain"
+			/>
+			<figcaption
+				class="flex w-full max-w-3xl flex-wrap items-center justify-between gap-4 text-ivory"
+			>
+				<div class="min-w-0">
+					<p class="truncate font-display text-lg leading-snug">{item.title}</p>
+					{#if item.caption}
+						<p class="mt-1 truncate text-xs text-ivory/60">{item.caption}</p>
+					{/if}
+				</div>
+				<div class="flex shrink-0 items-center gap-2">
+					<button
+						type="button"
+						onclick={() => stepLightbox(-1)}
+						aria-label="Foto sebelumnya"
+						class="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/25 text-ivory transition-colors hover:border-gold-light hover:text-gold-light"
+					>
+						<Icon name="arrow-left" class="h-4 w-4" />
+					</button>
+					<span class="min-w-16 text-center text-xs text-ivory/70">
+						{lightboxIndex + 1} / {gallery.length}
+					</span>
+					<button
+						type="button"
+						onclick={() => stepLightbox(1)}
+						aria-label="Foto berikutnya"
+						class="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/25 text-ivory transition-colors hover:border-gold-light hover:text-gold-light"
+					>
+						<Icon name="arrow-right" class="h-4 w-4" />
+					</button>
+					<button
+						type="button"
+						onclick={closeLightbox}
+						aria-label="Tutup pratinjau"
+						class="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/25 text-ivory transition-colors hover:border-gold-light hover:text-gold-light"
+					>
+						<Icon name="close" class="h-4 w-4" />
+					</button>
+				</div>
+			</figcaption>
+		</figure>
+	{/if}
+</dialog>

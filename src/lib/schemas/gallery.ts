@@ -66,3 +66,9 @@ export function galleryItemFormValuesFromRaw(raw: Record<string, string>): Galle
 		captionEn: raw.captionEn ?? ''
 	};
 }
+
+export const galleryBulkPublishSchema = z.object({
+	itemIds: z.array(z.uuid()).min(1, 'Pilih minimal satu foto.')
+});
+
+export type GalleryBulkPublishInput = z.infer<typeof galleryBulkPublishSchema>;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { galleryItemFormSchema } from './gallery.ts';
+import { galleryBulkPublishSchema, galleryItemFormSchema } from './gallery.ts';
 
 describe('gallery item form schema', () => {
 	it('allows a draft gallery item without a title', () => {
@@ -42,5 +42,30 @@ describe('gallery item form schema', () => {
 		});
 
 		expect(result.success).toBe(true);
+	});
+});
+
+describe('galleryBulkPublishSchema', () => {
+	const itemId = 'a0000000-0000-4000-8000-000000000001';
+	const otherItemId = 'a0000000-0000-4000-8000-000000000002';
+
+	it('accepts one or more gallery item IDs', () => {
+		expect(galleryBulkPublishSchema.safeParse({ itemIds: [itemId] }).success).toBe(true);
+		expect(galleryBulkPublishSchema.safeParse({ itemIds: [itemId, otherItemId] }).success).toBe(
+			true
+		);
+	});
+
+	it('rejects an empty selection', () => {
+		const result = galleryBulkPublishSchema.safeParse({ itemIds: [] });
+
+		expect(result.success).toBe(false);
+		if (!result.success) {
+			expect(result.error.issues[0]?.message).toBe('Pilih minimal satu foto.');
+		}
+	});
+
+	it('rejects invalid gallery item IDs', () => {
+		expect(galleryBulkPublishSchema.safeParse({ itemIds: ['bukan-uuid'] }).success).toBe(false);
 	});
 });
