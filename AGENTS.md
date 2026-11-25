@@ -210,7 +210,7 @@ TypeScript hanya memeriksa compile time; semua input eksternal wajib divalidasi 
 - Registrasi publik dinonaktifkan; akun admin dibuat dengan `pnpm admin:create`.
 - Upload aset tersedia di `/admin/media/upload`; file disimpan di `UPLOAD_DIR` dan divalidasi di `src/lib/server/storage/local.ts`.
 - Preview aset tersedia di `/admin/media/[id]`; validasi publikasi scene ada di `validateSceneForPublish`.
-- Halaman sejarah, area, galeri, dan panduan masih placeholder; konten situs belum dikelola dari dashboard.
+- Halaman publik kini dikelola dari dashboard: sejarah sudah tayang dengan konten naskah, area menampilkan 3 area published, dan galeri menunggu persetujuan (34 foto draft).
 - Panorama di `static/images/panoramas/` masih aset sintetis; jangan dianggap dokumentasi final.
 - `.env` berisi kredensial development; jangan commit dan ganti semua secret untuk produksi.
 
@@ -230,3 +230,18 @@ TypeScript hanya memeriksa compile time; semua input eksternal wajib divalidasi 
 3. Jika ada keputusan produk yang belum final (`PRD.md` §15), jangan mengarang; tandai sebagai TODO atau tanyakan.
 4. Jangan merusak pekerjaan user yang sudah ada; periksa file sebelum menimpa.
 5. Setelah selesai, laporkan file yang diubah, perintah yang dijalankan, dan hasil test.
+
+## 14. Konteks Lintas Sesi
+
+Sebelum mengeksplorasi codebase:
+
+1. Baca knowledge graph memory MCP (`read_graph`, atau `search_nodes "batuankaler"`):
+   state terbaru, riwayat commit, keputusan desain, infrastruktur deploy, dan langkah
+   berikutnya sudah tersimpan di sana.
+2. Jika `graphify-out/graph.json` ada, jawab pertanyaan tentang codebase lewat graph
+   terlebih dahulu (`graphify query "..."`, `graphify explain "Simbol"`,
+   `graphify path "A" "B"`) sebelum membaca file satu per satu. Setelah refactor besar,
+   jalankan `graphify . --update`.
+3. Baca `AGENTS.md`, `PRD.md`, dan `DESIGN.md`. Jangan memindai ulang seluruh repo.
+4. Untuk tugas berkelanjutan, lanjutkan session Orca yang ada (`orca search "<kata kunci>"`
+   untuk menemukan konteks lama) alih-alih memulai session baru.
