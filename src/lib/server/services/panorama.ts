@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { asc, eq } from 'drizzle-orm';
 import { db } from '#lib/server/db/index.ts';
 import { panoramaAsset, scene, sitePage } from '#lib/server/db/schema.ts';
@@ -65,7 +66,7 @@ type PanoramaAsset = typeof panoramaAsset.$inferSelect;
 
 export async function updatePanoramaThumbnail(id: string, file: File): Promise<PanoramaAsset> {
 	const asset = await requirePanoramaAsset(id);
-	const saved = await savePanoramaImage(file, 'thumbnail', asset.id);
+	const saved = await savePanoramaImage(file, 'thumbnail', randomUUID());
 
 	try {
 		const [updated] = await db
@@ -78,10 +79,12 @@ export async function updatePanoramaThumbnail(id: string, file: File): Promise<P
 			throw new NotFoundError('Aset panorama tidak ditemukan.');
 		}
 
-		try {
-			await deletePanoramaFile(asset.thumbnailPath);
-		} catch (cause) {
-			console.error('Failed to delete previous panorama thumbnail', cause);
+		if (asset.thumbnailPath !== saved.publicPath) {
+			try {
+				await deletePanoramaFile(asset.thumbnailPath);
+			} catch (cause) {
+				console.error('Failed to delete previous panorama thumbnail', cause);
+			}
 		}
 
 		return updated;
