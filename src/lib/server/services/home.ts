@@ -40,13 +40,16 @@ async function resolveHomeMedia(shared: unknown): Promise<HomeMediaPaths> {
 		media.heroAssetId ? getPanoramaAsset(media.heroAssetId) : Promise.resolve(undefined),
 		media.previewAssetId ? getPanoramaAsset(media.previewAssetId) : Promise.resolve(undefined)
 	]);
-	const heroPath = hero?.previewPath ?? hero?.originalPath;
+	const heroPath = hero?.previewPath ?? hero?.thumbnailPath ?? hero?.originalPath;
 
 	return {
 		heroImagePath: heroPath ?? DEFAULT_HOME_MEDIA.heroImagePath,
 		heroBackgroundPath: heroPath ?? DEFAULT_HOME_MEDIA.heroBackgroundPath,
 		previewImagePath:
-			preview?.previewPath ?? preview?.originalPath ?? DEFAULT_HOME_MEDIA.previewImagePath
+			preview?.previewPath ??
+			preview?.thumbnailPath ??
+			preview?.originalPath ??
+			DEFAULT_HOME_MEDIA.previewImagePath
 	};
 }
 
