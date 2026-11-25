@@ -43,3 +43,6 @@ test-results
 
 # Documentation is kept locally, not tracked in the repository
 /docs/
+
+# Graphify knowledge graph (generated)
+/graphify-out/
