@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { isLocale } from '#lib/i18n/index.ts';
 import { DEFAULT_HOME_MEDIA, getPublishedHomeContent } from '#lib/server/services/home.ts';
+import { countPublishedScenes } from '#lib/server/services/scene.ts';
 import { getPublishedVisitInformation } from '#lib/server/services/site-content.ts';
 import type { PageServerLoad } from './$types';
 
@@ -9,9 +10,10 @@ export const load: PageServerLoad = async ({ params }) => {
 		error(404, 'Halaman tidak ditemukan');
 	}
 
-	const [visitInfo, homeResult] = await Promise.all([
+	const [visitInfo, homeResult, sceneCount] = await Promise.all([
 		getPublishedVisitInformation(params.lang),
-		getPublishedHomeContent(params.lang)
+		getPublishedHomeContent(params.lang),
+		countPublishedScenes()
 	]);
 
 	return {
@@ -19,6 +21,7 @@ export const load: PageServerLoad = async ({ params }) => {
 		home: homeResult?.content ?? null,
 		homeFallback: homeResult?.fallbackUsed ?? false,
 		homeMedia: homeResult?.media ?? DEFAULT_HOME_MEDIA,
-		homeSeo: homeResult?.seo ?? null
+		homeSeo: homeResult?.seo ?? null,
+		sceneCount
 	};
 };

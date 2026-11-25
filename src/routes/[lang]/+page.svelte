@@ -18,6 +18,7 @@
 	const content = $derived(dictionary[data.lang]);
 	const home = $derived(data.home ?? content.home);
 	const hero = $derived(home.hero);
+	const introBody = $derived(home.intro.body.replace('{count}', String(data.sceneCount)));
 
 	function href(path = '') {
 		return localeHref(data.lang, path);
@@ -140,7 +141,7 @@
 		</div>
 
 		<div>
-			<p class="lede max-w-2xl">{home.intro.body}</p>
+			<p class="lede max-w-2xl">{introBody}</p>
 
 			<div class="mt-10 border-t border-charcoal/12">
 				{#each home.intro.points as point, index (point.title)}

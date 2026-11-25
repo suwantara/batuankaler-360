@@ -348,6 +348,15 @@ export async function publishScenes(ids: string[]): Promise<SceneBulkPublishResu
 	return result;
 }
 
+export async function countPublishedScenes(): Promise<number> {
+	const [row] = await db
+		.select({ value: count() })
+		.from(scene)
+		.where(eq(scene.status, 'published'));
+
+	return Number(row?.value ?? 0);
+}
+
 export async function deleteScene(id: string) {
 	const existing = await getSceneForAdmin(id);
 

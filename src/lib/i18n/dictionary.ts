@@ -4,7 +4,7 @@ const id = {
 	meta: {
 		title: 'Pura Batuan Kaler 360 | Virtual Tour Kawasan Pura',
 		description:
-			'Jelajahi kawasan Pura Batuan Kaler melalui panorama 360 derajat, informasi area, sejarah, dan panduan kunjungan.'
+			'Berjalan menyusuri kawasan Pura Batuan Kaler lewat panorama 360° yang diambil langsung di lokasi, dilengkapi informasi area dan panduan berkunjung.'
 	},
 	common: {
 		skipToContent: 'Lewati ke konten',
@@ -49,11 +49,11 @@ const id = {
 	],
 	actions: {
 		exploreTour: 'Jelajahi Virtual Tour',
-		learnHistory: 'Pelajari Sejarah',
-		viewAllAreas: 'Lihat Semua Area',
-		openGallery: 'Buka Galeri',
-		readGuide: 'Baca Panduan',
-		readHistory: 'Baca Sejarah'
+		learnHistory: 'Pelajari sejarahnya',
+		viewAllAreas: 'Lihat semua area',
+		openGallery: 'Lihat galeri foto',
+		readGuide: 'Baca panduan kunjungan',
+		readHistory: 'Baca sejarahnya'
 	},
 	visitInfo: {
 		eyebrow: 'Informasi kunjungan',
@@ -94,7 +94,7 @@ const id = {
 	footer: {
 		description:
 			'Dokumentasi digital kawasan Pura Batuan Kaler dalam bentuk virtual tour 360 derajat. Disusun untuk mendukung orientasi pengunjung dengan tetap menghormati nilai dan aturan tempat.',
-		explore: 'Jelajahi',
+		explore: 'Tautan',
 		visit: 'Kunjungan',
 		note: 'Konten sedang melalui proses validasi pengelola.',
 		rights: 'Pura Batuan Kaler 360.',
@@ -111,7 +111,7 @@ const id = {
 			titleLead: 'Pura Batuan Kaler,',
 			titleAccent: 'dalam pandangan 360°.',
 			description:
-				'Jelajahi suasana kawasan pura melalui panorama interaktif, mengenal area yang terdokumentasi, dan memahami konteks kunjungan dengan tetap menghormati nilai dan aturan tempat.',
+				'Putar panorama untuk melihat kawasan pura seperti berdiri di tempat. Foto diambil langsung di lokasi, dari Jaba Pura hingga Utama Mandala, supaya yang Anda lihat sesuai kenyataan.',
 			note: 'Konten visual dan informasi sedang melalui proses validasi pengelola.',
 			viewLabel: 'Pratinjau panorama',
 			meta: [
@@ -122,8 +122,8 @@ const id = {
 		},
 		intro: {
 			eyebrow: 'Tentang proyek',
-			title: 'Menjaga ingatan tempat melalui dokumentasi yang cermat.',
-			body: 'Pura Batuan Kaler 360 menghadirkan dokumentasi visual kawasan pura dalam bentuk tur panorama. Setiap area, keterangan, dan panduan kunjungan disusun untuk membantu pengunjung memahami tempat sebelum berkunjung.',
+			title: 'Kenali pura sebelum melangkah masuk.',
+			body: 'Kawasan pura dipotret menjadi {count} panorama 360°, dari Jaba Pura hingga Utama Mandala, lengkap dengan foto detail. Keterangan tiap area disusun bersama pengelola dan tampil setelah disetujui.',
 			points: [
 				{
 					title: 'Dokumentasi visual',
@@ -141,21 +141,21 @@ const id = {
 		},
 		tour: {
 			eyebrow: 'Virtual tour',
-			title: 'Berpindah dari satu area ke area lain.',
-			body: 'Panorama 360 derajat dilengkapi titik interaktif untuk berpindah lokasi dan membuka informasi area. Gunakan drag, sentuhan, atau kontrol zoom untuk menjelajah.',
+			title: 'Menyusuri kawasan, scene demi scene.',
+			body: 'Mulai dari Jaba Pura, gunakan ikon hotspot untuk berpindah ke area berikutnya, dan buka keterangan area di sepanjang jalur.',
 			previewLabel: 'Pratinjau panorama 360°'
 		},
 		history: {
 			eyebrow: 'Sejarah',
 			title: 'Konteks yang melandasi kawasan.',
-			body: 'Ringkasan sejarah dan perkembangan kawasan pura akan ditampilkan setelah melalui proses verifikasi dan persetujuan pengelola. Pendekatan ini menjaga agar informasi yang dipublikasikan dapat dipertanggungjawabkan.',
+			body: 'Ringkasan sejarah disusun dari sumber tertulis kawasan pura, lalu tampil setelah disetujui pengelola.',
 			noteLabel: 'Catatan kurasi',
 			status: 'Dalam proses verifikasi'
 		},
 		areas: {
 			eyebrow: 'Area',
-			title: 'Titik-titik yang dapat dijelajahi.',
-			body: 'Setiap area memiliki karakter, fungsi, dan aturan yang berbeda. Nama dan deskripsi area pada tahap ini merupakan kerangka konten dan menunggu verifikasi pengelola.',
+			title: 'Dari Jaba Pura hingga Utama Mandala.',
+			body: 'Tiap area punya fungsi dan aturan kunjungan yang berbeda. Keterangan di bawah ini disusun sebagai kerangka dan menunggu peninjauan pengelola.',
 			items: [
 				{
 					name: 'Jaba Pura',
@@ -176,7 +176,7 @@ const id = {
 		gallery: {
 			eyebrow: 'Galeri',
 			title: 'Dokumentasi visual kawasan.',
-			body: 'Foto dan media akan ditambahkan setelah izin dokumentasi dan validasi konten selesai. Galeri disiapkan untuk menampilkan detail arsitektur, lanskap, dan suasana kawasan.',
+			body: 'Foto close-up detail pura dan panorama pilihan akan tampil setelah konten disetujui pengelola.',
 			pending: 'Dokumentasi menyusul',
 			items: [
 				{ title: 'Ruang luar', caption: 'Kerangka dokumentasi area luar' },
@@ -209,9 +209,9 @@ const id = {
 			eyebrow: 'Virtual tour',
 			title: 'Jelajahi kawasan dalam 360°.',
 			description:
-				'Gunakan panorama interaktif untuk melihat suasana kawasan. Tarik atau geser tampilan, gunakan tombol zoom, dan buka layar penuh untuk pengalaman yang lebih luas.',
+				'Geser untuk melihat sekeliling, ketuk ikon hotspot untuk berpindah area atau membuka keterangan, dan buka layar penuh bila ingin lebih leluasa.',
 			notice:
-				'Panorama pada halaman ini masih menggunakan aset uji. Scene dan hotspot dikelola melalui dashboard admin.',
+				'Scene dan hotspot dikelola pengelola. Keterangan area menyusul setelah diverifikasi.',
 			panel: {
 				sceneList: 'Daftar scene',
 				sceneListHint: 'Pilih scene untuk berpindah panorama.',
@@ -225,8 +225,7 @@ const id = {
 				infoNotice: 'Konten informasi masih dalam kerangka dan menunggu verifikasi pengelola.',
 				closeInfo: 'Tutup informasi',
 				emptyScenes: 'Belum ada scene yang dipublikasikan.',
-				emptyScenesHint:
-					'Scene yang berstatus published akan tampil di sini. Administrator dapat mengelola scene melalui dashboard.',
+				emptyScenesHint: 'Scene yang sudah dipublikasikan akan tampil di sini.',
 				legendInfo: 'Hotspot informasi',
 				legendNavigate: 'Hotspot pindah area',
 				legendDrag: 'Geser panorama untuk melihat'
@@ -273,9 +272,9 @@ const id = {
 			eyebrow: 'Sejarah',
 			title: 'Sejarah dan konteks kawasan.',
 			description:
-				'Halaman ini akan memuat ringkasan sejarah Pura Batuan Kaler setelah melalui verifikasi dan persetujuan pengelola.',
+				'Ringkasan sejarah disusun dari sumber tertulis tentang Pura Puseh Ganggangan Canggi, lalu tampil setelah disetujui pengelola.',
 			notice:
-				'Konten sejarah belum dipublikasikan. Kerangka halaman disiapkan agar informasi yang nantinya tampil memiliki sumber yang dapat dipertanggungjawabkan.',
+				'Konten sejarah belum tayang. Kerangka halaman disiapkan agar informasi yang tampil memiliki sumber yang jelas.',
 			toc: 'Dalam halaman ini',
 			updated: 'Terakhir diperbarui',
 			source: 'Sumber',
@@ -285,11 +284,11 @@ const id = {
 		},
 		area: {
 			eyebrow: 'Area',
-			title: 'Mengenal area kawasan pura.',
+			title: 'Tiga bagian, satu alur kunjungan.',
 			description:
-				'Setiap area memiliki fungsi dan aturan kunjungan yang berbeda. Daftar berikut merupakan kerangka konten yang akan dilengkapi setelah verifikasi pengelola.',
+				'Kawasan pura terbagi menjadi Jaba Pura, Madya Mandala, dan Utama Mandala. Tiap bagian punya fungsi dan aturan sendiri. Keterangan menyusul setelah peninjauan pengelola.',
 			notice:
-				'Nama, deskripsi, dan batas area masih menunggu validasi. Jangan menggunakan halaman ini sebagai panduan resmi sebelum konten final dipublikasikan.',
+				'Konten halaman ini masih dalam peninjauan pengelola dan belum menjadi panduan resmi.',
 			updated: 'Terakhir diperbarui',
 			empty: 'Daftar area sedang disiapkan oleh pengelola.',
 			fallback:
@@ -303,9 +302,8 @@ const id = {
 			eyebrow: 'Galeri',
 			title: 'Dokumentasi visual kawasan.',
 			description:
-				'Galeri akan menampilkan foto dan media kawasan setelah izin dokumentasi dan validasi konten selesai.',
-			notice:
-				'Belum ada media final yang dipublikasikan. Elemen pada halaman ini merupakan placeholder untuk tata letak galeri.',
+				'Foto close-up detail pura dan panorama pilihan akan tampil di sini setelah konten disetujui pengelola.',
+			notice: 'Belum ada media yang dipublikasikan.',
 			updated: 'Terakhir diperbarui',
 			empty: 'Galeri sedang disiapkan oleh pengelola.',
 			fallback:
@@ -315,7 +313,7 @@ const id = {
 			eyebrow: 'Panduan kunjungan',
 			title: 'Informasi sebelum berkunjung.',
 			description:
-				'Panduan kunjungan akan memuat informasi praktis mengenai etika, pakaian, akses, dan ketentuan pengelola pura.',
+				'Etika berkunjung, pakaian, dan akses mengikuti ketentuan resmi pengelola pura. Panduan diperbarui setelah dikonfirmasi.',
 			guideEyebrow: 'Panduan umum',
 			guideTitle: 'Prinsip yang perlu dijaga.',
 			notice:
@@ -336,7 +334,7 @@ const en: SiteDictionary = {
 	meta: {
 		title: 'Pura Batuan Kaler 360 | Virtual Tour of the Temple Grounds',
 		description:
-			'Explore the grounds of Pura Batuan Kaler through 360-degree panoramas, area information, history, and visit guidance.'
+			'Walk through the Pura Batuan Kaler grounds via 360° panoramas shot on site, with area notes and a visit guide.'
 	},
 	common: {
 		skipToContent: 'Skip to content',
@@ -380,12 +378,12 @@ const en: SiteDictionary = {
 		{ label: 'Visit Guide', path: '/panduan' }
 	],
 	actions: {
-		exploreTour: 'Explore the Virtual Tour',
-		learnHistory: 'Learn the History',
-		viewAllAreas: 'View All Areas',
-		openGallery: 'Open Gallery',
-		readGuide: 'Read the Guide',
-		readHistory: 'Read the History'
+		exploreTour: 'Enter the 360° tour',
+		learnHistory: 'Read its history',
+		viewAllAreas: 'See all areas',
+		openGallery: 'See the photo gallery',
+		readGuide: 'Read the visit guide',
+		readHistory: 'Read the history'
 	},
 	visitInfo: {
 		eyebrow: 'Visit information',
@@ -425,7 +423,7 @@ const en: SiteDictionary = {
 	footer: {
 		description:
 			'Digital documentation of Pura Batuan Kaler through a 360-degree virtual tour. Designed to help visitors orient themselves while respecting the values and rules of the place.',
-		explore: 'Explore',
+		explore: 'Links',
 		visit: 'Visit',
 		note: 'Content is currently undergoing review by the temple management.',
 		rights: 'Pura Batuan Kaler 360.',
@@ -442,7 +440,7 @@ const en: SiteDictionary = {
 			titleLead: 'Pura Batuan Kaler,',
 			titleAccent: 'in a 360° view.',
 			description:
-				'Explore the atmosphere of the temple grounds through interactive panoramas, discover documented areas, and understand the context of a visit while respecting the values and rules of the place.',
+				'Turn the panorama to see the grounds as if you were standing there. Every shot was taken on site, from Jaba Pura to Utama Mandala, so what you see matches the place.',
 			note: 'Visual content and information are currently undergoing review by the temple management.',
 			viewLabel: 'Panorama preview',
 			meta: [
@@ -453,8 +451,8 @@ const en: SiteDictionary = {
 		},
 		intro: {
 			eyebrow: 'About the project',
-			title: 'Preserving a sense of place through careful documentation.',
-			body: 'Pura Batuan Kaler 360 presents visual documentation of the temple grounds as a panoramic tour. Each area, caption, and visit guideline is prepared to help visitors understand the place before they arrive.',
+			title: 'Know the temple before you step in.',
+			body: 'The grounds were photographed into {count} 360° panoramas, from Jaba Pura to Utama Mandala, along with detail photos. Area notes are prepared with the caretakers and appear once approved.',
 			points: [
 				{
 					title: 'Visual documentation',
@@ -472,21 +470,21 @@ const en: SiteDictionary = {
 		},
 		tour: {
 			eyebrow: 'Virtual tour',
-			title: 'Move from one area to another.',
-			body: 'The 360-degree panorama includes interactive points for moving between locations and opening area information. Drag, swipe, or use the zoom controls to explore.',
+			title: 'Walk the grounds, scene by scene.',
+			body: 'Start at Jaba Pura, use the hotspot icons to move to the next area, and open area notes along the route.',
 			previewLabel: '360° panorama preview'
 		},
 		history: {
 			eyebrow: 'History',
 			title: 'The context that shapes the grounds.',
-			body: 'A summary of the history and development of the temple grounds will be published after verification and approval by the management. This approach ensures that published information can be accounted for.',
+			body: 'A written history of the grounds is being prepared and will appear once approved by the caretakers.',
 			noteLabel: 'Curatorial note',
 			status: 'Under verification'
 		},
 		areas: {
 			eyebrow: 'Areas',
-			title: 'Points to explore.',
-			body: 'Each area has a different character, function, and set of rules. Area names and descriptions at this stage are a content framework awaiting management verification.',
+			title: 'From Jaba Pura to Utama Mandala.',
+			body: 'Each area has its own function and visit rules. The notes below are a framework awaiting review by the caretakers.',
 			items: [
 				{
 					name: 'Jaba Pura',
@@ -507,7 +505,7 @@ const en: SiteDictionary = {
 		gallery: {
 			eyebrow: 'Gallery',
 			title: 'Visual documentation of the grounds.',
-			body: 'Photographs and media will be added once documentation permission and content review are complete. The gallery is prepared to show architectural details, landscape, and atmosphere.',
+			body: 'Close-up photos of temple details and selected panoramas will appear once the content is approved.',
 			pending: 'Documentation forthcoming',
 			items: [
 				{ title: 'Outer spaces', caption: 'Documentation framework for outer areas' },
@@ -540,9 +538,8 @@ const en: SiteDictionary = {
 			eyebrow: 'Virtual tour',
 			title: 'Explore the grounds in 360°.',
 			description:
-				'Use the interactive panorama to view the atmosphere of the grounds. Drag or swipe the view, use the zoom controls, and open full screen for a wider experience.',
-			notice:
-				'This page currently uses test assets. Scenes and hotspots are managed through the admin dashboard.',
+				'Drag to look around, tap a hotspot to move between areas or open notes, and use fullscreen when you want more room.',
+			notice: 'Scenes and hotspots are managed by the caretakers. Area notes follow once verified.',
 			panel: {
 				sceneList: 'Scene list',
 				sceneListHint: 'Choose a scene to move to another panorama.',
@@ -556,8 +553,7 @@ const en: SiteDictionary = {
 				infoNotice: 'Information content is still a framework awaiting management verification.',
 				closeInfo: 'Close information',
 				emptyScenes: 'No published scenes yet.',
-				emptyScenesHint:
-					'Published scenes will appear here. An administrator can manage scenes through the dashboard.',
+				emptyScenesHint: 'Published scenes will appear here.',
 				legendInfo: 'Information hotspot',
 				legendNavigate: 'Area navigation hotspot',
 				legendDrag: 'Drag the panorama to look around'
@@ -604,9 +600,9 @@ const en: SiteDictionary = {
 			eyebrow: 'History',
 			title: 'History and context of the grounds.',
 			description:
-				'This page will present a summary of the history of Pura Batuan Kaler after verification and approval by the management.',
+				'A written history of Pura Puseh Ganggangan Canggi is being prepared and will appear once approved by the caretakers.',
 			notice:
-				'Historical content has not been published yet. The page framework is prepared so that the information shown later has accountable sources.',
+				'The history content is not published yet. The page framework is prepared so that everything shown has a clear source.',
 			toc: 'On this page',
 			updated: 'Last updated',
 			source: 'Source',
@@ -615,11 +611,10 @@ const en: SiteDictionary = {
 		},
 		area: {
 			eyebrow: 'Areas',
-			title: 'Getting to know the temple grounds.',
+			title: 'Three sections, one visit route.',
 			description:
-				'Each area has a different function and set of visiting rules. The list below is a content framework to be completed after management verification.',
-			notice:
-				'Area names, descriptions, and boundaries are awaiting validation. Do not use this page as an official guide until the final content is published.',
+				'The grounds are divided into Jaba Pura, Madya Mandala, and Utama Mandala. Each has its own function and rules. Notes follow once reviewed by the caretakers.',
+			notice: 'This page is still under review by the caretakers and is not yet an official guide.',
 			updated: 'Last updated',
 			empty: 'The area list is being prepared by the management.',
 			fallback: 'The English translation is incomplete. Part of the list is shown in Indonesian.',
@@ -632,9 +627,8 @@ const en: SiteDictionary = {
 			eyebrow: 'Gallery',
 			title: 'Visual documentation of the grounds.',
 			description:
-				'The gallery will present photographs and media of the grounds once documentation permission and content review are complete.',
-			notice:
-				'No final media has been published yet. The elements on this page are placeholders for the gallery layout.',
+				'Close-up photos of the temple and selected panoramas will appear here once the content is approved.',
+			notice: 'No media has been published yet.',
 			updated: 'Last updated',
 			empty: 'The gallery is being prepared by the management.',
 			fallback: 'The English translation is incomplete. Some captions are shown in Indonesian.'
@@ -643,7 +637,7 @@ const en: SiteDictionary = {
 			eyebrow: 'Visit guide',
 			title: 'Information before your visit.',
 			description:
-				'The visit guide will contain practical information about etiquette, dress, access, and the rules of the temple management.',
+				'Visit etiquette, dress, and access follow the official rules of the temple caretakers. This guide is updated once confirmed.',
 			guideEyebrow: 'General guidance',
 			guideTitle: 'Principles to keep in mind.',
 			notice:
