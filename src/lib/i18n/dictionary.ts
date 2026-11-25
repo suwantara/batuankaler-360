@@ -101,7 +101,7 @@ const id = {
 		cta: {
 			eyebrow: 'Virtual tour',
 			title: 'Masuk ke kawasan, satu panorama demi satu.',
-			body: 'Mulai dari Jaba Pura, lalu berjalan menuju area berikutnya melalui hotspot dan daftar scene.'
+			body: 'Lanjutkan ke area berikutnya lewat hotspot dan daftar scene.'
 		}
 	},
 	home: {
@@ -430,7 +430,7 @@ const en: SiteDictionary = {
 		cta: {
 			eyebrow: 'Virtual tour',
 			title: 'Enter the grounds, one panorama at a time.',
-			body: 'Begin at Jaba Pura, then move through the following areas with hotspots and the scene list.'
+			body: 'Continue to the next areas with hotspots and the scene list.'
 		}
 	},
 	home: {
