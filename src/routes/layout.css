@@ -902,6 +902,33 @@
 		pointer-events: none;
 	}
 
+	/* Scrollbar tipis untuk panel gelap (peta alur, daftar scene). */
+	.scroll-slim {
+		scrollbar-width: thin;
+		scrollbar-color: color-mix(in srgb, var(--color-ivory) 38%, transparent) transparent;
+	}
+
+	.scroll-slim::-webkit-scrollbar {
+		width: 6px;
+		height: 6px;
+	}
+
+	.scroll-slim::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.scroll-slim::-webkit-scrollbar-thumb {
+		border: 2px solid transparent;
+		border-radius: 9999px;
+		background-color: color-mix(in srgb, var(--color-ivory) 38%, transparent);
+		background-clip: padding-box;
+	}
+
+	.scroll-slim::-webkit-scrollbar-thumb:hover {
+		background-color: color-mix(in srgb, var(--color-gold-light) 60%, transparent);
+		background-clip: padding-box;
+	}
+
 	@keyframes hotspot-pulse {
 		0%,
 		100% {

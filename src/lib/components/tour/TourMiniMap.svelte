@@ -143,7 +143,7 @@
 
 <p class="mt-3 text-xs leading-relaxed text-ivory/55">{hint}</p>
 
-<div class="mt-3 max-h-40 overflow-y-auto overscroll-contain">
+<div class="scroll-slim mt-3 max-h-40 overflow-y-auto overscroll-contain">
 	<ol class="grid gap-1">
 		{#each nodes as node (node.scene.id)}
 			<li>

@@ -146,7 +146,7 @@
 						{panelLabels.sceneListHint}
 					</p>
 				</div>
-				<div class="flex max-h-80 flex-col overflow-y-auto overscroll-contain">
+				<div class="scroll-slim flex max-h-80 flex-col overflow-y-auto overscroll-contain">
 					{#each scenes as scene, index (scene.id)}
 						<button
 							type="button"
